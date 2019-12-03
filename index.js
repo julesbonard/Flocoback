@@ -14,6 +14,9 @@ app.use(express.json());
 
 app.get("/", (req, res) => res.send("Hello world !"));
 
+//route
+app.use("/users", require("./route/users.route"));
+
 async function main() {
   try {
     await sequelize.sync(); // Sync Method will create Database using the config & models
@@ -32,4 +35,4 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 // If you want to add tests with Mocha & Chai
-// module.exports = app;
+module.exports = app;

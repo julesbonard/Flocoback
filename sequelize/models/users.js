@@ -19,11 +19,24 @@ const User = sequelize.define(
       allowNull: false
     },
     age: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      allowNull: false
     },
     email: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    pseudo: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    avatar: {
+      type: Sequelize.STRING,
+      allowNull: true
     }
   },
   {}

@@ -7,7 +7,7 @@ let database = process.env.DB_DATABASE;
 let dialect = process.env.DB_DIALECT;
 
 if (process.env.NODE_ENV === "test") {
-  database = process.env.DB_DATABASE_TEST;
+  database = process.env.DB_DATABASE_TEST || "floco_test";
 }
 
 const conf = {
