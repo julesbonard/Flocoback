@@ -11,15 +11,19 @@ const Pot = sequelize.define(
       defaultValue: Sequelize.UUIDV4
     },
     Width: {
-      type: Sequelize.FLOAT,
-      allowNull: false
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: { min: 0 }
     },
     length: {
-      type: Sequelize.FLOAT,
-      allowNull: false
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: { min: 0 }
     },
     Depth: {
-      type: Sequelize.FLOAT
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: { min: 0 }
     }
   },
   {}

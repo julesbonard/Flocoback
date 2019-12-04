@@ -7,19 +7,19 @@ const Message = require("../sequelize/models/messages");
 
 chai.use(chaiHttp);
 beforeEach(() => sequelize.sync({ force: true }));
-const userSample = {
+const MessageSample = {
   Date: "1970-01-01T00:00:00.000Z",
   Contents: "Salut Toto !"
 };
 describe("MESSAGE", () => {
   describe("GET * messages", () => {
     it("It should return all messages.", async () => {
-      console.log(userSample.Date);
-      await Message.create(userSample);
+      console.log(MessageSample.Date);
+      await Message.create(MessageSample);
       const res = await chai.request(server).get("/messages");
       res.should.have.status(200);
       res.body.should.be.a("array");
-      res.body[0].should.include(userSample);
+      res.body[0].should.include(MessageSample);
       res.body.length.should.be.eql(1);
     });
   });

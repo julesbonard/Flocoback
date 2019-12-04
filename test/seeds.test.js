@@ -7,7 +7,7 @@ const Seed = require("../sequelize/models/seeds");
 
 chai.use(chaiHttp);
 beforeEach(() => sequelize.sync({ force: true }));
-const userSample = {
+const SeedSample = {
   name: "rose",
   statut: "vulnérable",
   type: "vivace",
@@ -19,11 +19,11 @@ const userSample = {
 describe("SEED", () => {
   describe("GET * SEEDS", () => {
     it("It should return all seeds.", async () => {
-      await Seed.create(userSample);
+      await Seed.create(SeedSample);
       const res = await chai.request(server).get("/seeds");
       res.should.have.status(200);
       res.body.should.be.a("array");
-      res.body[0].should.include(userSample);
+      res.body[0].should.include(SeedSample);
       res.body.length.should.be.eql(1);
     });
   });
