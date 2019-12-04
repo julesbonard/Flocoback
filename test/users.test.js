@@ -21,6 +21,7 @@ describe("USERS", () => {
       await User.create(userSample);
       const res = await chai.request(server).get("/users");
       res.should.have.status(200);
+      res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(userSample);
       res.body.length.should.be.eql(1);

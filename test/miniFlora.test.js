@@ -16,6 +16,7 @@ describe("MINIFLORA", () => {
       await MiniFlora.create(miniFloraSample);
       const res = await chai.request(server).get("/miniFlora");
       res.should.have.status(200);
+      res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(miniFloraSample);
       res.body.length.should.be.eql(1);

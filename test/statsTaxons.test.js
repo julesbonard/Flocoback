@@ -18,6 +18,7 @@ describe("STATSTAXONS", () => {
       await StatsTaxons.create(statsTaxonsSample);
       const res = await chai.request(server).get("/statsTaxons");
       res.should.have.status(200);
+      res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(statsTaxonsSample);
       res.body.length.should.be.eql(1);

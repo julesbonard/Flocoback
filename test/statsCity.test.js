@@ -17,6 +17,7 @@ describe("STATSCITY", () => {
       await StatsCity.create(statsCitySample);
       const res = await chai.request(server).get("/statsCity");
       res.should.have.status(200);
+      res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(statsCitySample);
       res.body.length.should.be.eql(1);
