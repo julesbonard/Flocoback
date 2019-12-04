@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../index");
 
-const User = sequelize.define(
-  "User",
+const Partner = sequelize.define(
+  "Partner",
   {
     uuid: {
       type: Sequelize.UUID,
@@ -10,37 +10,34 @@ const User = sequelize.define(
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
-    firstName: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    lastName: {
+    address: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    age: {
+    tags: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    website: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    phone: {
       type: Sequelize.INTEGER,
       allowNull: false,
       validate: { min: 0 }
     },
-    email: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    pseudo: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    password: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    avatar: {
-      type: Sequelize.STRING,
-      allowNull: true
+    score: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      validate: { min: 0 }
     }
   },
   {}
 );
 
-module.exports = User;
+module.exports = Partner;
