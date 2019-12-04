@@ -11,11 +11,11 @@ const Location = sequelize.define(
       defaultValue: Sequelize.UUIDV4
     },
     latitude: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
       allowNull: false
     },
     longitude: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
       allowNull: false
     }
   },
