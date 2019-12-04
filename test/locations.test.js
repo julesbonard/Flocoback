@@ -17,8 +17,11 @@ describe("LOCATION", () => {
       await Location.create(locationSample);
       const res = await chai.request(server).get("/locations");
       res.should.have.status(200);
+      res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(locationSample);
+      res.body[0].should.have.property("latitude");
+      res.body[0].should.have.property("longitude");
       res.body.length.should.be.eql(1);
     });
   });
