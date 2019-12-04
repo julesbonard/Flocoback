@@ -18,8 +18,12 @@ describe("PARTNER", () => {
       await Partner.create(partnerSample);
       const res = await chai.request(server).get("/partners");
       res.should.have.status(200);
+      res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(partnerSample);
+      res.body[0].should.have.property("name");
+      res.body[0].should.have.property("address");
+      res.body[0].should.have.property("phone");
       res.body.length.should.be.eql(1);
     });
   });
