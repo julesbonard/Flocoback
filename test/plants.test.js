@@ -17,6 +17,7 @@ describe("Plant", () => {
       await Plant.create(plantSample);
       const res = await chai.request(server).get("/plants");
       res.should.have.status(200);
+      res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(plantSample);
       res.body.length.should.be.eql(1);
@@ -28,6 +29,7 @@ describe("Plant", () => {
       const plant = await Plant.create(plantSample);
       const res = await chai.request(server).get(`/plants/${plant.uuid}`);
       res.should.have.status(200);
+      res.should.be.json;
       res.body.should.be.a("object");
       res.body.should.include(plantSample);
       res.body.should.have.keys(["uuid", "image", "createdAt", "updatedAt"]);
