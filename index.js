@@ -16,6 +16,7 @@ app.get("/", (req, res) => res.send("Hello world !"));
 
 //route
 app.use("/users", require("./route/users.route"));
+app.use("/miniFlora", require("./route/miniFlora.route"));
 
 async function main() {
   try {

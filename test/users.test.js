@@ -15,7 +15,7 @@ const userSample = {
   pseudo: "azerty",
   password: "ytreza23"
 };
-describe("USER", () => {
+describe("USERS", () => {
   describe("GET * USERS", () => {
     it("It should return all users.", async () => {
       await User.create(userSample);
