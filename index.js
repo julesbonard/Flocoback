@@ -18,6 +18,7 @@ app.get("/", (req, res) => res.send("Hello world !"));
 app.use("/users", require("./route/users.route"));
 app.use("/seeds", require("./route/seeds.route"));
 app.use("/pots", require("./route/pots.route"));
+app.use("/messages", require("./route/messages.route"));
 async function main() {
   try {
     await sequelize.sync(); // Sync Method will create Database using the config & models
