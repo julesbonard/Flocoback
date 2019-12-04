@@ -28,11 +28,13 @@ const Partner = sequelize.define(
     },
     phone: {
       type: Sequelize.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: { min: 0 }
     },
     score: {
       type: Sequelize.INTEGER,
-      allowNull: true
+      allowNull: true,
+      validate: { min: 0 }
     }
   },
   {}

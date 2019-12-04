@@ -20,7 +20,8 @@ const User = sequelize.define(
     },
     age: {
       type: Sequelize.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: { min: 0 }
     },
     email: {
       type: Sequelize.STRING,
