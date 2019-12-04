@@ -17,22 +17,13 @@ const userSample = {
 };
 describe("USER", () => {
   describe("GET * USERS", () => {
-    it("It should return all users.", done => {
-      User.create(userSample).then(() => {
-        chai
-          .request(server)
-          .get("/users")
-          .end((err, res) => {
-            if (err) {
-              return done(err);
-            }
-            res.should.have.status(200);
-            res.body.should.be.a("array");
-            res.body[0].should.include(userSample);
-            res.body.length.should.be.eql(1);
-            done();
-          });
-      });
+    it("It should return all users.", async () => {
+      await User.create(userSample);
+      const res = await chai.request(server).get("/users");
+      res.should.have.status(200);
+      res.body.should.be.a("array");
+      res.body[0].should.include(userSample);
+      res.body.length.should.be.eql(1);
     });
   });
 });
