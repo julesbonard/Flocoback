@@ -53,7 +53,7 @@ router.post("/", joiValidate(statsOxygenePost), (req, res) => {
     date,
     rate
   })
-    .then(location => res.status(201).json(location))
+    .then(statsOxygene => res.status(201).json(statsOxygene))
     .catch(err => res.status(400).json(err));
 });
 

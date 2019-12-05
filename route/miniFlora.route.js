@@ -52,7 +52,7 @@ router.post("/", joiValidate(miniFloraPost), (req, res) => {
   MiniFlora.create({
     number
   })
-    .then(location => res.status(201).json(location))
+    .then(miniFlora => res.status(201).json(miniFlora))
     .catch(err => res.status(400).json(err));
 });
 
