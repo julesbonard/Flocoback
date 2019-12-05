@@ -1,6 +1,9 @@
 const express = require("express");
 const sequelize = require("sequelize");
 const router = express.Router();
+
+const { joiValidate } = require("../middlewares/joiValidate");
+const { statsOxygene } = require("../middlewares/joiSchemas");
 const StatsOxygene = require("../sequelize/models/statsOxygene");
 
 router.get("/", (req, res) => {
@@ -39,9 +42,13 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
-  StatsOxygene.findAll()
-    .then(statsOxygene => res.status(200).json(statsOxygene))
+router.post("/", joiValidate(statsOxygene), (req, res) => {
+  const { date, rate } = req.body;
+  StatsOxygene.create({
+    date,
+    rate
+  })
+    .then(location => res.status(201).json(location))
     .catch(err => res.status(400).json(err));
 });
 

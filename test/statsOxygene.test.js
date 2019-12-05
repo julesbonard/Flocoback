@@ -5,6 +5,8 @@ const server = require("../index");
 const sequelize = require("../sequelize");
 const StatsOxygene = require("../sequelize/models/statsOxygene");
 
+const statsOxygeneKeys = ["uuid", "date", "rate", "createdAt", "updatedAt"];
+
 chai.use(chaiHttp);
 describe("STATSOXYGENE", () => {
   before(() => sequelize.sync({ force: true }));
@@ -35,13 +37,7 @@ describe("STATSOXYGENE", () => {
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("object");
-      res.body.should.have.keys([
-        "uuid",
-        "date",
-        "rate",
-        "createdAt",
-        "updatedAt"
-      ]);
+      res.body.should.have.keys(statsOxygeneKeys);
     });
   });
 
@@ -55,13 +51,7 @@ describe("STATSOXYGENE", () => {
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("object");
-      res.body.should.have.keys([
-        "uuid",
-        "date",
-        "rate",
-        "createdAt",
-        "updatedAt"
-      ]);
+      res.body.should.have.keys(statsOxygeneKeys);
     });
   });
 
@@ -71,14 +61,22 @@ describe("STATSOXYGENE", () => {
       const res = await chai
         .request(server)
         .post(`/statsOxygene`)
-        .send({ statsOxygeneSample });
-      res.should.have.status(200);
+        .send(statsOxygeneSample);
+      res.should.have.status(201);
+      res.should.be.json;
+      res.body.should.be.a("object");
+      res.body.should.include(statsOxygeneSample);
+      res.body.should.have.property("date");
+      res.body.should.have.property("rate");
+    });
+    it("should fail at adding a SINGLE statsOxygene", async () => {
+      const res = await chai
+        .request(server)
+        .post("/statsOxygene")
+        .send({ dte: 23, rat: 30 });
+      res.should.have.status(422);
       res.should.be.json;
       res.body.should.be.a("array");
-      res.body[0].should.include(statsOxygeneSample);
-      res.body[0].should.have.property("date");
-      res.body[0].should.have.property("rate");
-      res.body.length.should.be.eql(1);
     });
   });
 
