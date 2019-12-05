@@ -16,7 +16,8 @@ const StatsOxygene = sequelize.define(
     },
     rate: {
       type: Sequelize.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: { min: 0 }
     }
   },
   {}

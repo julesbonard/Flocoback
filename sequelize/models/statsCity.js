@@ -12,11 +12,13 @@ const StatsCity = sequelize.define(
     },
     district: {
       type: Sequelize.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: { min: 0 }
     },
     street: {
       type: Sequelize.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: { min: 0 }
     }
   },
   {}
