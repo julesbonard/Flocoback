@@ -1,22 +1,22 @@
 const Joi = require("@hapi/joi");
 
-module.exports.statsOxygene = Joi.object({
+module.exports.statsOxygenePost = Joi.object({
   date: Joi.date().required(),
   rate: Joi.number().required()
 });
-module.exports.miniFlora = Joi.object({
+module.exports.miniFloraPost = Joi.object({
   number: Joi.number().required()
 });
-module.exports.statsCity = Joi.object({
+module.exports.statsCityPost = Joi.object({
   district: Joi.number().required(),
   street: Joi.number().required()
 });
-module.exports.statsTaxons = Joi.object({
+module.exports.statsTaxonsPost = Joi.object({
   number: Joi.number().required(),
   restored: Joi.bool().required(),
   status: Joi.string().required()
 });
-module.exports.users = Joi.object({
+module.exports.usersPost = Joi.object({
   firstname: Joi.string().required(),
   lastname: Joi.string().required(),
   age: Joi.number().required(),

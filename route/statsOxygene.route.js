@@ -3,7 +3,7 @@ const sequelize = require("sequelize");
 const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { statsOxygene } = require("../middlewares/joiSchemas");
+const { statsOxygenePost } = require("../middlewares/joiSchemas");
 const StatsOxygene = require("../sequelize/models/statsOxygene");
 
 router.get("/", (req, res) => {
@@ -29,11 +29,16 @@ router.get("/:id", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  StatsOxygene.findOne({
-    where: {
-      uuid: id
+  StatsOxygene.update(
+    {
+      rate: req.body.rate
+    },
+    {
+      where: {
+        uuid: id
+      }
     }
-  })
+  )
     .then(statsOxygene => {
       res.status(200).json(statsOxygene);
     })
@@ -42,7 +47,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.post("/", joiValidate(statsOxygene), (req, res) => {
+router.post("/", joiValidate(statsOxygenePost), (req, res) => {
   const { date, rate } = req.body;
   StatsOxygene.create({
     date,
@@ -54,7 +59,7 @@ router.post("/", joiValidate(statsOxygene), (req, res) => {
 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
-  StatsOxygene.findOne({
+  StatsOxygene.destroy({
     where: {
       uuid: id
     }

@@ -14,6 +14,7 @@ describe("STATSOXYGENE", () => {
     date: "1970-01-01T00:00:00.000Z",
     rate: 34
   };
+  //GET ALL TEST
   describe("GET * STATSOXYGENE", () => {
     it("It should return all statsOxygene.", async () => {
       await StatsOxygene.create(statsOxygeneSample);
@@ -26,8 +27,15 @@ describe("STATSOXYGENE", () => {
       res.body[0].should.have.property("rate");
       res.body.length.should.be.eql(1);
     });
+    //FAIL GET ALL TEST
+    it("should fail at returning a SINGLE statsOxygene", async () => {
+      await StatsOxygene.create(statsOxygeneSample);
+      const res = await chai.request(server).get(`/statsOxy`);
+      res.should.have.status(404);
+    });
   });
 
+  //GET TEST
   describe("GET ONE STATSOXYGENE", () => {
     it("should return a SINGLE statsOxygene", async () => {
       const statsOxygene = await StatsOxygene.create(statsOxygeneSample);
@@ -39,22 +47,15 @@ describe("STATSOXYGENE", () => {
       res.body.should.be.a("object");
       res.body.should.have.keys(statsOxygeneKeys);
     });
-  });
-
-  describe("PUT ONE STATSOXYGENE", () => {
-    it("should update a SINGLE statsOxygene", async () => {
+    //FAIL GET TEST
+    it("should fail at returning a SINGLE statsOxygene", async () => {
       const statsOxygene = await StatsOxygene.create(statsOxygeneSample);
-      const res = await chai
-        .request(server)
-        .put(`/statsOxygene/${statsOxygene.uuid}`)
-        .send({ rate: 10 });
-      res.should.have.status(200);
-      res.should.be.json;
-      res.body.should.be.a("object");
-      res.body.should.have.keys(statsOxygeneKeys);
+      const res = await chai.request(server).get(`${statsOxygene.uuid}`);
+      res.should.have.status(404);
     });
   });
 
+  //POST TEST
   describe("POST ONE STATSOXYGENE", () => {
     it("should add a SINGLE statsOxygene", async () => {
       await StatsOxygene.create(statsOxygeneSample);
@@ -69,6 +70,7 @@ describe("STATSOXYGENE", () => {
       res.body.should.have.property("date");
       res.body.should.have.property("rate");
     });
+    // FAIL POST TEST
     it("should fail at adding a SINGLE statsOxygene", async () => {
       const res = await chai
         .request(server)
@@ -80,6 +82,32 @@ describe("STATSOXYGENE", () => {
     });
   });
 
+  //PUT TEST
+  describe("PUT ONE STATSOXYGENE", () => {
+    it("should update a SINGLE statsOxygene", async () => {
+      const statsOxygene = await StatsOxygene.create(statsOxygeneSample);
+      const res = await chai
+        .request(server)
+        .put(`/statsOxygene/${statsOxygene.uuid}`)
+        .send({ rate: 10 });
+      res.should.have.status(200);
+      res.should.be.json;
+      res.body.should.be.a("array");
+    });
+    // FAIL PUT TEST
+    it("should fail at updating a SINGLE statsOxygene", async () => {
+      const statsOxygene = await StatsOxygene.create(statsOxygeneSample);
+      const res = await chai
+        .request(server)
+        .put(`/statsOxygene/${statsOxygene.uuid}`)
+        .send({ rate: "aaaee" });
+      res.should.have.status(400);
+      res.should.be.json;
+      res.body.should.be.a("object");
+    });
+  });
+
+  //DELETE TEST
   describe("DELETE ONE STATSOXYGENE", () => {
     it("should delete a SINGLE statsOxygene", async () => {
       const statsOxygene = await StatsOxygene.create(statsOxygeneSample);
@@ -88,7 +116,12 @@ describe("STATSOXYGENE", () => {
         .delete(`/statsOxygene/${statsOxygene.uuid}`);
       res.should.have.status(200);
       res.should.be.json;
-      res.body.should.be.a("object");
+    });
+    //FAIL DELETE TEST
+    it("should fail at deleting a SINGLE statsOxygene", async () => {
+      const statsOxygene = await StatsOxygene.create(statsOxygeneSample);
+      const res = await chai.request(server).delete(`/${statsOxygene.uuid}`);
+      res.should.have.status(404);
     });
   });
 });
