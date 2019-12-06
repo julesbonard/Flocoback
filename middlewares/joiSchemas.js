@@ -1,5 +1,9 @@
 const Joi = require("@hapi/joi");
 
+module.exports.locationPost = Joi.object({
+  latitude: Joi.number().required(),
+  longitude: Joi.number().required()
+});
 module.exports.statsOxygenePost = Joi.object({
   date: Joi.date().required(),
   rate: Joi.number().required()
