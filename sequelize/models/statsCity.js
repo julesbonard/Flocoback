@@ -21,7 +21,6 @@ const StatsCity = sequelize.define(
       validate: { min: 0 }
     }
   },
-  {}
 );
 
 module.exports = StatsCity;
