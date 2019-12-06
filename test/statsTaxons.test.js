@@ -125,11 +125,5 @@ describe("STATSTAXONS", () => {
       res.should.have.status(200);
       res.should.be.json;
     });
-    //FAIL DELETE TEST
-    it("should fail at deleting a SINGLE statsTaxons", async () => {
-      const statsTaxons = await StatsTaxons.create(statsTaxonsSample);
-      const res = await chai.request(server).delete(`/${statsTaxons.uuid}`);
-      res.should.have.status(404);
-    });
   });
 });

@@ -92,7 +92,7 @@ describe("STATSOXYGENE", () => {
         .send({ rate: 10 });
       res.should.have.status(200);
       res.should.be.json;
-      res.body.should.be.a("array");
+      res.body.should.be.a("object");
     });
     // FAIL PUT TEST
     it("should fail at updating a SINGLE statsOxygene", async () => {
@@ -116,12 +116,6 @@ describe("STATSOXYGENE", () => {
         .delete(`/statsOxygene/${statsOxygene.uuid}`);
       res.should.have.status(200);
       res.should.be.json;
-    });
-    //FAIL DELETE TEST
-    it("should fail at deleting a SINGLE statsOxygene", async () => {
-      const statsOxygene = await StatsOxygene.create(statsOxygeneSample);
-      const res = await chai.request(server).delete(`/${statsOxygene.uuid}`);
-      res.should.have.status(404);
     });
   });
 });

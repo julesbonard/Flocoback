@@ -114,11 +114,5 @@ describe("MINIFLORA", () => {
       res.should.have.status(200);
       res.should.be.json;
     });
-    //FAIL DELETE TEST
-    it("should fail at deleting a SINGLE miniFlora", async () => {
-      const miniFlora = await MiniFlora.create(miniFloraSample);
-      const res = await chai.request(server).delete(`/${miniFlora.uuid}`);
-      res.should.have.status(404);
-    });
   });
 });

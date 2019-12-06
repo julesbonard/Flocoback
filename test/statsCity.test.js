@@ -117,11 +117,5 @@ describe("STATSCITY", () => {
       res.should.have.status(200);
       res.should.be.json;
     });
-    //FAIL DELETE TEST
-    it("should fail at deleting a SINGLE statsCity", async () => {
-      const statsCity = await StatsCity.create(statsCitySample);
-      const res = await chai.request(server).delete(`/${statsCity.uuid}`);
-      res.should.have.status(404);
-    });
   });
 });

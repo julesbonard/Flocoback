@@ -29,9 +29,10 @@ router.get("/:id", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const { id } = req.params;
+  const { rate } = req.body;
   StatsOxygene.update(
     {
-      rate: req.body.rate
+      rate
     },
     {
       where: {
@@ -39,6 +40,13 @@ router.put("/:id", (req, res) => {
       }
     }
   )
+    .then(() => {
+      return StatsOxygene.findOne({
+        where: {
+          uuid: id
+        }
+      });
+    })
     .then(statsOxygene => {
       res.status(200).json(statsOxygene);
     })

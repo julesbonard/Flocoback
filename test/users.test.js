@@ -136,11 +136,5 @@ describe("USERS", () => {
       res.should.have.status(200);
       res.should.be.json;
     });
-    //FAIL DELETE TEST
-    it("should fail at deleting a SINGLE users", async () => {
-      const users = await User.create(usersSample);
-      const res = await chai.request(server).delete(`/${users.uuid}`);
-      res.should.have.status(404);
-    });
   });
 });

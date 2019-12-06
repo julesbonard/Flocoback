@@ -5,13 +5,13 @@ const server = require("../index");
 const sequelize = require("../sequelize");
 const Location = require("../sequelize/models/locations");
 
-chai.use(chaiHttp);
-beforeEach(() => sequelize.sync({ force: true }));
-const locationSample = {
-  latitude: 40,
-  longitude: 40
-};
 describe("LOCATION", () => {
+  chai.use(chaiHttp);
+  before(() => sequelize.sync({ force: true }));
+  const locationSample = {
+    latitude: 40,
+    longitude: 40
+  };
   describe("GET * LOCATIONS", () => {
     it("It should return all locations.", async () => {
       await Location.create(locationSample);
