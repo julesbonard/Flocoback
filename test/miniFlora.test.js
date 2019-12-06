@@ -26,7 +26,7 @@ describe("MINIFLORA", () => {
       res.body.length.should.be.eql(1);
     });
     //FAIL GET ALL TEST
-    it("should fail at returning a SINGLE miniFlora", async () => {
+    it("should fail at returning all miniFlora", async () => {
       await MiniFlora.create(miniFloraSample);
       const res = await chai.request(server).get(`/statsOxy`);
       res.should.have.status(404);
