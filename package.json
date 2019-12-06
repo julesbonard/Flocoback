@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test PORT=4001 mocha --exit",
+    "test": "NODE_ENV=test PORT=4001 mocha --reporter=nyan --exit",
     "start": "NODE_ENV=production node index.js && echo \"If you are in dev env, use npm run dev instead\"",
     "dev": "nodemon index.js",
     "resync": "node sequelize/resync.js"
