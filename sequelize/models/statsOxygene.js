@@ -19,8 +19,7 @@ const StatsOxygene = sequelize.define(
       allowNull: false,
       validate: { min: 0 }
     }
-  },
-  {}
+  }
 );
 
 module.exports = StatsOxygene;
