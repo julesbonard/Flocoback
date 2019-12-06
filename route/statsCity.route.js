@@ -3,24 +3,24 @@ const sequelize = require("sequelize");
 const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { usersPost } = require("../middlewares/joiSchemas");
-const User = require("../sequelize/models/users");
+const { statsCityPost } = require("../middlewares/joiSchemas");
+const StatsCity = require("../sequelize/models/statsCity");
 
 router.get("/", (req, res) => {
-  User.findAll()
-    .then(users => res.status(200).json(users))
+  StatsCity.findAll()
+    .then(statsCity => res.status(200).json(statsCity))
     .catch(err => res.status(400).json(err));
 });
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  User.findOne({
+  StatsCity.findOne({
     where: {
       uuid: id
     }
   })
-    .then(users => {
-      res.status(200).json(users);
+    .then(statsCity => {
+      res.status(200).json(statsCity);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -29,9 +29,9 @@ router.get("/:id", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  User.update(
+  StatsCity.update(
     {
-      age: req.body.age
+      street: req.body.street
     },
     {
       where: {
@@ -39,37 +39,33 @@ router.put("/:id", (req, res) => {
       }
     }
   )
-    .then(users => {
-      res.status(200).json(users);
+    .then(statsCity => {
+      res.status(200).json(statsCity);
     })
     .catch(err => {
       res.status(400).json(err);
     });
 });
 
-router.post("/", joiValidate(usersPost), (req, res) => {
-  const { firstName, lastName, age, email, pseudo, password } = req.body;
-  User.create({
-    firstName,
-    lastName,
-    age,
-    email,
-    pseudo,
-    password
+router.post("/", joiValidate(statsCityPost), (req, res) => {
+  const { district, street } = req.body;
+  StatsCity.create({
+    district,
+    street
   })
-    .then(users => res.status(201).json(users))
+    .then(statsCity => res.status(201).json(statsCity))
     .catch(err => res.status(400).json(err));
 });
 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
-  User.destroy({
+  StatsCity.destroy({
     where: {
       uuid: id
     }
   })
-    .then(users => {
-      res.status(200).json(users);
+    .then(statsCity => {
+      res.status(200).json(statsCity);
     })
     .catch(err => {
       res.status(400).json(err);
