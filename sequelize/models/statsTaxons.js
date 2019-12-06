@@ -23,8 +23,7 @@ const StatsTaxons = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false
     }
-  },
-  {}
+  }
 );
 
 module.exports = StatsTaxons;
