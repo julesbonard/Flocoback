@@ -17,11 +17,10 @@ module.exports.statsTaxonsPost = Joi.object({
   status: Joi.string().required()
 });
 module.exports.usersPost = Joi.object({
-  firstname: Joi.string().required(),
-  lastname: Joi.string().required(),
+  firstName: Joi.string().required(),
+  lastName: Joi.string().required(),
   age: Joi.number().required(),
   email: Joi.string().required(),
   pseudo: Joi.string().required(),
-  password: Joi.string().required(),
-  avatar: Joi.string().required()
+  password: Joi.string().required()
 });
