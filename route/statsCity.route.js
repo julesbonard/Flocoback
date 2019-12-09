@@ -6,12 +6,14 @@ const { joiValidate } = require("../middlewares/joiValidate");
 const { statsCityPost } = require("../middlewares/joiSchemas");
 const StatsCity = require("../sequelize/models/statsCity");
 
+//GET ALL
 router.get("/", (req, res) => {
   StatsCity.findAll()
     .then(statsCity => res.status(200).json(statsCity))
     .catch(err => res.status(400).json(err));
 });
 
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   StatsCity.findOne({
@@ -27,11 +29,14 @@ router.get("/:id", (req, res) => {
     });
 });
 
+//PUT ONE
 router.put("/:id", (req, res) => {
   const { id } = req.params;
+  const { street, district } = req.body;
   StatsCity.update(
     {
-      street: req.body.street
+      street,
+      district
     },
     {
       where: {
@@ -39,6 +44,13 @@ router.put("/:id", (req, res) => {
       }
     }
   )
+    .then(() => {
+      return StatsCity.findOne({
+        where: {
+          uuid: id
+        }
+      });
+    })
     .then(statsCity => {
       res.status(200).json(statsCity);
     })
@@ -47,6 +59,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
+//POST ONE
 router.post("/", joiValidate(statsCityPost), (req, res) => {
   const { district, street } = req.body;
   StatsCity.create({
@@ -57,19 +70,24 @@ router.post("/", joiValidate(statsCityPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-router.delete("/:id", (req, res) => {
+//DELETE ONE
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  StatsCity.destroy({
-    where: {
-      uuid: id
-    }
-  })
-    .then(statsCity => {
-      res.status(200).json(statsCity);
-    })
-    .catch(err => {
-      res.status(400).json(err);
+  try {
+    const statsCity = await StatsCity.findOne({
+      where: {
+        uuid: id
+      }
     });
+    await StatsCity.destroy({
+      where: {
+        uuid: id
+      }
+    });
+    res.status(200).json(statsCity);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;

@@ -6,12 +6,14 @@ const { joiValidate } = require("../middlewares/joiValidate");
 const { statsTaxonsPost } = require("../middlewares/joiSchemas");
 const StatsTaxons = require("../sequelize/models/statsTaxons");
 
+//GET ALL
 router.get("/", (req, res) => {
   StatsTaxons.findAll()
     .then(statsTaxons => res.status(200).json(statsTaxons))
     .catch(err => res.status(400).json(err));
 });
 
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   StatsTaxons.findOne({
@@ -27,11 +29,15 @@ router.get("/:id", (req, res) => {
     });
 });
 
+//PUT ONE
 router.put("/:id", (req, res) => {
   const { id } = req.params;
+  const { number, restored, status } = req.body;
   StatsTaxons.update(
     {
-      number: req.body.number
+      number,
+      restored,
+      status
     },
     {
       where: {
@@ -39,6 +45,13 @@ router.put("/:id", (req, res) => {
       }
     }
   )
+    .then(() => {
+      return StatsTaxons.findOne({
+        where: {
+          uuid: id
+        }
+      });
+    })
     .then(statsTaxons => {
       res.status(200).json(statsTaxons);
     })
@@ -47,6 +60,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
+//POST ONE
 router.post("/", joiValidate(statsTaxonsPost), (req, res) => {
   const { restored, status, number } = req.body;
   StatsTaxons.create({
@@ -58,19 +72,24 @@ router.post("/", joiValidate(statsTaxonsPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-router.delete("/:id", (req, res) => {
+//DELETE ONE
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  StatsTaxons.destroy({
-    where: {
-      uuid: id
-    }
-  })
-    .then(statsTaxons => {
-      res.status(200).json(statsTaxons);
-    })
-    .catch(err => {
-      res.status(400).json(err);
+  try {
+    const statsTaxons = await StatsTaxons.findOne({
+      where: {
+        uuid: id
+      }
     });
+    await StatsTaxons.destroy({
+      where: {
+        uuid: id
+      }
+    });
+    res.status(200).json(statsTaxons);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;

@@ -6,12 +6,14 @@ const { joiValidate } = require("../middlewares/joiValidate");
 const { statsOxygenePost } = require("../middlewares/joiSchemas");
 const StatsOxygene = require("../sequelize/models/statsOxygene");
 
+//GET ALL
 router.get("/", (req, res) => {
   StatsOxygene.findAll()
     .then(statsOxygene => res.status(200).json(statsOxygene))
     .catch(err => res.status(400).json(err));
 });
 
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   StatsOxygene.findOne({
@@ -27,12 +29,14 @@ router.get("/:id", (req, res) => {
     });
 });
 
+//PUT ONE
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { rate } = req.body;
+  const { rate, date } = req.body;
   StatsOxygene.update(
     {
-      rate
+      rate,
+      date
     },
     {
       where: {
@@ -55,6 +59,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
+//POST ONE
 router.post("/", joiValidate(statsOxygenePost), (req, res) => {
   const { date, rate } = req.body;
   StatsOxygene.create({
@@ -65,19 +70,24 @@ router.post("/", joiValidate(statsOxygenePost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-router.delete("/:id", (req, res) => {
+//DELETE ONE
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  StatsOxygene.destroy({
-    where: {
-      uuid: id
-    }
-  })
-    .then(statsOxygene => {
-      res.status(200).json(statsOxygene);
-    })
-    .catch(err => {
-      res.status(400).json(err);
+  try {
+    const statsOxygene = await StatsOxygene.findOne({
+      where: {
+        uuid: id
+      }
     });
+    await StatsOxygene.destroy({
+      where: {
+        uuid: id
+      }
+    });
+    res.status(200).json(statsOxygene);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;

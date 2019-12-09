@@ -6,12 +6,14 @@ const { joiValidate } = require("../middlewares/joiValidate");
 const { usersPost } = require("../middlewares/joiSchemas");
 const User = require("../sequelize/models/users");
 
+//GET ALL
 router.get("/", (req, res) => {
   User.findAll()
     .then(users => res.status(200).json(users))
     .catch(err => res.status(400).json(err));
 });
 
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   User.findOne({
@@ -27,11 +29,27 @@ router.get("/:id", (req, res) => {
     });
 });
 
+//PUT ONE
 router.put("/:id", (req, res) => {
   const { id } = req.params;
+  const {
+    firstName,
+    lastName,
+    age,
+    email,
+    pseudo,
+    password,
+    avatar
+  } = req.body;
   User.update(
     {
-      age: req.body.age
+      firstName,
+      lastName,
+      age,
+      email,
+      pseudo,
+      password,
+      avatar
     },
     {
       where: {
@@ -39,6 +57,13 @@ router.put("/:id", (req, res) => {
       }
     }
   )
+    .then(() => {
+      return User.findOne({
+        where: {
+          uuid: id
+        }
+      });
+    })
     .then(users => {
       res.status(200).json(users);
     })
@@ -47,33 +72,48 @@ router.put("/:id", (req, res) => {
     });
 });
 
+//POST ONE
 router.post("/", joiValidate(usersPost), (req, res) => {
-  const { firstName, lastName, age, email, pseudo, password } = req.body;
+  const {
+    firstName,
+    lastName,
+    age,
+    email,
+    pseudo,
+    password,
+    avatar
+  } = req.body;
   User.create({
     firstName,
     lastName,
     age,
     email,
     pseudo,
-    password
+    password,
+    avatar
   })
     .then(users => res.status(201).json(users))
     .catch(err => res.status(400).json(err));
 });
 
-router.delete("/:id", (req, res) => {
+//DELETE ONE
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  User.destroy({
-    where: {
-      uuid: id
-    }
-  })
-    .then(users => {
-      res.status(200).json(users);
-    })
-    .catch(err => {
-      res.status(400).json(err);
+  try {
+    const users = await User.findOne({
+      where: {
+        uuid: id
+      }
     });
+    await User.destroy({
+      where: {
+        uuid: id
+      }
+    });
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;
