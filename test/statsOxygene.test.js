@@ -50,7 +50,7 @@ describe("STATSOXYGENE", () => {
     //FAIL GET TEST
     it("should fail at returning a SINGLE statsOxygene", async () => {
       const statsOxygene = await StatsOxygene.create(statsOxygeneSample);
-      const res = await chai.request(server).get(`${statsOxygene.uuid}`);
+      const res = await chai.request(server).get(`/${statsOxygene.uuid}`);
       res.should.have.status(404);
     });
   });

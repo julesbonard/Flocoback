@@ -6,12 +6,13 @@ const sequelize = require("../sequelize");
 const Plant = require("../sequelize/models/plants");
 
 chai.use(chaiHttp);
-beforeEach(() => sequelize.sync({ force: true }));
-const plantSample = {
-  image:
-    "https://www.ikea.com/fr/fr/images/products/monstera-potted-plant__0653991_PE708220_S5.JPG?f=s"
-};
 describe("Plant", () => {
+  before(() => sequelize.sync({ force: true }));
+  const plantSample = {
+    image:
+      "https://www.ikea.com/fr/fr/images/products/monstera-potted-plant__0653991_PE708220_S5.JPG?f=s"
+  };
+
   describe("GET * PLANTS", () => {
     it("It should return all plants.", async () => {
       await Plant.create(plantSample);

@@ -28,3 +28,11 @@ module.exports.usersPost = Joi.object({
   pseudo: Joi.string().required(),
   password: Joi.string().required()
 });
+module.exports.partnersPost = Joi.object({
+  name: Joi.string().required(),
+  address: Joi.string().required(),
+  tags: Joi.string(),
+  website: Joi.string(),
+  phone: Joi.number().required(),
+  score: Joi.number()
+});

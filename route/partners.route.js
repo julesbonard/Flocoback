@@ -1,12 +1,79 @@
 const express = require("express");
 const sequelize = require("sequelize");
 const router = express.Router();
-const Partner = require("../sequelize/models/partners");
+const Partners = require("../sequelize/models/partners");
+
+const { joiValidate } = require("../middlewares/joiValidate");
+const { partnersPost } = require("../middlewares/joiSchemas");
 
 router.get("/", (req, res) => {
-  Partner.findAll()
+  Partners.findAll()
     .then(partners => res.status(200).json(partners))
     .catch(err => res.status(400).json(err));
+});
+
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  Partners.findOne({
+    where: {
+      uuid: id
+    }
+  })
+    .then(partners => {
+      res.status(200).json(partners);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  Partners.update(
+    {
+      number: req.body.number
+    },
+    {
+      where: {
+        uuid: id
+      }
+    }
+  )
+    .then(partners => {
+      res.status(200).json(partners);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
+router.post("/", joiValidate(partnersPost), (req, res) => {
+  const { name, address, tags, phone, score, website } = req.body;
+  Partners.create({
+    name,
+    address,
+    tags,
+    phone,
+    score,
+    website
+  })
+    .then(partners => res.status(201).json(partners))
+    .catch(err => res.status(400).json(err));
+});
+
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  Partners.destroy({
+    where: {
+      uuid: id
+    }
+  })
+    .then(partners => {
+      res.status(200).json(partners);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
 });
 
 module.exports = router;

@@ -67,7 +67,7 @@ describe("USERS", () => {
     //FAIL GET TEST
     it("should fail at returning a SINGLE users", async () => {
       const users = await User.create(usersSample);
-      const res = await chai.request(server).get(`${users.uuid}`);
+      const res = await chai.request(server).get(`/${users.uuid}`);
       res.should.have.status(404);
     });
   });

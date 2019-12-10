@@ -50,7 +50,7 @@ describe("STATSCITY", () => {
     //FAIL GET TEST
     it("should fail at returning a SINGLE statsCity", async () => {
       const statsCity = await StatsCity.create(statsCitySample);
-      const res = await chai.request(server).get(`${statsCity.uuid}`);
+      const res = await chai.request(server).get(`/${statsCity.uuid}`);
       res.should.have.status(404);
     });
   });

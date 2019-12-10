@@ -59,7 +59,7 @@ describe("STATSTAXONS", () => {
     //FAIL GET TEST
     it("should fail at returning a SINGLE statsTaxons", async () => {
       const statsTaxons = await StatsTaxons.create(statsTaxonsSample);
-      const res = await chai.request(server).get(`${statsTaxons.uuid}`);
+      const res = await chai.request(server).get(`/${statsTaxons.uuid}`);
       res.should.have.status(404);
     });
   });

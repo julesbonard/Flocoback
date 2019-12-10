@@ -25,12 +25,6 @@ describe("MINIFLORA", () => {
       res.body[0].should.have.property("number");
       res.body.length.should.be.eql(1);
     });
-    //FAIL GET ALL TEST
-    it("should fail at returning all miniFlora", async () => {
-      await MiniFlora.create(miniFloraSample);
-      const res = await chai.request(server).get(`/statsOxy`);
-      res.should.have.status(404);
-    });
   });
 
   //GET TEST
@@ -44,12 +38,6 @@ describe("MINIFLORA", () => {
       res.should.be.json;
       res.body.should.be.a("object");
       res.body.should.have.keys(miniFloraKeys);
-    });
-    //FAIL GET TEST
-    it("should fail at returning a SINGLE miniFlora", async () => {
-      const miniFlora = await MiniFlora.create(miniFloraSample);
-      const res = await chai.request(server).get(`${miniFlora.uuid}`);
-      res.should.have.status(404);
     });
   });
 
@@ -67,16 +55,6 @@ describe("MINIFLORA", () => {
       res.body.should.include(miniFloraSample);
       res.body.should.have.property("number");
     });
-    // FAIL POST TEST
-    it("should fail at adding a SINGLE miniFlora", async () => {
-      const res = await chai
-        .request(server)
-        .post("/miniFlora")
-        .send({ dte: 23, rat: 30 });
-      res.should.have.status(422);
-      res.should.be.json;
-      res.body.should.be.a("array");
-    });
   });
 
   //PUT TEST
@@ -91,17 +69,6 @@ describe("MINIFLORA", () => {
       res.should.be.json;
       res.body.should.be.a("array");
     });
-    // FAIL PUT TEST
-    it("should fail at updating a SINGLE miniFlora", async () => {
-      const miniFlora = await MiniFlora.create(miniFloraSample);
-      const res = await chai
-        .request(server)
-        .put(`/miniFlora/${miniFlora.uuid}`)
-        .send({ number: "aaaee" });
-      res.should.have.status(400);
-      res.should.be.json;
-      res.body.should.be.a("object");
-    });
   });
 
   //DELETE TEST
@@ -113,12 +80,6 @@ describe("MINIFLORA", () => {
         .delete(`/miniFlora/${miniFlora.uuid}`);
       res.should.have.status(200);
       res.should.be.json;
-    });
-    //FAIL DELETE TEST
-    it("should fail at deleting a SINGLE miniFlora", async () => {
-      const miniFlora = await MiniFlora.create(miniFloraSample);
-      const res = await chai.request(server).delete(`/${miniFlora.uuid}`);
-      res.should.have.status(404);
     });
   });
 });
