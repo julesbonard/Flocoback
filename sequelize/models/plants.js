@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../index");
 
-const Plant = sequelize.define(
+const Plants = sequelize.define(
   "Plant",
   {
     uuid: {
@@ -18,4 +18,4 @@ const Plant = sequelize.define(
   {}
 );
 
-module.exports = Plant;
+module.exports = Plants;

@@ -36,3 +36,6 @@ module.exports.partnersPost = Joi.object({
   phone: Joi.number().required(),
   score: Joi.number()
 });
+module.exports.plantsPost = Joi.object({
+  image: Joi.string()
+});
