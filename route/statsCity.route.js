@@ -3,7 +3,7 @@ const sequelize = require("sequelize");
 const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { statsCityPost } = require("../middlewares/joiSchemas");
+const { statsCityPost, statsCityPut } = require("../middlewares/joiSchemas");
 const StatsCity = require("../sequelize/models/statsCity");
 
 //GET ALL
@@ -30,7 +30,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", (req, res) => {
+router.put("/:id", joiValidate(statsCityPut), (req, res) => {
   const { id } = req.params;
   const { street, district } = req.body;
   StatsCity.update(

@@ -104,9 +104,9 @@ describe("STATSTAXONS", () => {
         .request(server)
         .put(`/statsTaxons/${statsTaxons.uuid}`)
         .send({ number: "aaaee" });
-      res.should.have.status(400);
+      res.should.have.status(422);
       res.should.be.json;
-      res.body.should.be.a("object");
+      res.body.should.be.a("array");
     });
   });
 

@@ -3,7 +3,7 @@ const sequelize = require("sequelize");
 const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { messagePost } = require("../middlewares/joiSchemas");
+const { messagePost, messagePut } = require("../middlewares/joiSchemas");
 const Message = require("../sequelize/models/messages");
 
 //GET ALL
@@ -30,7 +30,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", (req, res) => {
+router.put("/:id", joiValidate(messagePut), (req, res) => {
   const { id } = req.params;
   const { date, contents } = req.body;
   Message.update(

@@ -3,7 +3,10 @@ const sequelize = require("sequelize");
 const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { statsOxygenePost } = require("../middlewares/joiSchemas");
+const {
+  statsOxygenePost,
+  statsOxygenePut
+} = require("../middlewares/joiSchemas");
 const StatsOxygene = require("../sequelize/models/statsOxygene");
 
 //GET ALL
@@ -30,7 +33,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", (req, res) => {
+router.put("/:id", joiValidate(statsOxygenePut), (req, res) => {
   const { id } = req.params;
   const { rate, date } = req.body;
   StatsOxygene.update(

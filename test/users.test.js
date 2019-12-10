@@ -111,9 +111,9 @@ describe("USERS", () => {
         .request(server)
         .put(`/users/${users.uuid}`)
         .send({ age: "aaaee" });
-      res.should.have.status(400);
+      res.should.have.status(422);
       res.should.be.json;
-      res.body.should.be.a("object");
+      res.body.should.be.a("array");
     });
   });
 

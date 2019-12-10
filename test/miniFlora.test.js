@@ -98,9 +98,9 @@ describe("MINIFLORA", () => {
         .request(server)
         .put(`/miniFlora/${miniFlora.uuid}`)
         .send({ number: "aaaee" });
-      res.should.have.status(400);
+      res.should.have.status(422);
       res.should.be.json;
-      res.body.should.be.a("object");
+      res.body.should.be.a("array");
     });
   });
 
