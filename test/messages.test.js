@@ -9,8 +9,8 @@ describe("MESSAGE", () => {
   chai.use(chaiHttp);
   before(() => sequelize.sync({ force: true }));
   const MessageSample = {
-    Date: "1970-01-01T00:00:00.000Z",
-    Contents: "Salut Toto !"
+    date: "1970-01-01T00:00:00.000Z",
+    contents: "Salut Toto !"
   };
   describe("GET * messages", () => {
     it("It should return all messages.", async () => {

@@ -10,7 +10,7 @@ describe("SEED", () => {
   before(() => sequelize.sync({ force: true }));
   const SeedSample = {
     name: "rose",
-    statut: "vulnérable",
+    status: "vulnérable",
     type: "vivace",
     environment: "extérieur/intérieur",
     season: "printemps",

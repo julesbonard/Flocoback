@@ -9,9 +9,9 @@ describe("POT", () => {
   chai.use(chaiHttp);
   before(() => sequelize.sync({ force: true }));
   const PotSample = {
-    Width: 40,
+    width: 40,
     length: 35,
-    Depth: 40
+    depth: 40
   };
   describe("GET * POTS", () => {
     it("It should return all pots.", async () => {

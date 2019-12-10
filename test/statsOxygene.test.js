@@ -66,7 +66,7 @@ describe("STATSOXYGENE", () => {
       res.should.be.json;
       res.body.should.be.a("array");
     });
-    it("should fail at adding a SINGLE statsCity", async () => {
+    it("should fail at adding a SINGLE statsOxygene", async () => {
       const res = await chai
         .request(server)
         .post("/statsCity")
