@@ -14,7 +14,7 @@ const Seed = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false
     },
-    statut: {
+    status: {
       type: Sequelize.STRING,
       allowNull: false
     },

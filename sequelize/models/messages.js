@@ -10,13 +10,12 @@ const Message = sequelize.define(
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
-    Date: {
+    date: {
       type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW,
       allowNull: false
     },
-    Contents: {
-      type: Sequelize.TEXT,
+    contents: {
+      type: Sequelize.STRING,
       allowNull: false
     }
   },

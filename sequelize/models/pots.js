@@ -10,7 +10,7 @@ const Pot = sequelize.define(
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
-    Width: {
+    width: {
       type: Sequelize.INTEGER,
       allowNull: false,
       validate: { min: 0 }
@@ -20,7 +20,7 @@ const Pot = sequelize.define(
       allowNull: false,
       validate: { min: 0 }
     },
-    Depth: {
+    depth: {
       type: Sequelize.INTEGER,
       allowNull: false,
       validate: { min: 0 }

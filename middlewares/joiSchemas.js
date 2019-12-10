@@ -17,7 +17,7 @@ module.exports.statsCityPost = Joi.object({
 });
 module.exports.statsTaxonsPost = Joi.object({
   number: Joi.number().required(),
-  restored: Joi.bool().required(),
+  restored: Joi.boolean().required(),
   status: Joi.string().required()
 });
 module.exports.usersPost = Joi.object({
@@ -28,4 +28,34 @@ module.exports.usersPost = Joi.object({
   pseudo: Joi.string().required(),
   password: Joi.string().required(),
   avatar: Joi.string()
+});
+module.exports.commentPost = Joi.object({
+  date: Joi.date().required(),
+  contents: Joi.string().required()
+});
+module.exports.likePost = Joi.object({
+  like: Joi.boolean().required()
+});
+module.exports.postsPost = Joi.object({
+  contents: Joi.string().required(),
+  date: Joi.date().required(),
+  image: Joi.string().required()
+});
+module.exports.messagePost = Joi.object({
+  date: Joi.date().required(),
+  contents: Joi.string().required()
+});
+module.exports.potsPost = Joi.object({
+  width: Joi.number().required(),
+  length: Joi.number().required(),
+  depth: Joi.number().required()
+});
+module.exports.seedsPost = Joi.object({
+  name: Joi.string().required(),
+  status: Joi.string().required(),
+  type: Joi.string().required(),
+  environment: Joi.string().required(),
+  season: Joi.string().required(),
+  exposure: Joi.string().required(),
+  spray: Joi.string().required()
 });

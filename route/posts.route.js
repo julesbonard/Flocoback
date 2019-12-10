@@ -1,12 +1,95 @@
 const express = require("express");
 const sequelize = require("sequelize");
 const router = express.Router();
+
+const { joiValidate } = require("../middlewares/joiValidate");
+const { postsPost } = require("../middlewares/joiSchemas");
 const Post = require("../sequelize/models/posts");
 
+//GET ALL
 router.get("/", (req, res) => {
   Post.findAll()
     .then(posts => res.status(200).json(posts))
     .catch(err => res.status(400).json(err));
+});
+
+//GET ONE
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  Post.findOne({
+    where: {
+      uuid: id
+    }
+  })
+    .then(posts => {
+      res.status(200).json(posts);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
+//PUT ONE
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const { contents, date, image } = req.body;
+  Post.update(
+    {
+      contents,
+      date,
+      image
+    },
+    {
+      where: {
+        uuid: id
+      }
+    }
+  )
+    .then(() => {
+      return Post.findOne({
+        where: {
+          uuid: id
+        }
+      });
+    })
+    .then(posts => {
+      res.status(200).json(posts);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
+//POST ONE
+router.post("/", joiValidate(postsPost), (req, res) => {
+  const { contents, date, image } = req.body;
+  Post.create({
+    contents,
+    date,
+    image
+  })
+    .then(posts => res.status(201).json(posts))
+    .catch(err => res.status(400).json(err));
+});
+
+//DELETE ONE
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const posts = await Post.findOne({
+      where: {
+        uuid: id
+      }
+    });
+    await Post.destroy({
+      where: {
+        uuid: id
+      }
+    });
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;
