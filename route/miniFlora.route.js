@@ -62,19 +62,23 @@ router.post("/", joiValidate(miniFloraPost), (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  MiniFlora.destroy({
-    where: {
-      uuid: id
-    }
-  })
-    .then(miniFlora => {
-      res.status(200).json(miniFlora);
-    })
-    .catch(err => {
-      res.status(400).json(err);
+  try {
+    const miniFlora = await MiniFlora.findOne({
+      where: {
+        uuid: id
+      }
     });
+    await MiniFlora.destroy({
+      where: {
+        uuid: id
+      }
+    });
+    res.status(200).json(miniFlora);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;
