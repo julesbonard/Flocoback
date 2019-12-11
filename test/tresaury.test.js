@@ -24,6 +24,8 @@ const tresaurySample = {
 
 describe("TRESAURY", () => {
   before(() => sequelize.sync({ force: true }));
+  
+  //GET ALL TEST
   describe("GET * TRESAURY", () => {
     it("It should return all tresaury.", async () => {
       await Tresaury.create(tresaurySample);
@@ -36,6 +38,7 @@ describe("TRESAURY", () => {
       res.body[0].should.have.keys(tresauryKeys);
     });
   });
+  
   //GET ONE TEST
   describe("GET ONE TRESAURY", () => {
     it("should return a SINGLE tresaury", async () => {
