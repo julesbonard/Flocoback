@@ -3,26 +3,26 @@ const sequelize = require("sequelize");
 const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { statsCityPost, statsCityPut } = require("../middlewares/joiSchemas");
-const StatsCity = require("../sequelize/models/statsCity");
+const { seedsPost, seedsPut } = require("../middlewares/joiSchemas");
+const Seed = require("../sequelize/models/seeds");
 
 //GET ALL
 router.get("/", (req, res) => {
-  StatsCity.findAll()
-    .then(statsCity => res.status(200).json(statsCity))
+  Seed.findAll()
+    .then(seeds => res.status(200).json(seeds))
     .catch(err => res.status(400).json(err));
 });
 
 //GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  StatsCity.findOne({
+  Seed.findOne({
     where: {
       uuid: id
     }
   })
-    .then(statsCity => {
-      res.status(200).json(statsCity);
+    .then(seeds => {
+      res.status(200).json(seeds);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -30,13 +30,18 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", joiValidate(statsCityPut), (req, res) => {
+router.put("/:id", joiValidate(seedsPut), (req, res) => {
   const { id } = req.params;
-  const { street, district } = req.body;
-  StatsCity.update(
+  const { name, status, type, environment, season, exposure, spray } = req.body;
+  Seed.update(
     {
-      street,
-      district
+      name,
+      status,
+      type,
+      environment,
+      season,
+      exposure,
+      spray
     },
     {
       where: {
@@ -45,14 +50,14 @@ router.put("/:id", joiValidate(statsCityPut), (req, res) => {
     }
   )
     .then(() => {
-      return StatsCity.findOne({
+      return Seed.findOne({
         where: {
           uuid: id
         }
       });
     })
-    .then(statsCity => {
-      res.status(200).json(statsCity);
+    .then(seeds => {
+      res.status(200).json(seeds);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -60,13 +65,18 @@ router.put("/:id", joiValidate(statsCityPut), (req, res) => {
 });
 
 //POST ONE
-router.post("/", joiValidate(statsCityPost), (req, res) => {
-  const { district, street } = req.body;
-  StatsCity.create({
-    district,
-    street
+router.post("/", joiValidate(seedsPost), (req, res) => {
+  const { name, status, type, environment, season, exposure, spray } = req.body;
+  Seed.create({
+    name,
+    status,
+    type,
+    environment,
+    season,
+    exposure,
+    spray
   })
-    .then(statsCity => res.status(201).json(statsCity))
+    .then(seeds => res.status(201).json(seeds))
     .catch(err => res.status(400).json(err));
 });
 
@@ -74,17 +84,17 @@ router.post("/", joiValidate(statsCityPost), (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const statsCity = await StatsCity.findOne({
+    const seeds = await Seed.findOne({
       where: {
         uuid: id
       }
     });
-    await StatsCity.destroy({
+    await Seed.destroy({
       where: {
         uuid: id
       }
     });
-    res.status(200).json(statsCity);
+    res.status(200).json(seeds);
   } catch (err) {
     res.status(400).json(err);
   }

@@ -98,6 +98,7 @@ describe("MINIFLORA", () => {
       res.should.have.status(400);
       res.should.be.json;
       res.should.be.a("object");
+
     });
   });
 

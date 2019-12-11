@@ -18,6 +18,7 @@ describe("plants", () => {
   
   //GET ALL TEST
   describe("GET * Plants", () => {
+
     it("It should return all plants.", async () => {
       await Plants.create(plantsSample);
       const res = await chai.request(server).get("/plants");

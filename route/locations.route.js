@@ -3,7 +3,7 @@ const sequelize = require("sequelize");
 const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { locationPost } = require("../middlewares/joiSchemas");
+const { locationPost, locationPut } = require("../middlewares/joiSchemas");
 const Location = require("../sequelize/models/locations");
 
 //GET ALL LOCATIONS
@@ -30,7 +30,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE LOCATION
-router.put("/:id", joiValidate(locationPost), (req, res) => {
+router.put("/:id", joiValidate(locationPut), (req, res) => {
   const { id } = req.params;
   const { latitude, longitude } = req.body;
 

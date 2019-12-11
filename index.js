@@ -26,6 +26,12 @@ app.use("/partners", require("./route/partners.route"));
 app.use("/tresaury", require("./route/tresaury.route"));
 app.use("/agenda", require("./route/agenda.route"));
 app.use("/friends", require("./route/friends.route"));
+app.use("/comments", require("./route/comments.route"));
+app.use("/likes", require("./route/likes.route"));
+app.use("/posts", require("./route/posts.route"));
+app.use("/seeds", require("./route/seeds.route"));
+app.use("/pots", require("./route/pots.route"));
+app.use("/messages", require("./route/messages.route"));
 
 async function main() {
   try {

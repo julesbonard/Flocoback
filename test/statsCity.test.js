@@ -23,19 +23,12 @@ describe("STATSCITY", () => {
       res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(statsCitySample);
-      res.body[0].should.have.property("district");
-      res.body[0].should.have.property("street");
+      res.body[0].should.have.keys(statsCityKeys);
       res.body.length.should.be.eql(1);
-    });
-    //FAIL GET ALL TEST
-    it("should fail at returning a SINGLE statsCity", async () => {
-      await StatsCity.create(statsCitySample);
-      const res = await chai.request(server).get(`/statsOxy`);
-      res.should.have.status(404);
     });
   });
 
-  //GET TEST
+  //GET ONE TEST
   describe("GET ONE STATSCITY", () => {
     it("should return a SINGLE statsCity", async () => {
       const statsCity = await StatsCity.create(statsCitySample);
@@ -46,12 +39,6 @@ describe("STATSCITY", () => {
       res.should.be.json;
       res.body.should.be.a("object");
       res.body.should.have.keys(statsCityKeys);
-    });
-    //FAIL GET TEST
-    it("should fail at returning a SINGLE statsCity", async () => {
-      const statsCity = await StatsCity.create(statsCitySample);
-      const res = await chai.request(server).get(`/${statsCity.uuid}`);
-      res.should.have.status(404);
     });
   });
 
@@ -67,15 +54,23 @@ describe("STATSCITY", () => {
       res.should.be.json;
       res.body.should.be.a("object");
       res.body.should.include(statsCitySample);
-      res.body.should.have.property("street");
-      res.body.should.have.property("district");
+      res.body.should.have.keys(statsCityKeys);
     });
     // FAIL POST TEST
     it("should fail at adding a SINGLE statsCity", async () => {
       const res = await chai
         .request(server)
         .post("/statsCity")
-        .send({ dte: 23, rat: 30 });
+        .send({ dis: 23, rat: 30 });
+      res.should.have.status(422);
+      res.should.be.json;
+      res.body.should.be.a("array");
+    });
+    it("should fail at adding a SINGLE statsCity", async () => {
+      const res = await chai
+        .request(server)
+        .post("/statsCity")
+        .send({ district: "ert", street: "xcvb" });
       res.should.have.status(422);
       res.should.be.json;
       res.body.should.be.a("array");
@@ -92,7 +87,7 @@ describe("STATSCITY", () => {
         .send({ street: 10 });
       res.should.have.status(200);
       res.should.be.json;
-      res.body.should.be.a("array");
+      res.body.should.be.a("object");
     });
     // FAIL PUT TEST
     it("should fail at updating a SINGLE statsCity", async () => {
@@ -101,9 +96,9 @@ describe("STATSCITY", () => {
         .request(server)
         .put(`/statsCity/${statsCity.uuid}`)
         .send({ street: "aaaee" });
-      res.should.have.status(400);
+      res.should.have.status(422);
       res.should.be.json;
-      res.body.should.be.a("object");
+      res.body.should.be.a("array");
     });
   });
 
@@ -116,12 +111,6 @@ describe("STATSCITY", () => {
         .delete(`/statsCity/${statsCity.uuid}`);
       res.should.have.status(200);
       res.should.be.json;
-    });
-    //FAIL DELETE TEST
-    it("should fail at deleting a SINGLE statsCity", async () => {
-      const statsCity = await StatsCity.create(statsCitySample);
-      const res = await chai.request(server).delete(`/${statsCity.uuid}`);
-      res.should.have.status(404);
     });
   });
 });

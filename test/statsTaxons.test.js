@@ -31,16 +31,8 @@ describe("STATSTAXONS", () => {
       res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(statsTaxonsSample);
-      res.body[0].should.have.property("restored");
-      res.body[0].should.have.property("number");
-      res.body[0].should.have.property("status");
+      res.body[0].should.have.keys(statsTaxonsKeys);
       res.body.length.should.be.eql(1);
-    });
-    //FAIL GET ALL TEST
-    it("should fail at returning a SINGLE statsTaxons", async () => {
-      await StatsTaxons.create(statsTaxonsSample);
-      const res = await chai.request(server).get(`/statsOxy`);
-      res.should.have.status(404);
     });
   });
 
@@ -55,12 +47,6 @@ describe("STATSTAXONS", () => {
       res.should.be.json;
       res.body.should.be.a("object");
       res.body.should.have.keys(statsTaxonsKeys);
-    });
-    //FAIL GET TEST
-    it("should fail at returning a SINGLE statsTaxons", async () => {
-      const statsTaxons = await StatsTaxons.create(statsTaxonsSample);
-      const res = await chai.request(server).get(`/${statsTaxons.uuid}`);
-      res.should.have.status(404);
     });
   });
 
@@ -83,7 +69,16 @@ describe("STATSTAXONS", () => {
       const res = await chai
         .request(server)
         .post("/statsTaxons")
-        .send({ dte: 23, rat: 30 });
+        .send({ number: 23, restored: 30, status: 1234 });
+      res.should.have.status(422);
+      res.should.be.json;
+      res.body.should.be.a("array");
+    });
+    it("should fail at adding a SINGLE statsTaxons", async () => {
+      const res = await chai
+        .request(server)
+        .post("/statsCity")
+        .send({ nudfff: "ert", qsd: "xcvb" });
       res.should.have.status(422);
       res.should.be.json;
       res.body.should.be.a("array");
@@ -100,7 +95,7 @@ describe("STATSTAXONS", () => {
         .send({ number: 10 });
       res.should.have.status(200);
       res.should.be.json;
-      res.body.should.be.a("array");
+      res.body.should.be.a("object");
     });
     // FAIL PUT TEST
     it("should fail at updating a SINGLE statsTaxons", async () => {
@@ -109,9 +104,9 @@ describe("STATSTAXONS", () => {
         .request(server)
         .put(`/statsTaxons/${statsTaxons.uuid}`)
         .send({ number: "aaaee" });
-      res.should.have.status(400);
+      res.should.have.status(422);
       res.should.be.json;
-      res.body.should.be.a("object");
+      res.body.should.be.a("array");
     });
   });
 
@@ -124,12 +119,6 @@ describe("STATSTAXONS", () => {
         .delete(`/statsTaxons/${statsTaxons.uuid}`);
       res.should.have.status(200);
       res.should.be.json;
-    });
-    //FAIL DELETE TEST
-    it("should fail at deleting a SINGLE statsTaxons", async () => {
-      const statsTaxons = await StatsTaxons.create(statsTaxonsSample);
-      const res = await chai.request(server).delete(`/${statsTaxons.uuid}`);
-      res.should.have.status(404);
     });
   });
 });
