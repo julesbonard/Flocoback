@@ -29,10 +29,10 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT 
+//PUT
 router.put("/:id", joiValidate(partnersPut), (req, res) => {
   const { id } = req.params;
-  const { name } = req.body
+  const { name } = req.body;
   Partners.update(
     {
       name
@@ -58,7 +58,7 @@ router.put("/:id", joiValidate(partnersPut), (req, res) => {
     });
 });
 
-//POST 
+//POST
 router.post("/", joiValidate(partnersPost), (req, res) => {
   const { name, address, tags, phone, score, website } = req.body;
   Partners.create({
@@ -73,8 +73,8 @@ router.post("/", joiValidate(partnersPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE 
-router.delete("/:id", (req, res) => {
+//DELETE
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const partners = await Partners.findOne({

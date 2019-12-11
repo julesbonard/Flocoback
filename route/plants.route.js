@@ -4,7 +4,7 @@ const router = express.Router();
 const Plants = require("../sequelize/models/plants");
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { plantsPost } = require("../middlewares/joiSchemas");
+const { plantsPost, plantsPut } = require("../middlewares/joiSchemas");
 
 //GET ALL
 router.get("/", (req, res) => {
@@ -29,13 +29,13 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT 
-router.put("/:id", joiValidate(plantsPost), (req, res) => {
+//PUT
+router.put("/:id", joiValidate(plantsPut), (req, res) => {
   const { id } = req.params;
-  const { image } = req.body
+  const { image } = req.body;
   Plants.update(
     {
-      image: req
+      image
     },
     {
       where: {
@@ -68,8 +68,8 @@ router.post("/", joiValidate(plantsPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE 
-router.delete("/:id", (req, res) => {
+//DELETE
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const plants = await Plants.findOne({

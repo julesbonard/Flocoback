@@ -95,10 +95,9 @@ describe("MINIFLORA", () => {
         .request(server)
         .put(`/miniFlora/${changeMiniFlora.uuid}`)
         .send({ number: "fffsdf" });
-      res.should.have.status(400);
+      res.should.have.status(422);
       res.should.be.json;
       res.should.be.a("object");
-
     });
   });
 

@@ -164,6 +164,9 @@ module.exports.partnersPut = Joi.object({
 module.exports.plantsPost = Joi.object({
   image: Joi.string()
 });
+module.exports.plantsPut = Joi.object({
+  image: Joi.string()
+});
 
 //AGENDA
 module.exports.agendaPost = Joi.object({
