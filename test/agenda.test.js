@@ -15,6 +15,8 @@ const agendaSample = {
 
 describe("AGENDA", () => {
   before(() => sequelize.sync({ force: true }));
+  
+  //GET ALL TEST
   describe("GET * AGENDA", () => {
     it("It should return all agenda.", async () => {
       await Agenda.create(agendaSample);
@@ -28,7 +30,7 @@ describe("AGENDA", () => {
     });
   });
 
-  //GET TEST
+  //GET ONE TEST
   describe("GET ONE AGENDA", () => {
     it("should return a SINGLE agenda", async () => {
       const agenda = await Agenda.create(agendaSample);
