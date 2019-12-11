@@ -6,13 +6,15 @@ const Agenda = require("../sequelize/models/agenda");
 const { joiValidate } = require("../middlewares/joiValidate");
 const { agendaPost, agendaPut } = require("../middlewares/joiSchemas");
 
-//GET ROUTE:
+//GET ALL
 router.get("/", (req, res) => {
   Agenda.findAll()
     .then(agenda => res.status(200).json(agenda))
     .catch(err => res.status(400).json(err));
 });
 
+
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   Agenda.findOne({
@@ -28,12 +30,13 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT ROUTE:
+//PUT 
 router.put("/:id", joiValidate(agendaPut), (req, res) => {
   const { id } = req.params;
+  const { event } = req.body
   Agenda.update(
     {
-      event: req.body.event
+      event
     },
     {
       where: {
@@ -56,7 +59,7 @@ router.put("/:id", joiValidate(agendaPut), (req, res) => {
     });
 });
 
-//POST ROUTE:
+//POST 
 router.post("/", joiValidate(agendaPost), (req, res) => {
   const { event } = req.body;
   Agenda.create({
@@ -66,7 +69,7 @@ router.post("/", joiValidate(agendaPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE ROUTE:
+//DELETE 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
