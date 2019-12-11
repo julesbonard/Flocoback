@@ -6,13 +6,14 @@ const Partners = require("../sequelize/models/partners");
 const { joiValidate } = require("../middlewares/joiValidate");
 const { partnersPost, partnersPut } = require("../middlewares/joiSchemas");
 
-//GET ROUTE:
+//GET ALL
 router.get("/", (req, res) => {
   Partners.findAll()
     .then(partners => res.status(200).json(partners))
     .catch(err => res.status(400).json(err));
 });
 
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   Partners.findOne({
@@ -28,12 +29,13 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT ROUTE:
+//PUT 
 router.put("/:id", joiValidate(partnersPut), (req, res) => {
   const { id } = req.params;
+  const { name } = req.body
   Partners.update(
     {
-      name: req.body.name
+      name
     },
     {
       where: {
@@ -56,7 +58,7 @@ router.put("/:id", joiValidate(partnersPut), (req, res) => {
     });
 });
 
-//POST ROUTE:
+//POST 
 router.post("/", joiValidate(partnersPost), (req, res) => {
   const { name, address, tags, phone, score, website } = req.body;
   Partners.create({
@@ -71,7 +73,7 @@ router.post("/", joiValidate(partnersPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE ROUTE:
+//DELETE 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   Partners.destroy({
