@@ -15,6 +15,8 @@ const friendsSample = {
 
 describe("friends", () => {
   before(() => sequelize.sync({ force: true }));
+  
+  //GET ALL TEST
   describe("GET * friends", () => {
     it("It should return all friends.", async () => {
       await Friends.create(friendsSample);
@@ -28,7 +30,7 @@ describe("friends", () => {
     });
   });
 
-  //GET TEST
+  //GET ONE TEST
   describe("GET ONE FRIENDS", () => {
     it("should return a SINGLE Friends", async () => {
       const friends = await Friends.create(friendsSample);
