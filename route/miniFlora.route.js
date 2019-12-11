@@ -6,13 +6,14 @@ const { joiValidate } = require("../middlewares/joiValidate");
 const { miniFloraPost } = require("../middlewares/joiSchemas");
 const MiniFlora = require("../sequelize/models/miniFlora");
 
-//GET ROUTE
+//GET ALL
 router.get("/", (req, res) => {
   MiniFlora.findAll()
     .then(miniFlora => res.status(200).json(miniFlora))
     .catch(err => res.status(400).json(err));
 });
 
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   MiniFlora.findOne({
@@ -28,12 +29,13 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT ROUTE:
+//PUT 
 router.put("/:id", (req, res) => {
   const { id } = req.params;
+  const { number } = req.body
   MiniFlora.update(
     {
-      number: req.body.number
+      number
     },
     {
       where: {
@@ -49,7 +51,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
-//POST ROUTE:
+//POST
 router.post("/", joiValidate(miniFloraPost), (req, res) => {
   const { number } = req.body;
   MiniFlora.create({
@@ -59,7 +61,7 @@ router.post("/", joiValidate(miniFloraPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE ROUTE:
+//DELETE
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   MiniFlora.destroy({
