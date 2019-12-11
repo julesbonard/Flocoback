@@ -6,13 +6,14 @@ const Tresaury = require("../sequelize/models/tresaury");
 const { joiValidate } = require("../middlewares/joiValidate");
 const { tresauryPost, tresauryPut } = require("../middlewares/joiSchemas");
 
-//GET ROUTE:
+//GET ALL
 router.get("/", (req, res) => {
   Tresaury.findAll()
     .then(tresaury => res.status(200).json(tresaury))
     .catch(err => res.status(400).json(err));
 });
 
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   Tresaury.findOne({
@@ -28,8 +29,8 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT ROUTE:
-router.put("/:id", joiValidate(tresauryPost), (req, res) => {
+//PUT 
+router.put("/:id", joiValidate(tresauryPut), (req, res) => {
   const { id } = req.params;
   Tresaury.update(
     {
@@ -56,7 +57,7 @@ router.put("/:id", joiValidate(tresauryPost), (req, res) => {
     });
 });
 
-//POST ROUTE:
+//POST 
 router.post("/", joiValidate(tresauryPost), (req, res) => {
   const { level, badge, points } = req.body;
   Tresaury.create({
@@ -68,20 +69,25 @@ router.post("/", joiValidate(tresauryPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE ROUTE:
-router.delete("/:id", (req, res) => {
+//DELETE 
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  Tresaury.destroy({
+  try {
+    const tresaury = await Tresaury.findOne({
     where: {
       uuid: id
     }
   })
-    .then(tresaury => {
+    await Tresaury.destroy({
+    where: {
+      uuid: id
+    }
+  })
       res.status(200).json(tresaury);
-    })
-    .catch(err => {
+    }
+    catch (err) {
       res.status(400).json(err);
-    });
+    };
 });
 
 module.exports = router;
