@@ -6,13 +6,14 @@ const Friends = require("../sequelize/models/friends");
 const { joiValidate } = require("../middlewares/joiValidate");
 const { friendsPost, friendsPut } = require("../middlewares/joiSchemas");
 
-//GET ROUTE:
+//GET ALL
 router.get("/", (req, res) => {
   Friends.findAll()
     .then(friends => res.status(200).json(friends))
     .catch(err => res.status(400).json(err));
 });
 
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   Friends.findOne({
@@ -28,12 +29,13 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT ROUTE:
+//PUT 
 router.put("/:id", joiValidate(friendsPut), (req, res) => {
   const { id } = req.params;
+  const { confirmed } = req.body;
   Friends.update(
     {
-      confirmed: req.body.confirmed
+      confirmed
     },
     {
       where: {
@@ -56,7 +58,7 @@ router.put("/:id", joiValidate(friendsPut), (req, res) => {
     });
 });
 
-//POST ROUTE:
+//POST 
 router.post("/", joiValidate(friendsPost), (req, res) => {
   const { confirmed } = req.body;
   Friends.create({
@@ -66,7 +68,7 @@ router.post("/", joiValidate(friendsPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE ROUTE:
+//DELETE 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
