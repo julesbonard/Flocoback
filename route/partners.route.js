@@ -76,17 +76,21 @@ router.post("/", joiValidate(partnersPost), (req, res) => {
 //DELETE 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
-  Partners.destroy({
-    where: {
-      uuid: id
-    }
-  })
-    .then(partners => {
-      res.status(200).json(partners);
-    })
-    .catch(err => {
-      res.status(400).json(err);
+  try {
+    const partners = await Partners.findOne({
+      where: {
+        uuid: id
+      }
     });
+    await Partners.destroy({
+      where: {
+        uuid: id
+      }
+    });
+    res.status(200).json(partners);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;
