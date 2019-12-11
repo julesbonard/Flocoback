@@ -9,7 +9,6 @@ module.exports.statsOxygenePost = Joi.object({
   rate: Joi.number().required()
 });
 
-//
 module.exports.miniFloraPost = Joi.object({
   number: Joi.number().required()
 });
@@ -30,6 +29,8 @@ module.exports.usersPost = Joi.object({
   pseudo: Joi.string().required(),
   password: Joi.string().required()
 });
+
+//PARTNERS
 module.exports.partnersPost = Joi.object({
   name: Joi.string().required(),
   address: Joi.string().required(),
@@ -46,9 +47,13 @@ module.exports.partnersPut = Joi.object({
   phone: Joi.number(),
   score: Joi.number()
 });
+
+//PLANTS
 module.exports.plantsPost = Joi.object({
   image: Joi.string()
 });
+
+//AGENDA
 module.exports.agendaPost = Joi.object({
   event: Joi.string()
 });
@@ -56,7 +61,7 @@ module.exports.agendaPut = Joi.object({
   event: Joi.string()
 });
 
-//TRESAURY:
+//TRESAURY
 module.exports.tresauryPost = Joi.object({
   level: Joi.number(),
   badge: Joi.string(),
@@ -68,7 +73,7 @@ module.exports.tresauryPut = Joi.object({
   points: Joi.number()
 });
 
-//FRIENDS:
+//FRIENDS
 module.exports.friendsPost = Joi.object({
   confirmed: Joi.boolean()
 });
