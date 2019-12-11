@@ -141,3 +141,54 @@ module.exports.seedsPut = Joi.object({
   exposure: Joi.string(),
   spray: Joi.string()
 });
+
+//PARTNERS
+module.exports.partnersPost = Joi.object({
+  name: Joi.string().required(),
+  address: Joi.string().required(),
+  tags: Joi.string(),
+  website: Joi.string(),
+  phone: Joi.number().required(),
+  score: Joi.number()
+});
+module.exports.partnersPut = Joi.object({
+  name: Joi.string(),
+  address: Joi.string(),
+  tags: Joi.string(),
+  website: Joi.string(),
+  phone: Joi.number(),
+  score: Joi.number()
+});
+
+//PLANTS
+module.exports.plantsPost = Joi.object({
+  image: Joi.string()
+});
+
+//AGENDA
+module.exports.agendaPost = Joi.object({
+  event: Joi.string()
+});
+module.exports.agendaPut = Joi.object({
+  event: Joi.string()
+});
+
+//TRESAURY
+module.exports.tresauryPost = Joi.object({
+  level: Joi.number(),
+  badge: Joi.string(),
+  points: Joi.number()
+});
+module.exports.tresauryPut = Joi.object({
+  level: Joi.number(),
+  badge: Joi.string(),
+  points: Joi.number()
+});
+
+//FRIENDS
+module.exports.friendsPost = Joi.object({
+  confirmed: Joi.boolean()
+});
+module.exports.friendsPut = Joi.object({
+  confirmed: Joi.boolean()
+});

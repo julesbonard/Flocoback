@@ -1,28 +1,28 @@
 const express = require("express");
 const sequelize = require("sequelize");
 const router = express.Router();
-const Partners = require("../sequelize/models/partners");
+const Friends = require("../sequelize/models/friends");
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { partnersPost, partnersPut } = require("../middlewares/joiSchemas");
+const { friendsPost, friendsPut } = require("../middlewares/joiSchemas");
 
 //GET ALL
 router.get("/", (req, res) => {
-  Partners.findAll()
-    .then(partners => res.status(200).json(partners))
+  Friends.findAll()
+    .then(friends => res.status(200).json(friends))
     .catch(err => res.status(400).json(err));
 });
 
 //GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  Partners.findOne({
+  Friends.findOne({
     where: {
       uuid: id
     }
   })
-    .then(partners => {
-      res.status(200).json(partners);
+    .then(friends => {
+      res.status(200).json(friends);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -30,12 +30,12 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT 
-router.put("/:id", joiValidate(partnersPut), (req, res) => {
+router.put("/:id", joiValidate(friendsPut), (req, res) => {
   const { id } = req.params;
-  const { name } = req.body
-  Partners.update(
+  const { confirmed } = req.body;
+  Friends.update(
     {
-      name
+      confirmed
     },
     {
       where: {
@@ -44,14 +44,14 @@ router.put("/:id", joiValidate(partnersPut), (req, res) => {
     }
   )
     .then(() => {
-      return Partners.findOne({
+      return Friends.findOne({
         where: {
           uuid: id
         }
       });
     })
-    .then(partners => {
-      res.status(200).json(partners);
+    .then(friends => {
+      res.status(200).json(friends);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -59,35 +59,30 @@ router.put("/:id", joiValidate(partnersPut), (req, res) => {
 });
 
 //POST 
-router.post("/", joiValidate(partnersPost), (req, res) => {
-  const { name, address, tags, phone, score, website } = req.body;
-  Partners.create({
-    name,
-    address,
-    tags,
-    phone,
-    score,
-    website
+router.post("/", joiValidate(friendsPost), (req, res) => {
+  const { confirmed } = req.body;
+  Friends.create({
+    confirmed
   })
-    .then(partners => res.status(201).json(partners))
+    .then(friends => res.status(201).json(friends))
     .catch(err => res.status(400).json(err));
 });
 
 //DELETE 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const partners = await Partners.findOne({
+    const friends = await Friends.findOne({
       where: {
         uuid: id
       }
     });
-    await Partners.destroy({
+    await Friends.destroy({
       where: {
         uuid: id
       }
     });
-    res.status(200).json(partners);
+    res.status(200).json(friends);
   } catch (err) {
     res.status(400).json(err);
   }

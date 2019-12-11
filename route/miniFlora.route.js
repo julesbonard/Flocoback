@@ -6,12 +6,14 @@ const { joiValidate } = require("../middlewares/joiValidate");
 const { miniFloraPost, miniFloraPut } = require("../middlewares/joiSchemas");
 const MiniFlora = require("../sequelize/models/miniFlora");
 
+//GET ALL
 router.get("/", (req, res) => {
   MiniFlora.findAll()
     .then(miniFlora => res.status(200).json(miniFlora))
     .catch(err => res.status(400).json(err));
 });
 
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   MiniFlora.findOne({
@@ -27,11 +29,13 @@ router.get("/:id", (req, res) => {
     });
 });
 
+//PUT 
 router.put("/:id", joiValidate(miniFloraPut), (req, res) => {
   const { id } = req.params;
+  const { number } = req.body
   MiniFlora.update(
     {
-      number: req.body.number
+      number
     },
     {
       where: {
@@ -47,6 +51,7 @@ router.put("/:id", joiValidate(miniFloraPut), (req, res) => {
     });
 });
 
+//POST
 router.post("/", joiValidate(miniFloraPost), (req, res) => {
   const { number } = req.body;
   MiniFlora.create({
@@ -56,19 +61,24 @@ router.post("/", joiValidate(miniFloraPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-router.delete("/:id", (req, res) => {
+//DELETE
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  MiniFlora.destroy({
-    where: {
-      uuid: id
-    }
-  })
-    .then(miniFlora => {
-      res.status(200).json(miniFlora);
-    })
-    .catch(err => {
-      res.status(400).json(err);
+  try {
+    const miniFlora = await MiniFlora.findOne({
+      where: {
+        uuid: id
+      }
     });
+    await MiniFlora.destroy({
+      where: {
+        uuid: id
+      }
+    });
+    res.status(200).json(miniFlora);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;

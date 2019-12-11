@@ -1,28 +1,29 @@
 const express = require("express");
 const sequelize = require("sequelize");
 const router = express.Router();
-const Partners = require("../sequelize/models/partners");
+const Agenda = require("../sequelize/models/agenda");
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { partnersPost, partnersPut } = require("../middlewares/joiSchemas");
+const { agendaPost, agendaPut } = require("../middlewares/joiSchemas");
 
 //GET ALL
 router.get("/", (req, res) => {
-  Partners.findAll()
-    .then(partners => res.status(200).json(partners))
+  Agenda.findAll()
+    .then(agenda => res.status(200).json(agenda))
     .catch(err => res.status(400).json(err));
 });
+
 
 //GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  Partners.findOne({
+  Agenda.findOne({
     where: {
       uuid: id
     }
   })
-    .then(partners => {
-      res.status(200).json(partners);
+    .then(agenda => {
+      res.status(200).json(agenda);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -30,12 +31,12 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT 
-router.put("/:id", joiValidate(partnersPut), (req, res) => {
+router.put("/:id", joiValidate(agendaPut), (req, res) => {
   const { id } = req.params;
-  const { name } = req.body
-  Partners.update(
+  const { event } = req.body
+  Agenda.update(
     {
-      name
+      event
     },
     {
       where: {
@@ -44,14 +45,14 @@ router.put("/:id", joiValidate(partnersPut), (req, res) => {
     }
   )
     .then(() => {
-      return Partners.findOne({
+      return Agenda.findOne({
         where: {
           uuid: id
         }
       });
     })
-    .then(partners => {
-      res.status(200).json(partners);
+    .then(agenda => {
+      res.status(200).json(agenda);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -59,35 +60,30 @@ router.put("/:id", joiValidate(partnersPut), (req, res) => {
 });
 
 //POST 
-router.post("/", joiValidate(partnersPost), (req, res) => {
-  const { name, address, tags, phone, score, website } = req.body;
-  Partners.create({
-    name,
-    address,
-    tags,
-    phone,
-    score,
-    website
+router.post("/", joiValidate(agendaPost), (req, res) => {
+  const { event } = req.body;
+  Agenda.create({
+    event
   })
-    .then(partners => res.status(201).json(partners))
+    .then(agenda => res.status(201).json(agenda))
     .catch(err => res.status(400).json(err));
 });
 
 //DELETE 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const partners = await Partners.findOne({
+    const agenda = await Agenda.findOne({
       where: {
         uuid: id
       }
     });
-    await Partners.destroy({
+    await Agenda.destroy({
       where: {
         uuid: id
       }
     });
-    res.status(200).json(partners);
+    res.status(200).json(agenda);
   } catch (err) {
     res.status(400).json(err);
   }
