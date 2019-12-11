@@ -15,6 +15,8 @@ const plantsSample = {
 
 describe("plants", () => {
   before(() => sequelize.sync({ force: true }));
+  
+  //GET ALL TEST
   describe("GET * Plants", () => {
     it("It should return all plants.", async () => {
       await Plants.create(plantsSample);
@@ -28,7 +30,7 @@ describe("plants", () => {
     });
   });
 
-  //GET TEST
+  //GET ONE TEST
   describe("GET ONE PLANTS", () => {
     it("should return a SINGLE Plants", async () => {
       const plants = await Plants.create(plantsSample);
