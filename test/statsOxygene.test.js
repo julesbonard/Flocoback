@@ -23,15 +23,8 @@ describe("STATSOXYGENE", () => {
       res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(statsOxygeneSample);
-      res.body[0].should.have.property("date");
-      res.body[0].should.have.property("rate");
+      res.body[0].should.have.keys(statsOxygeneKeys);
       res.body.length.should.be.eql(1);
-    });
-    //FAIL GET ALL TEST
-    it("should fail at returning a SINGLE statsOxygene", async () => {
-      await StatsOxygene.create(statsOxygeneSample);
-      const res = await chai.request(server).get(`/statsOxy`);
-      res.should.have.status(404);
     });
   });
 
@@ -47,12 +40,6 @@ describe("STATSOXYGENE", () => {
       res.body.should.be.a("object");
       res.body.should.have.keys(statsOxygeneKeys);
     });
-    //FAIL GET TEST
-    it("should fail at returning a SINGLE statsOxygene", async () => {
-      const statsOxygene = await StatsOxygene.create(statsOxygeneSample);
-      const res = await chai.request(server).get(`${statsOxygene.uuid}`);
-      res.should.have.status(404);
-    });
   });
 
   //POST TEST
@@ -67,8 +54,7 @@ describe("STATSOXYGENE", () => {
       res.should.be.json;
       res.body.should.be.a("object");
       res.body.should.include(statsOxygeneSample);
-      res.body.should.have.property("date");
-      res.body.should.have.property("rate");
+      res.body.should.have.keys(statsOxygeneKeys);
     });
     // FAIL POST TEST
     it("should fail at adding a SINGLE statsOxygene", async () => {
@@ -76,6 +62,15 @@ describe("STATSOXYGENE", () => {
         .request(server)
         .post("/statsOxygene")
         .send({ dte: 23, rat: 30 });
+      res.should.have.status(422);
+      res.should.be.json;
+      res.body.should.be.a("array");
+    });
+    it("should fail at adding a SINGLE statsOxygene", async () => {
+      const res = await chai
+        .request(server)
+        .post("/statsCity")
+        .send({ date: "ert", rate: "xcvb" });
       res.should.have.status(422);
       res.should.be.json;
       res.body.should.be.a("array");
@@ -92,7 +87,7 @@ describe("STATSOXYGENE", () => {
         .send({ rate: 10 });
       res.should.have.status(200);
       res.should.be.json;
-      res.body.should.be.a("array");
+      res.body.should.be.a("object");
     });
     // FAIL PUT TEST
     it("should fail at updating a SINGLE statsOxygene", async () => {
@@ -101,9 +96,9 @@ describe("STATSOXYGENE", () => {
         .request(server)
         .put(`/statsOxygene/${statsOxygene.uuid}`)
         .send({ rate: "aaaee" });
-      res.should.have.status(400);
+      res.should.have.status(422);
       res.should.be.json;
-      res.body.should.be.a("object");
+      res.body.should.be.a("array");
     });
   });
 
@@ -116,12 +111,6 @@ describe("STATSOXYGENE", () => {
         .delete(`/statsOxygene/${statsOxygene.uuid}`);
       res.should.have.status(200);
       res.should.be.json;
-    });
-    //FAIL DELETE TEST
-    it("should fail at deleting a SINGLE statsOxygene", async () => {
-      const statsOxygene = await StatsOxygene.create(statsOxygeneSample);
-      const res = await chai.request(server).delete(`/${statsOxygene.uuid}`);
-      res.should.have.status(404);
     });
   });
 });

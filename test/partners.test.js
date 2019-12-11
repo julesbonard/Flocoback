@@ -5,14 +5,14 @@ const server = require("../index");
 const sequelize = require("../sequelize");
 const Partner = require("../sequelize/models/partners");
 
-chai.use(chaiHttp);
-beforeEach(() => sequelize.sync({ force: true }));
-const partnerSample = {
-  name: "Name",
-  address: "Address",
-  phone: 0640404040
-};
 describe("PARTNER", () => {
+  chai.use(chaiHttp);
+  before(() => sequelize.sync({ force: true }));
+  const partnerSample = {
+    name: "Name",
+    address: "Address",
+    phone: 0640404040
+  };
   describe("GET * PARTNERS", () => {
     it("It should return all partners.", async () => {
       await Partner.create(partnerSample);

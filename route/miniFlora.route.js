@@ -3,7 +3,7 @@ const sequelize = require("sequelize");
 const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { miniFloraPost } = require("../middlewares/joiSchemas");
+const { miniFloraPost, miniFloraPut } = require("../middlewares/joiSchemas");
 const MiniFlora = require("../sequelize/models/miniFlora");
 
 router.get("/", (req, res) => {
@@ -27,7 +27,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", joiValidate(miniFloraPut), (req, res) => {
   const { id } = req.params;
   MiniFlora.update(
     {

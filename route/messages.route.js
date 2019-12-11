@@ -3,26 +3,26 @@ const sequelize = require("sequelize");
 const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { statsCityPost, statsCityPut } = require("../middlewares/joiSchemas");
-const StatsCity = require("../sequelize/models/statsCity");
+const { messagePost, messagePut } = require("../middlewares/joiSchemas");
+const Message = require("../sequelize/models/messages");
 
 //GET ALL
 router.get("/", (req, res) => {
-  StatsCity.findAll()
-    .then(statsCity => res.status(200).json(statsCity))
+  Message.findAll()
+    .then(messages => res.status(200).json(messages))
     .catch(err => res.status(400).json(err));
 });
 
 //GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  StatsCity.findOne({
+  Message.findOne({
     where: {
       uuid: id
     }
   })
-    .then(statsCity => {
-      res.status(200).json(statsCity);
+    .then(messages => {
+      res.status(200).json(messages);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -30,13 +30,13 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", joiValidate(statsCityPut), (req, res) => {
+router.put("/:id", joiValidate(messagePut), (req, res) => {
   const { id } = req.params;
-  const { street, district } = req.body;
-  StatsCity.update(
+  const { date, contents } = req.body;
+  Message.update(
     {
-      street,
-      district
+      date,
+      contents
     },
     {
       where: {
@@ -45,14 +45,14 @@ router.put("/:id", joiValidate(statsCityPut), (req, res) => {
     }
   )
     .then(() => {
-      return StatsCity.findOne({
+      return Message.findOne({
         where: {
           uuid: id
         }
       });
     })
-    .then(statsCity => {
-      res.status(200).json(statsCity);
+    .then(messages => {
+      res.status(200).json(messages);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -60,13 +60,13 @@ router.put("/:id", joiValidate(statsCityPut), (req, res) => {
 });
 
 //POST ONE
-router.post("/", joiValidate(statsCityPost), (req, res) => {
-  const { district, street } = req.body;
-  StatsCity.create({
-    district,
-    street
+router.post("/", joiValidate(messagePost), (req, res) => {
+  const { date, contents } = req.body;
+  Message.create({
+    date,
+    contents
   })
-    .then(statsCity => res.status(201).json(statsCity))
+    .then(messages => res.status(201).json(messages))
     .catch(err => res.status(400).json(err));
 });
 
@@ -74,20 +74,22 @@ router.post("/", joiValidate(statsCityPost), (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const statsCity = await StatsCity.findOne({
+    const messages = await Message.findOne({
       where: {
         uuid: id
       }
     });
-    await StatsCity.destroy({
+    await Message.destroy({
       where: {
         uuid: id
       }
     });
-    res.status(200).json(statsCity);
+    res.status(200).json(messages);
   } catch (err) {
     res.status(400).json(err);
   }
 });
+
+module.exports = router;
 
 module.exports = router;

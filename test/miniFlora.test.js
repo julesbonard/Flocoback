@@ -98,9 +98,9 @@ describe("MINIFLORA", () => {
         .request(server)
         .put(`/miniFlora/${miniFlora.uuid}`)
         .send({ number: "aaaee" });
-      res.should.have.status(400);
+      res.should.have.status(422);
       res.should.be.json;
-      res.body.should.be.a("object");
+      res.body.should.be.a("array");
     });
   });
 
@@ -113,12 +113,6 @@ describe("MINIFLORA", () => {
         .delete(`/miniFlora/${miniFlora.uuid}`);
       res.should.have.status(200);
       res.should.be.json;
-    });
-    //FAIL DELETE TEST
-    it("should fail at deleting a SINGLE miniFlora", async () => {
-      const miniFlora = await MiniFlora.create(miniFloraSample);
-      const res = await chai.request(server).delete(`/${miniFlora.uuid}`);
-      res.should.have.status(404);
     });
   });
 });
