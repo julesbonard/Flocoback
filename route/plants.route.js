@@ -6,13 +6,14 @@ const Plants = require("../sequelize/models/plants");
 const { joiValidate } = require("../middlewares/joiValidate");
 const { plantsPost } = require("../middlewares/joiSchemas");
 
-//GET ROUTE:
+//GET ALL
 router.get("/", (req, res) => {
   Plants.findAll()
     .then(plants => res.status(200).json(plants))
     .catch(err => res.status(400).json(err));
 });
 
+//GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   Plants.findOne({
@@ -28,12 +29,13 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT ROUTE:
+//PUT 
 router.put("/:id", joiValidate(plantsPost), (req, res) => {
   const { id } = req.params;
+  const { image } = req.body
   Plants.update(
     {
-      image: req.body.image
+      image: req
     },
     {
       where: {
@@ -56,7 +58,7 @@ router.put("/:id", joiValidate(plantsPost), (req, res) => {
     });
 });
 
-//POST ROUTE:
+//POST
 router.post("/", joiValidate(plantsPost), (req, res) => {
   const { image } = req.body;
   Plants.create({
@@ -66,7 +68,7 @@ router.post("/", joiValidate(plantsPost), (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE ROUTE:
+//DELETE 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   Plants.destroy({
