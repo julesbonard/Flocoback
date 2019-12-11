@@ -23,7 +23,9 @@ app.use("/statsOxygene", require("./route/statsOxygene.route"));
 app.use("/plants", require("./route/plants.route"));
 app.use("/locations", require("./route/locations.route"));
 app.use("/partners", require("./route/partners.route"));
-
+app.use("/tresaury", require("./route/tresaury.route"));
+app.use("/agenda", require("./route/agenda.route"));
+app.use("/friends", require("./route/friends.route"));
 
 async function main() {
   try {

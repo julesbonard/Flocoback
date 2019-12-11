@@ -13,9 +13,9 @@ const plantsSample = {
     "https://www.ikea.com/fr/fr/images/products/monstera-potted-plant__0653991_PE708220_S5.JPG?f=s"
 };
 
-describe("PLANTS", () => {
+describe("plants", () => {
   before(() => sequelize.sync({ force: true }));
-  describe("GET * PLANTS", () => {
+  describe("GET * Plants", () => {
     it("It should return all plants.", async () => {
       await Plants.create(plantsSample);
       const res = await chai.request(server).get("/plants");
@@ -23,59 +23,91 @@ describe("PLANTS", () => {
       res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(plantsSample);
-      res.body[0].should.have.property("image");
+      res.body[0].should.keys(plantsKeys);
       res.body.length.should.be.eql(1);
     });
   });
-});
 
-//GET TEST
-describe("GET ONE PLANTS", () => {
-  it("should return a SINGLE plants", async () => {
-    const plants = await Plants.create(plantsSample);
-    const res = await chai.request(server).get(`/plants/${plants.uuid}`);
-    res.should.have.status(200);
-    res.should.be.json;
-    res.body.should.be.a("object");
-    res.body.should.have.keys(plantsKeys);
+  //GET TEST
+  describe("GET ONE PLANTS", () => {
+    it("should return a SINGLE Plants", async () => {
+      const plants = await Plants.create(plantsSample);
+      const res = await chai.request(server).get(`/plants/${plants.uuid}`);
+      res.should.have.status(200);
+      res.should.be.json;
+      res.body.should.be.a("object");
+      res.body.should.have.keys(plantsKeys);
+    });
   });
-});
 
-//POST TEST
-describe("POST ONE PLANTS", () => {
-  it("should add a SINGLE plants", async () => {
-    const res = await chai
-      .request(server)
-      .post(`/plants`)
-      .send(plantsSample);
-    res.should.have.status(201);
-    res.should.be.json;
-    res.body.should.be.a("object");
-    res.body.should.include(plantsSample);
-    res.body.should.have.keys(plantsKeys);
+  //POST TEST
+  describe("POST ONE Plants", () => {
+    it("should add a SINGLE plants", async () => {
+      const res = await chai
+        .request(server)
+        .post(`/plants`)
+        .send(plantsSample);
+      res.should.have.status(201);
+      res.should.be.json;
+      res.body.should.be.a("object");
+      res.body.should.include(plantsSample);
+      res.body.should.have.keys(plantsKeys);
+    });
+
+    //POST TEST FAIL ONE plants
+    it("should fail at adding one Plants (wrong keys)", async () => {
+      const res = await chai
+        .request(server)
+        .post(`/plants`)
+        .send({ image: false });
+      res.should.have.status(422);
+      res.should.be.json;
+      res.should.be.a("object");
+    });
+    it("should fail at adding one plants (wrong keys)", async () => {
+      const res = await chai
+        .request(server)
+        .post(`/plants`)
+        .send({ imag: "ddjdjd" });
+      res.should.have.status(422);
+      res.should.be.json;
+      res.should.be.a("object");
+    });
   });
-});
 
-//PUT TEST
-describe("PUT ONE PLANTS", () => {
-  it("should update a SINGLE plants", async () => {
-    const plants = await Plants.create(plantsSample);
-    const res = await chai
-      .request(server)
-      .put(`/plants/${plants.uuid}`)
-      .send({ number: 10 });
-    res.should.have.status(200);
-    res.should.be.json;
-    res.body.should.be.a("array");
+  //PUT TEST
+  describe("PUT ONE plants", () => {
+    it("should update a SINGLE plants", async () => {
+      const plants = await Plants.create(plantsSample);
+      const res = await chai
+        .request(server)
+        .put(`/plants/${plants.uuid}`)
+        .send({ image: "dfgdgdgdg" });
+      res.should.have.status(200);
+      res.should.be.json;
+      res.body.should.be.a("object");
+    });
+
+    //PUT TEST FAIL ONE plants
+    it("should fail at updating a SINGLE plants (interger values instead of string)", async () => {
+      const changeplants = await Plants.create(plantsSample);
+      const res = await chai
+        .request(server)
+        .put(`/plants/${changeplants.uuid}`)
+        .send({ image: 1342 });
+      res.should.have.status(422);
+      res.should.be.json;
+      res.should.be.a("object");
+    });
   });
-});
 
-//DELETE TEST
-describe("DELETE ONE PLANTS", () => {
-  it("should delete a SINGLE plants", async () => {
-    const plants = await Plants.create(plantsSample);
-    const res = await chai.request(server).delete(`/plants/${plants.uuid}`);
-    res.should.have.status(200);
-    res.should.be.json;
+  //DELETE TEST
+  describe("DELETE ONE plants", () => {
+    it("should delete a SINGLE plants", async () => {
+      const plants = await Plants.create(plantsSample);
+      const res = await chai.request(server).delete(`/plants/${plants.uuid}`);
+      res.should.have.status(200);
+      res.should.be.json;
+    });
   });
 });

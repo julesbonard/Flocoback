@@ -1,27 +1,27 @@
 const express = require("express");
 const sequelize = require("sequelize");
 const router = express.Router();
-const Partners = require("../sequelize/models/partners");
+const Tresaury = require("../sequelize/models/tresaury");
 
 const { joiValidate } = require("../middlewares/joiValidate");
-const { partnersPost, partnersPut } = require("../middlewares/joiSchemas");
+const { tresauryPost, tresauryPut } = require("../middlewares/joiSchemas");
 
 //GET ROUTE:
 router.get("/", (req, res) => {
-  Partners.findAll()
-    .then(partners => res.status(200).json(partners))
+  Tresaury.findAll()
+    .then(tresaury => res.status(200).json(tresaury))
     .catch(err => res.status(400).json(err));
 });
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  Partners.findOne({
+  Tresaury.findOne({
     where: {
       uuid: id
     }
   })
-    .then(partners => {
-      res.status(200).json(partners);
+    .then(tresaury => {
+      res.status(200).json(tresaury);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -29,11 +29,11 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ROUTE:
-router.put("/:id", joiValidate(partnersPut), (req, res) => {
+router.put("/:id", joiValidate(tresauryPost), (req, res) => {
   const { id } = req.params;
-  Partners.update(
+  Tresaury.update(
     {
-      name: req.body.name
+      level: req.body.level
     },
     {
       where: {
@@ -42,14 +42,14 @@ router.put("/:id", joiValidate(partnersPut), (req, res) => {
     }
   )
     .then(() => {
-      return Partners.findOne({
+      return Tresaury.findOne({
         where: {
           uuid: id
         }
       });
     })
-    .then(partners => {
-      res.status(200).json(partners);
+    .then(tresaury => {
+      res.status(200).json(tresaury);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -57,30 +57,27 @@ router.put("/:id", joiValidate(partnersPut), (req, res) => {
 });
 
 //POST ROUTE:
-router.post("/", joiValidate(partnersPost), (req, res) => {
-  const { name, address, tags, phone, score, website } = req.body;
-  Partners.create({
-    name,
-    address,
-    tags,
-    phone,
-    score,
-    website
+router.post("/", joiValidate(tresauryPost), (req, res) => {
+  const { level, badge, points } = req.body;
+  Tresaury.create({
+    level,
+    badge,
+    points
   })
-    .then(partners => res.status(201).json(partners))
+    .then(tresaury => res.status(201).json(tresaury))
     .catch(err => res.status(400).json(err));
 });
 
 //DELETE ROUTE:
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
-  Partners.destroy({
+  Tresaury.destroy({
     where: {
       uuid: id
     }
   })
-    .then(partners => {
-      res.status(200).json(partners);
+    .then(tresaury => {
+      res.status(200).json(tresaury);
     })
     .catch(err => {
       res.status(400).json(err);

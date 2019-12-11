@@ -22,7 +22,6 @@ describe("MINIFLORA", () => {
       res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(miniFloraSample);
-      res.body[0].should.have.property("number");
       res.body.length.should.be.eql(1);
     });
   });
@@ -44,7 +43,6 @@ describe("MINIFLORA", () => {
   //POST TEST
   describe("POST ONE MINIFLORA", () => {
     it("should add a SINGLE miniFlora", async () => {
-      await MiniFlora.create(miniFloraSample);
       const res = await chai
         .request(server)
         .post(`/miniFlora`)
@@ -53,7 +51,27 @@ describe("MINIFLORA", () => {
       res.should.be.json;
       res.body.should.be.a("object");
       res.body.should.include(miniFloraSample);
-      res.body.should.have.property("number");
+      res.body.should.have.keys(miniFloraKeys);
+    });
+
+    //POST TEST FAIL ONE miniFlora
+    it("should fail at adding one miniFlora (wrong keys)", async () => {
+      const res = await chai
+        .request(server)
+        .post(`/miniFlora`)
+        .send({ number: false });
+      res.should.have.status(422);
+      res.should.be.json;
+      res.should.be.a("object");
+    });
+    it("should fail at adding one miniFlora (wrong keys)", async () => {
+      const res = await chai
+        .request(server)
+        .post(`/miniFlora`)
+        .send({ numer: "ddjdjd" });
+      res.should.have.status(422);
+      res.should.be.json;
+      res.should.be.a("object");
     });
   });
 
@@ -64,10 +82,22 @@ describe("MINIFLORA", () => {
       const res = await chai
         .request(server)
         .put(`/miniFlora/${miniFlora.uuid}`)
-        .send({ number: 10 });
+        .send({ number: 12 });
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("array");
+    });
+
+    //PUT TEST FAIL ONE miniFlora
+    it("should fail at updating a SINGLE miniFlora (interger values instead of string)", async () => {
+      const changeMiniFlora = await MiniFlora.create(miniFloraSample);
+      const res = await chai
+        .request(server)
+        .put(`/miniFlora/${changeMiniFlora.uuid}`)
+        .send({ number: "fffsdf" });
+      res.should.have.status(400);
+      res.should.be.json;
+      res.should.be.a("object");
     });
   });
 
