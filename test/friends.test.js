@@ -4,18 +4,35 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Friends = require("../sequelize/models/friends");
-
-const friendsKeys = ["uuid", "confirmed", "createdAt", "updatedAt"];
+const User = require("../sequelize/models/users");
 
 chai.use(chaiHttp);
 
-const friendsSample = {
+const friendsKeys = ["uuid", "confirmed", "createdAt", "updatedAt", "UserUuid"];
+let friendsSample = {
   confirmed: true
 };
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
 
-describe("friends", () => {
-  before(() => sequelize.sync({ force: true }));
-  
+describe("FRIEND", () => {
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const user = await User.create(usersSample);
+    friendsSample = {
+      ...friendsSample,
+      UserUuid: user.uuid
+    };
+  });
+
   //GET ALL TEST
   describe("GET * friends", () => {
     it("It should return all friends.", async () => {

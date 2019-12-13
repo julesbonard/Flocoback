@@ -4,16 +4,43 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Message = require("../sequelize/models/messages");
+const User = require("../sequelize/models/users");
 
-const messagesKeys = ["uuid", "date", "contents", "createdAt", "updatedAt"];
+chai.use(chaiHttp);
+
+const messagesKeys = [
+  "uuid",
+  "date",
+  "contents",
+  "createdAt",
+  "updatedAt",
+  "UserUuid"
+];
+let messageSample = {
+  date: "1970-01-01T00:00:00.000Z",
+  contents: "Salut Toto !"
+};
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
 
 describe("MESSAGE", () => {
-  chai.use(chaiHttp);
-  before(() => sequelize.sync({ force: true }));
-  const messageSample = {
-    date: "1970-01-01T00:00:00.000Z",
-    contents: "Salut Toto !"
-  };
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const user = await User.create(usersSample);
+    messageSample = {
+      ...messageSample,
+      UserUuid: user.uuid
+    };
+  });
+
   //GET ALL TEST
   describe("GET * MESSAGES", () => {
     it("It should return all messages.", async () => {

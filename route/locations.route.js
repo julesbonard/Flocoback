@@ -57,20 +57,13 @@ router.put("/:id", joiValidate(locationPut), (req, res) => {
 });
 
 //POST ONE LOCATION
-router.post("/:id", joiValidate(locationPost), (req, res) => {
-  const { id } = req.params;
-  const { latitude, longitude } = req.body;
+router.post("/", joiValidate(locationPost), (req, res) => {
+  const { latitude, longitude, PlantUuid } = req.body;
   Location.create({
     latitude,
-    longitude
+    longitude,
+    PlantUuid
   })
-    .then(() => {
-      return Location.findOne({
-        where: {
-          uuid: id
-        }
-      });
-    })
     .then(location => res.status(201).json(location))
     .catch(err => res.status(422).json(err));
 });

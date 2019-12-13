@@ -61,10 +61,11 @@ router.put("/:id", joiValidate(commentPut), (req, res) => {
 
 //POST ONE
 router.post("/", joiValidate(commentPost), (req, res) => {
-  const { date, contents } = req.body;
+  const { date, contents, UserUuid } = req.body;
   Comment.create({
     date,
-    contents
+    contents,
+    UserUuid
   })
     .then(comments => res.status(201).json(comments))
     .catch(err => res.status(400).json(err));

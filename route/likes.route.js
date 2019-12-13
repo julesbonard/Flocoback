@@ -60,9 +60,10 @@ router.put("/:id", joiValidate(likePut), (req, res) => {
 
 //POST ONE
 router.post("/", joiValidate(likePost), (req, res) => {
-  const { like } = req.body;
+  const { like, UserUuid } = req.body;
   Like.create({
-    like
+    like,
+    UserUuid
   })
     .then(likes => res.status(201).json(likes))
     .catch(err => res.status(400).json(err));

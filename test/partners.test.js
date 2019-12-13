@@ -5,6 +5,8 @@ const server = require("../index");
 const sequelize = require("../sequelize");
 const Partners = require("../sequelize/models/partners");
 
+chai.use(chaiHttp);
+
 const partnersKeys = [
   "uuid",
   "name",
@@ -16,9 +18,6 @@ const partnersKeys = [
   "createdAt",
   "updatedAt"
 ];
-
-chai.use(chaiHttp);
-
 const partnersSample = {
   name: "name",
   address: "address",

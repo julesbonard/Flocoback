@@ -65,11 +65,12 @@ router.put("/:id", joiValidate(statsTaxonsPut), (req, res) => {
 
 //POST ONE
 router.post("/", joiValidate(statsTaxonsPost), (req, res) => {
-  const { restored, status, number } = req.body;
+  const { restored, status, number, miniFloraUuid } = req.body;
   StatsTaxons.create({
     number,
     restored,
-    status
+    status,
+    miniFloraUuid
   })
     .then(statsTaxons => res.status(201).json(statsTaxons))
     .catch(err => res.status(400).json(err));

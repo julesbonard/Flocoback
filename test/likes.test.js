@@ -4,15 +4,33 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Like = require("../sequelize/models/likes");
+const User = require("../sequelize/models/users");
 
-const likesKeys = ["uuid", "like", "createdAt", "updatedAt"];
+const likesKeys = ["uuid", "like", "createdAt", "updatedAt", "UserUuid"];
+let likesSample = {
+  like: true
+};
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
 
 describe("LIKE", () => {
-  chai.use(chaiHttp);
-  before(() => sequelize.sync({ force: true }));
-  const likesSample = {
-    like: true
-  };
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const user = await User.create(usersSample);
+    likesSample = {
+      ...likesSample,
+      UserUuid: user.uuid
+    };
+  });
+
   //GET ALL TEST
   describe("GET * LIKES", () => {
     it("It should return all likes.", async () => {

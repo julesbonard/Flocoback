@@ -29,7 +29,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT 
+//PUT
 router.put("/:id", joiValidate(friendsPut), (req, res) => {
   const { id } = req.params;
   const { confirmed } = req.body;
@@ -58,17 +58,18 @@ router.put("/:id", joiValidate(friendsPut), (req, res) => {
     });
 });
 
-//POST 
+//POST
 router.post("/", joiValidate(friendsPost), (req, res) => {
-  const { confirmed } = req.body;
+  const { confirmed, UserUuid } = req.body;
   Friends.create({
-    confirmed
+    confirmed,
+    UserUuid
   })
     .then(friends => res.status(201).json(friends))
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE 
+//DELETE
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {

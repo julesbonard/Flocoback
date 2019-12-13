@@ -4,16 +4,43 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Comment = require("../sequelize/models/comments");
+const User = require("../sequelize/models/users");
 
-const commentKeys = ["uuid", "date", "contents", "createdAt", "updatedAt"];
+chai.use(chaiHttp);
+
+const commentKeys = [
+  "uuid",
+  "date",
+  "contents",
+  "createdAt",
+  "updatedAt",
+  "UserUuid"
+];
+let commentsSample = {
+  date: "1970-01-01T00:00:00.000Z",
+  contents: "Super comment"
+};
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
 
 describe("COMMENT", () => {
-  chai.use(chaiHttp);
-  before(() => sequelize.sync({ force: true }));
-  const commentsSample = {
-    date: "1970-01-01T00:00:00.000Z",
-    contents: "Super comment"
-  };
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const user = await User.create(usersSample);
+    commentsSample = {
+      ...commentsSample,
+      UserUuid: user.uuid
+    };
+  });
+
   //GET ALL TEST
   describe("GET * COMMENTS", () => {
     it("It should return all comments.", async () => {

@@ -61,10 +61,11 @@ router.put("/:id", joiValidate(messagePut), (req, res) => {
 
 //POST ONE
 router.post("/", joiValidate(messagePost), (req, res) => {
-  const { date, contents } = req.body;
+  const { date, contents, UserUuid } = req.body;
   Message.create({
     date,
-    contents
+    contents,
+    UserUuid
   })
     .then(messages => res.status(201).json(messages))
     .catch(err => res.status(400).json(err));
