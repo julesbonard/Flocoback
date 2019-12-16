@@ -5,8 +5,17 @@ const server = require("../index");
 const sequelize = require("../sequelize");
 const Like = require("../sequelize/models/likes");
 const User = require("../sequelize/models/users");
+const Post = require("../sequelize/models/posts");
 
-const likesKeys = ["uuid", "like", "createdAt", "updatedAt", "UserUuid"];
+chai.use(chaiHttp);
+const likesKeys = [
+  "uuid",
+  "like",
+  "createdAt",
+  "updatedAt",
+  "UserUuid",
+  "PostUuid"
+];
 let likesSample = {
   like: true
 };
@@ -20,14 +29,21 @@ const usersSample = {
   pseudo: "azerty",
   password: "ytreza23"
 };
+const postSample = {
+  contents: "My plant",
+  date: "1970-01-01T00:00:00.000Z",
+  image: "https/"
+};
 
 describe("LIKE", () => {
   before(async () => {
     await sequelize.sync({ force: true });
     const user = await User.create(usersSample);
+    const post = await Post.create(postSample);
     likesSample = {
       ...likesSample,
-      UserUuid: user.uuid
+      UserUuid: user.uuid,
+      PostUuid: post.uuid
     };
   });
 

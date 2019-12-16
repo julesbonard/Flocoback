@@ -62,11 +62,12 @@ router.put("/:id", joiValidate(potsPut), (req, res) => {
 
 //POST ONE
 router.post("/", joiValidate(potsPost), (req, res) => {
-  const { width, length, depth } = req.body;
+  const { width, length, depth, UserUuid } = req.body;
   Pot.create({
     width,
     length,
-    depth
+    depth,
+    UserUuid
   })
     .then(pots => res.status(201).json(pots))
     .catch(err => res.status(400).json(err));

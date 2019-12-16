@@ -29,7 +29,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT 
+//PUT
 router.put("/:id", joiValidate(tresauryPut), (req, res) => {
   const { id } = req.params;
   Tresaury.update(
@@ -57,37 +57,37 @@ router.put("/:id", joiValidate(tresauryPut), (req, res) => {
     });
 });
 
-//POST 
+//POST
 router.post("/", joiValidate(tresauryPost), (req, res) => {
-  const { level, badge, points } = req.body;
+  const { level, badge, points, UserUuid } = req.body;
   Tresaury.create({
     level,
     badge,
-    points
+    points,
+    UserUuid
   })
     .then(tresaury => res.status(201).json(tresaury))
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE 
+//DELETE
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const tresaury = await Tresaury.findOne({
-    where: {
-      uuid: id
-    }
-  })
+      where: {
+        uuid: id
+      }
+    });
     await Tresaury.destroy({
-    where: {
-      uuid: id
-    }
-  })
-      res.status(200).json(tresaury);
-    }
-    catch (err) {
-      res.status(400).json(err);
-    };
+      where: {
+        uuid: id
+      }
+    });
+    res.status(200).json(tresaury);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;

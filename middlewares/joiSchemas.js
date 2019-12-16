@@ -77,7 +77,8 @@ module.exports.usersPut = Joi.object({
 module.exports.commentPost = Joi.object({
   date: Joi.date().required(),
   contents: Joi.string().required(),
-  UserUuid: Joi.string()
+  UserUuid: Joi.string(),
+  PostUuid: Joi.string()
 });
 module.exports.commentPut = Joi.object({
   date: Joi.date(),
@@ -87,7 +88,8 @@ module.exports.commentPut = Joi.object({
 //LIKE
 module.exports.likePost = Joi.object({
   like: Joi.boolean().required(),
-  UserUuid: Joi.string()
+  UserUuid: Joi.string(),
+  PostUuid: Joi.string()
 });
 module.exports.likePut = Joi.object({
   like: Joi.boolean()
@@ -109,7 +111,8 @@ module.exports.postsPut = Joi.object({
 module.exports.messagePost = Joi.object({
   date: Joi.date().required(),
   contents: Joi.string().required(),
-  UserUuid: Joi.string()
+  UserUuid: Joi.string(),
+  receiverUuid: Joi.string()
 });
 module.exports.messagePut = Joi.object({
   date: Joi.date(),
@@ -120,7 +123,8 @@ module.exports.messagePut = Joi.object({
 module.exports.potsPost = Joi.object({
   width: Joi.number().required(),
   length: Joi.number().required(),
-  depth: Joi.number().required()
+  depth: Joi.number().required(),
+  UserUuid: Joi.string()
 });
 module.exports.potsPut = Joi.object({
   width: Joi.number(),
@@ -188,7 +192,8 @@ module.exports.agendaPut = Joi.object({
 module.exports.tresauryPost = Joi.object({
   level: Joi.number(),
   badge: Joi.string(),
-  points: Joi.number()
+  points: Joi.number(),
+  UserUuid: Joi.string()
 });
 module.exports.tresauryPut = Joi.object({
   level: Joi.number(),

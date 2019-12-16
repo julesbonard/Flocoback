@@ -5,6 +5,8 @@ const server = require("../index");
 const sequelize = require("../sequelize");
 const Post = require("../sequelize/models/posts");
 
+chai.use(chaiHttp);
+
 const postsKeys = [
   "uuid",
   "contents",
@@ -13,15 +15,14 @@ const postsKeys = [
   "createdAt",
   "updatedAt"
 ];
+const postSample = {
+  contents: "My plant",
+  date: "1970-01-01T00:00:00.000Z",
+  image: "https/"
+};
 
 describe("POST", () => {
-  chai.use(chaiHttp);
   before(() => sequelize.sync({ force: true }));
-  const postSample = {
-    contents: "My plant",
-    date: "1970-01-01T00:00:00.000Z",
-    image: "https/"
-  };
   //GET ALL TEST
   describe("GET * POSTS", () => {
     it("It should return all posts.", async () => {

@@ -22,27 +22,32 @@ User.hasOne(Comments, {
   onDelete: "CASCADE"
 });
 User.hasOne(Friends, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
-User.hasOne(Messages, {
+User.belongsToMany(User, { as: "receiver", through: Messages });
+User.hasMany(Likes, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
+User.hasOne(Tresaury, {
   foreignKey: { allowNull: false },
   onDelete: "CASCADE"
 });
-// User.hasMany(User, {as: 'Messages', through: Messages});
-User.hasOne(Likes, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
+User.hasMany(Pots, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
 
 //AGENDA
 Agenda.belongsTo(User, { foreignKey: { allowNull: false } });
 
 //COMENTS
 Comments.belongsTo(User, { foreignKey: { allowNull: false } });
+Comments.belongsTo(Posts, { foreignKey: { allowNull: false } });
 
 //FRIENDS
 Friends.belongsTo(User, { foreignKey: { allowNull: false } });
 
-//MESSAGE
-Messages.belongsTo(User, { foreignKey: { allowNull: false } });
-
 //LIKES
 Likes.belongsTo(User, { foreignKey: { allowNull: false } });
+Likes.belongsTo(Posts, { foreignKey: { allowNull: false } });
+
+//POSTS
+Posts.hasMany(Likes, { foreignKey: { allowNull: false } });
+Posts.hasMany(Comments, { foreignKey: { allowNull: false } });
+Pots.belongsTo(User, { foreignKey: { allowNull: false } });
 
 //LOCATIONS
 Locations.belongsTo(Plants, { foreignKey: { allowNull: false } });
@@ -53,6 +58,7 @@ Plants.belongsTo(Seeds, { foreignKey: { allowNull: false } });
 
 //SEEDS
 Seeds.hasOne(Plants, { foreignKey: { allowNull: false } });
+// Seeds.belongsToMany(Partners, {through: {model: ItemTag}, foreignKey: { allowNull: false },constraints: false});
 
 //MINIFLORA:
 MiniFlora.hasOne(StatsTaxons, { foreignKey: { allowNull: false } });
@@ -63,3 +69,9 @@ StatsTaxons.belongsTo(MiniFlora, { foreignKey: { allowNull: false } });
 
 //STATSCITY
 StatsCity.belongsTo(MiniFlora, { foreignKey: { allowNull: false } });
+
+//PARTNERS
+// Partners.belongsToMany(Seeds, {through: {model: ItemTag}, foreignKey: { allowNull: false },constraints: false});
+
+//TRESAURY
+Tresaury.belongsTo(User, { foreignKey: { allowNull: false } });
