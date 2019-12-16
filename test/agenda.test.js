@@ -4,18 +4,37 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Agenda = require("../sequelize/models/agenda");
+const User = require("../sequelize/models/users");
 
-const agendaKeys = ["uuid", "event", "createdAt", "updatedAt"];
+const agendaKeys = ["uuid", "event", "createdAt", "updatedAt", "UserUuid"];
 
 chai.use(chaiHttp);
 
-const agendaSample = {
+let agendaSample = {
   event: "ete"
 };
 
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
+
 describe("AGENDA", () => {
-  before(() => sequelize.sync({ force: true }));
-  
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const user = await User.create(usersSample);
+    agendaSample = {
+      ...agendaSample,
+      UserUuid: user.uuid
+    };
+  });
+
   //GET ALL TEST
   describe("GET * AGENDA", () => {
     it("It should return all agenda.", async () => {
@@ -25,7 +44,7 @@ describe("AGENDA", () => {
       res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(agendaSample);
-      res.body[0].should.keys(agendaKeys);
+      res.body[0].should.have.keys(agendaKeys);
       res.body.length.should.be.eql(1);
     });
   });

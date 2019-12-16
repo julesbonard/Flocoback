@@ -13,7 +13,6 @@ router.get("/", (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-
 //GET ONE
 router.get("/:id", (req, res) => {
   const { id } = req.params;
@@ -30,10 +29,10 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT 
+//PUT
 router.put("/:id", joiValidate(agendaPut), (req, res) => {
   const { id } = req.params;
-  const { event } = req.body
+  const { event } = req.body;
   Agenda.update(
     {
       event
@@ -59,17 +58,18 @@ router.put("/:id", joiValidate(agendaPut), (req, res) => {
     });
 });
 
-//POST 
+//POST
 router.post("/", joiValidate(agendaPost), (req, res) => {
-  const { event } = req.body;
+  const { event, UserUuid } = req.body;
   Agenda.create({
-    event
+    event,
+    UserUuid
   })
     .then(agenda => res.status(201).json(agenda))
     .catch(err => res.status(400).json(err));
 });
 
-//DELETE 
+//DELETE
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {

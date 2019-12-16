@@ -92,7 +92,8 @@ module.exports.likePut = Joi.object({
 module.exports.postsPost = Joi.object({
   contents: Joi.string().required(),
   date: Joi.date().required(),
-  image: Joi.string().required()
+  image: Joi.string().required(),
+  UserUuid: Joi.string()
 });
 module.exports.postsPut = Joi.object({
   contents: Joi.string(),
@@ -170,7 +171,8 @@ module.exports.plantsPut = Joi.object({
 
 //AGENDA
 module.exports.agendaPost = Joi.object({
-  event: Joi.string()
+  event: Joi.string(),
+  UserUuid: Joi.string()
 });
 module.exports.agendaPut = Joi.object({
   event: Joi.string()
