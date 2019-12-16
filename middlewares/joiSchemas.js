@@ -31,7 +31,8 @@ module.exports.miniFloraPut = Joi.object({
 //STATSCITY
 module.exports.statsCityPost = Joi.object({
   district: Joi.number().required(),
-  street: Joi.number().required()
+  street: Joi.number().required(),
+  miniFloraUuid: Joi.string()
 });
 module.exports.statsCityPut = Joi.object({
   district: Joi.number(),
@@ -92,7 +93,8 @@ module.exports.likePut = Joi.object({
 module.exports.postsPost = Joi.object({
   contents: Joi.string().required(),
   date: Joi.date().required(),
-  image: Joi.string().required()
+  image: Joi.string().required(),
+  UserUuid: Joi.string()
 });
 module.exports.postsPut = Joi.object({
   contents: Joi.string(),
@@ -170,7 +172,8 @@ module.exports.plantsPut = Joi.object({
 
 //AGENDA
 module.exports.agendaPost = Joi.object({
-  event: Joi.string()
+  event: Joi.string(),
+  UserUuid: Joi.string()
 });
 module.exports.agendaPut = Joi.object({
   event: Joi.string()
