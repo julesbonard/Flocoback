@@ -4,22 +4,51 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Location = require("../sequelize/models/locations");
+const Seed = require("../sequelize/models/seeds");
+const Plants = require("../sequelize/models/plants");
+
+chai.use(chaiHttp);
 
 const locationKeys = [
   "uuid",
   "latitude",
   "longitude",
   "createdAt",
-  "updatedAt"
+  "updatedAt",
+  "PlantUuid"
 ];
+let locationSample = {
+  latitude: 40,
+  longitude: 40
+};
+let plantsSample = {
+  image:
+    "https://www.ikea.com/fr/fr/images/products/monstera-potted-plant__0653991_PE708220_S5.JPG?f=s"
+};
+const seedsSample = {
+  name: "rose",
+  status: "vulnérable",
+  type: "vivace",
+  environment: "extérieur/intérieur",
+  season: "printemps",
+  exposure: "sun",
+  spray: "fréquente"
+};
 
-chai.use(chaiHttp);
 describe("LOCATION", () => {
-  before(() => sequelize.sync({ force: true }));
-  const locationSample = {
-    latitude: 40,
-    longitude: 40
-  };
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const seed = await Seed.create(seedsSample);
+    plantsSample = {
+      ...plantsSample,
+      SeedUuid: seed.uuid
+    };
+    const plant = await Plants.create(plantsSample);
+    locationSample = {
+      ...locationSample,
+      PlantUuid: plant.uuid
+    };
+  });
 
   //GET ALL TEST
   describe("GET * LOCATIONS", () => {
@@ -88,10 +117,9 @@ describe("LOCATION", () => {
   //POST TEST ONE LOCATION
   describe("POST ONE LOCATION", () => {
     it("It should add one location.", async () => {
-      const createdLocation = await Location.create(locationSample);
       const res = await chai
         .request(server)
-        .post(`/locations/${createdLocation.uuid}`)
+        .post(`/locations`)
         .send(locationSample);
       res.should.have.status(201);
       res.should.be.json;
@@ -102,10 +130,9 @@ describe("LOCATION", () => {
 
     //POST TEST FAIL ONE LOCATION
     it("should fail at adding one location (wrong keys)", async () => {
-      const createdLocation = await Location.create(locationSample);
       const res = await chai
         .request(server)
-        .post(`/locations/${createdLocation.uuid}`)
+        .post(`/locations`)
         .send({ latude: 20, lontude: 30 });
       res.should.have.status(422);
       res.should.be.json;
@@ -114,10 +141,9 @@ describe("LOCATION", () => {
 
     //POST TEST FAIL ONE LOCATION
     it("should fail at adding one location", async () => {
-      const createdLocation = await Location.create(locationSample);
       const res = await chai
         .request(server)
-        .post(`/locations/${createdLocation.uuid}`)
+        .post(`/locations`)
         .send({ latitude: "tedwv", longitude: "xwves" });
       res.should.have.status(422);
       res.should.be.json;

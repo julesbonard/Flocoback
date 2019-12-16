@@ -5,6 +5,8 @@ const server = require("../index");
 const sequelize = require("../sequelize");
 const User = require("../sequelize/models/users");
 
+chai.use(chaiHttp);
+
 const usersKeys = [
   "uuid",
   "avatar",
@@ -17,20 +19,19 @@ const usersKeys = [
   "createdAt",
   "updatedAt"
 ];
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
 
-chai.use(chaiHttp);
 describe("USERS", () => {
   before(() => sequelize.sync({ force: true }));
-  const usersSample = {
-    firstName: "Toto",
-    lastName: "Paul",
-    avatar:
-      "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-    age: 23,
-    email: "totopaul@gmail.com",
-    pseudo: "azerty",
-    password: "ytreza23"
-  };
   //GET ALL TEST
   describe("GET * USERS", () => {
     it("It should return all users.", async () => {

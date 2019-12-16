@@ -4,6 +4,9 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Tresaury = require("../sequelize/models/tresaury");
+const User = require("../sequelize/models/users");
+
+chai.use(chaiHttp);
 
 const tresauryKeys = [
   "uuid",
@@ -11,20 +14,35 @@ const tresauryKeys = [
   "badge",
   "points",
   "createdAt",
-  "updatedAt"
+  "updatedAt",
+  "UserUuid"
 ];
-
-chai.use(chaiHttp);
-
-const tresaurySample = {
+let tresaurySample = {
   level: 10,
   badge: "captain",
   points: 1
 };
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
 
 describe("TRESAURY", () => {
-  before(() => sequelize.sync({ force: true }));
-  
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const user = await User.create(usersSample);
+    tresaurySample = {
+      ...tresaurySample,
+      UserUuid: user.uuid
+    };
+  });
+
   //GET ALL TEST
   describe("GET * TRESAURY", () => {
     it("It should return all tresaury.", async () => {
@@ -38,7 +56,7 @@ describe("TRESAURY", () => {
       res.body[0].should.have.keys(tresauryKeys);
     });
   });
-  
+
   //GET ONE TEST
   describe("GET ONE TRESAURY", () => {
     it("should return a SINGLE tresaury", async () => {

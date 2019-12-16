@@ -4,21 +4,37 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Plants = require("../sequelize/models/plants");
+const Seed = require("../sequelize/models/seeds");
 
-const plantsKeys = ["uuid", "image", "createdAt", "updatedAt"];
 chai.use(chaiHttp);
 
-const plantsSample = {
+const plantsKeys = ["uuid", "image", "createdAt", "updatedAt", "SeedUuid"];
+let plantsSample = {
   image:
     "https://www.ikea.com/fr/fr/images/products/monstera-potted-plant__0653991_PE708220_S5.JPG?f=s"
 };
+const seedsSample = {
+  name: "rose",
+  status: "vulnérable",
+  type: "vivace",
+  environment: "extérieur/intérieur",
+  season: "printemps",
+  exposure: "sun",
+  spray: "fréquente"
+};
 
-describe("plants", () => {
-  before(() => sequelize.sync({ force: true }));
-  
+describe("PLANT", () => {
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const seed = await Seed.create(seedsSample);
+    plantsSample = {
+      ...plantsSample,
+      SeedUuid: seed.uuid
+    };
+  });
+
   //GET ALL TEST
   describe("GET * Plants", () => {
-
     it("It should return all plants.", async () => {
       await Plants.create(plantsSample);
       const res = await chai.request(server).get("/plants");

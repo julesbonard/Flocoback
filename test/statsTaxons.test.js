@@ -4,6 +4,9 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const StatsTaxons = require("../sequelize/models/statsTaxons");
+const MiniFlora = require("../sequelize/models/miniFlora");
+
+chai.use(chaiHttp);
 
 const statsTaxonsKeys = [
   "uuid",
@@ -11,17 +14,28 @@ const statsTaxonsKeys = [
   "number",
   "status",
   "createdAt",
-  "updatedAt"
+  "updatedAt",
+  "miniFloraUuid"
 ];
+let statsTaxonsSample = {
+  number: 3,
+  restored: true,
+  status: "en danger critique"
+};
+const miniFloraSample = {
+  number: 123
+};
 
-chai.use(chaiHttp);
-describe("STATSTAXONS", () => {
-  before(() => sequelize.sync({ force: true }));
-  const statsTaxonsSample = {
-    number: 3,
-    restored: true,
-    status: "en danger critique"
-  };
+describe("STATSTAXON", () => {
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const miniFlora = await MiniFlora.create(miniFloraSample);
+    statsTaxonsSample = {
+      ...statsTaxonsSample,
+      miniFloraUuid: miniFlora.uuid
+    };
+  });
+
   //GET ALL TEST
   describe("GET * STATSTAXONS", () => {
     it("It should return all statsTaxons.", async () => {

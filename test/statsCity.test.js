@@ -4,16 +4,36 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const StatsCity = require("../sequelize/models/statsCity");
-
-const statsCityKeys = ["uuid", "district", "street", "createdAt", "updatedAt"];
+const MiniFlora = require("../sequelize/models/miniFlora");
 
 chai.use(chaiHttp);
+
+const statsCityKeys = [
+  "uuid",
+  "district",
+  "street",
+  "createdAt",
+  "updatedAt",
+  "miniFloraUuid"
+];
+let statsCitySample = {
+  street: 123,
+  district: 3
+};
+const miniFloraSample = {
+  number: 123
+};
+
 describe("STATSCITY", () => {
-  before(() => sequelize.sync({ force: true }));
-  const statsCitySample = {
-    street: 123,
-    district: 3
-  };
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const miniFlora = await MiniFlora.create(miniFloraSample);
+    statsCitySample = {
+      ...statsCitySample,
+      miniFloraUuid: miniFlora.uuid
+    };
+  });
+
   //GET ALL TEST
   describe("GET * STATSCITY", () => {
     it("It should return all statsCity.", async () => {

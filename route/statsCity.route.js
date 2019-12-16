@@ -61,10 +61,11 @@ router.put("/:id", joiValidate(statsCityPut), (req, res) => {
 
 //POST ONE
 router.post("/", joiValidate(statsCityPost), (req, res) => {
-  const { district, street } = req.body;
+  const { district, street, miniFloraUuid } = req.body;
   StatsCity.create({
     district,
-    street
+    street,
+    miniFloraUuid
   })
     .then(statsCity => res.status(201).json(statsCity))
     .catch(err => res.status(400).json(err));

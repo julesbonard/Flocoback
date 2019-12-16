@@ -5,14 +5,15 @@ const server = require("../index");
 const sequelize = require("../sequelize");
 const MiniFlora = require("../sequelize/models/miniFlora");
 
-const miniFloraKeys = ["uuid", "number", "createdAt", "updatedAt"];
-
 chai.use(chaiHttp);
+
+const miniFloraKeys = ["uuid", "number", "createdAt", "updatedAt"];
+const miniFloraSample = {
+  number: 123
+};
+
 describe("MINIFLORA", () => {
   before(() => sequelize.sync({ force: true }));
-  const miniFloraSample = {
-    number: 123
-  };
   //GET ALL TEST
   describe("GET * MINIFLORA", () => {
     it("It should return all miniFlora.", async () => {
