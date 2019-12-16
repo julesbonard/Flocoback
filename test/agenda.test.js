@@ -6,12 +6,25 @@ const sequelize = require("../sequelize");
 const Agenda = require("../sequelize/models/agenda");
 const User = require("../sequelize/models/users");
 
+
 chai.use(chaiHttp);
 
 const agendaKeys = ["uuid", "event", "createdAt", "updatedAt", "UserUuid"];
+
 let agendaSample = {
   event: "ete"
 };
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
+
 const usersSample = {
   firstName: "Toto",
   lastName: "Paul",

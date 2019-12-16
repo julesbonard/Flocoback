@@ -4,6 +4,7 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Post = require("../sequelize/models/posts");
+const Users = require("../sequelize/models/users");
 
 chai.use(chaiHttp);
 
@@ -13,7 +14,8 @@ const postsKeys = [
   "date",
   "image",
   "createdAt",
-  "updatedAt"
+  "updatedAt",
+  "UserUuid"
 ];
 const postSample = {
   contents: "My plant",
@@ -21,8 +23,32 @@ const postSample = {
   image: "https/"
 };
 
-describe("POST", () => {
-  before(() => sequelize.sync({ force: true }));
+
+let postSample = {
+  contents: "My plant",
+  date: "1970-01-01T00:00:00.000Z",
+  image: "https/"
+};
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
+describe("POSTS", () => {
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const users = await Users.create(usersSample);
+    postSample = {
+      ...postSample,
+      UserUuid: users.uuid
+    };
+  });
+
   //GET ALL TEST
   describe("GET * POSTS", () => {
     it("It should return all posts.", async () => {

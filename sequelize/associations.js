@@ -15,6 +15,7 @@ const StatsTaxons = require("./models/statsTaxons");
 const Tresaury = require("./models/tresaury");
 const User = require("./models/users");
 
+
 // //USER
 User.hasOne(Agenda, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
 User.hasOne(Comments, {
@@ -30,8 +31,14 @@ User.hasOne(Tresaury, {
 });
 User.hasMany(Pots, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
 
+//USER
+User.hasOne(Agenda, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
+User.hasMany(Posts, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
+
+
 //AGENDA
 Agenda.belongsTo(User, { foreignKey: { allowNull: false } });
+
 
 //COMENTS
 Comments.belongsTo(User, { foreignKey: { allowNull: false } });
@@ -75,3 +82,7 @@ StatsCity.belongsTo(MiniFlora, { foreignKey: { allowNull: false } });
 
 //TRESAURY
 Tresaury.belongsTo(User, { foreignKey: { allowNull: false } });
+
+//POSTS
+Posts.belongsTo(User, { foreignKey: { allowNull: false } });
+

@@ -62,11 +62,12 @@ router.put("/:id", joiValidate(postsPut), (req, res) => {
 
 //POST ONE
 router.post("/", joiValidate(postsPost), (req, res) => {
-  const { contents, date, image } = req.body;
+  const { contents, date, image, UserUuid } = req.body;
   Post.create({
     contents,
     date,
-    image
+    image,
+    UserUuid
   })
     .then(posts => res.status(201).json(posts))
     .catch(err => res.status(400).json(err));
