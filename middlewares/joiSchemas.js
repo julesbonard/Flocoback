@@ -32,7 +32,6 @@ module.exports.miniFloraPut = Joi.object({
 module.exports.statsCityPost = Joi.object({
   district: Joi.number().required(),
   street: Joi.number().required(),
-  miniFloraUuid: Joi.string()
 });
 module.exports.statsCityPut = Joi.object({
   district: Joi.number(),
