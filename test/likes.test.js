@@ -29,7 +29,7 @@ const usersSample = {
   pseudo: "azerty",
   password: "ytreza23"
 };
-const postSample = {
+let postSample = {
   contents: "My plant",
   date: "1970-01-01T00:00:00.000Z",
   image: "https/"
@@ -39,6 +39,10 @@ describe("LIKE", () => {
   before(async () => {
     await sequelize.sync({ force: true });
     const user = await User.create(usersSample);
+    postSample = {
+      ...postSample,
+      UserUuid: user.uuid
+    };
     const post = await Post.create(postSample);
     likesSample = {
       ...likesSample,

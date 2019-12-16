@@ -17,12 +17,6 @@ const postsKeys = [
   "updatedAt",
   "UserUuid"
 ];
-const postSample = {
-  contents: "My plant",
-  date: "1970-01-01T00:00:00.000Z",
-  image: "https/"
-};
-
 
 let postSample = {
   contents: "My plant",
