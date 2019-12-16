@@ -4,6 +4,7 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const User = require("../sequelize/models/users");
+const bcrypt = require("bcrypt");
 
 chai.use(chaiHttp);
 
@@ -30,13 +31,21 @@ const usersSample = {
   password: "ytreza23"
 };
 
+User.prototype.checkPassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
 describe("USERS", () => {
   before(() => sequelize.sync({ force: true }));
+
   //GET ALL TEST
   describe("GET * USERS", () => {
     it("It should return all users.", async () => {
       await User.create(usersSample);
       const res = await chai.request(server).get("/users");
+      if (bcrypt.compareSync(usersSample.password, res.body[0].password)) {
+        usersSample.password = res.body[0].password;
+      }
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("array");
@@ -66,6 +75,9 @@ describe("USERS", () => {
         .request(server)
         .post(`/users`)
         .send(usersSample);
+      if (bcrypt.compareSync(usersSample.password, res.body.password)) {
+        usersSample.password = res.body.password;
+      }
       res.should.have.status(201);
       res.should.be.json;
       res.body.should.be.a("object");
