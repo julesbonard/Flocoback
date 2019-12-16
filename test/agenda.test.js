@@ -9,6 +9,7 @@ const User = require("../sequelize/models/users");
 chai.use(chaiHttp);
 
 const agendaKeys = ["uuid", "event", "createdAt", "updatedAt", "UserUuid"];
+
 let agendaSample = {
   event: "ete"
 };

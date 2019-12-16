@@ -30,6 +30,8 @@ User.hasOne(Tresaury, {
   onDelete: "CASCADE"
 });
 User.hasMany(Pots, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
+User.hasOne(Agenda, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
+User.hasMany(Posts, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
 
 //AGENDA
 Agenda.belongsTo(User, { foreignKey: { allowNull: false } });
@@ -48,6 +50,9 @@ Likes.belongsTo(Posts, { foreignKey: { allowNull: false } });
 //POSTS
 Posts.hasMany(Likes, { foreignKey: { allowNull: false } });
 Posts.hasMany(Comments, { foreignKey: { allowNull: false } });
+Posts.belongsTo(User, { foreignKey: { allowNull: false } });
+
+//POTS
 Pots.belongsTo(User, { foreignKey: { allowNull: false } });
 
 //LOCATIONS
@@ -71,9 +76,10 @@ StatsTaxons.belongsTo(MiniFlora, { foreignKey: { allowNull: false } });
 StatsCity.belongsTo(MiniFlora, { foreignKey: { allowNull: false } });
 
 //PARTNERS
+Partners.belongsToMany(Seeds, { through: Seed_Partner });
 
 //TRESAURY
 Tresaury.belongsTo(User, { foreignKey: { allowNull: false } });
 
+//SEEDS
 Seeds.belongsToMany(Partners, { through: Seed_Partner });
-Partners.belongsToMany(Seeds, { through: Seed_Partner });
