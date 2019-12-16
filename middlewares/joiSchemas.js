@@ -31,7 +31,7 @@ module.exports.miniFloraPut = Joi.object({
 //STATSCITY
 module.exports.statsCityPost = Joi.object({
   district: Joi.number().required(),
-  street: Joi.number().required(),
+  street: Joi.number().required()
 });
 module.exports.statsCityPut = Joi.object({
   district: Joi.number(),
