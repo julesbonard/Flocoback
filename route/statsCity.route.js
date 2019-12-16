@@ -32,12 +32,11 @@ router.get("/:id", (req, res) => {
 //PUT ONE
 router.put("/:id", joiValidate(statsCityPut), (req, res) => {
   const { id } = req.params;
-  const { street, district, MiniFloraUuid } = req.body;
+  const { street, district } = req.body;
   StatsCity.update(
     {
       street,
-      district,
-      MiniFloraUuid
+      district
     },
     {
       where: {
