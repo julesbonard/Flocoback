@@ -14,7 +14,7 @@ const StatsCity = require("./models/statsCity");
 const StatsTaxons = require("./models/statsTaxons");
 const Tresaury = require("./models/tresaury");
 const User = require("./models/users");
-
+const Seed_Partner = require("./models/seed_Partner");
 
 // //USER
 User.hasOne(Agenda, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
@@ -30,15 +30,11 @@ User.hasOne(Tresaury, {
   onDelete: "CASCADE"
 });
 User.hasMany(Pots, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
-
-//USER
 User.hasOne(Agenda, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
 User.hasMany(Posts, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
 
-
 //AGENDA
 Agenda.belongsTo(User, { foreignKey: { allowNull: false } });
-
 
 //COMENTS
 Comments.belongsTo(User, { foreignKey: { allowNull: false } });
@@ -54,6 +50,9 @@ Likes.belongsTo(Posts, { foreignKey: { allowNull: false } });
 //POSTS
 Posts.hasMany(Likes, { foreignKey: { allowNull: false } });
 Posts.hasMany(Comments, { foreignKey: { allowNull: false } });
+Posts.belongsTo(User, { foreignKey: { allowNull: false } });
+
+//POTS
 Pots.belongsTo(User, { foreignKey: { allowNull: false } });
 
 //LOCATIONS
@@ -65,7 +64,6 @@ Plants.belongsTo(Seeds, { foreignKey: { allowNull: false } });
 
 //SEEDS
 Seeds.hasOne(Plants, { foreignKey: { allowNull: false } });
-// Seeds.belongsToMany(Partners, {through: {model: ItemTag}, foreignKey: { allowNull: false },constraints: false});
 
 //MINIFLORA:
 MiniFlora.hasOne(StatsTaxons, { foreignKey: { allowNull: false } });
@@ -78,11 +76,10 @@ StatsTaxons.belongsTo(MiniFlora, { foreignKey: { allowNull: false } });
 StatsCity.belongsTo(MiniFlora, { foreignKey: { allowNull: false } });
 
 //PARTNERS
-// Partners.belongsToMany(Seeds, {through: {model: ItemTag}, foreignKey: { allowNull: false },constraints: false});
+Partners.belongsToMany(Seeds, { through: Seed_Partner });
 
 //TRESAURY
 Tresaury.belongsTo(User, { foreignKey: { allowNull: false } });
 
-//POSTS
-Posts.belongsTo(User, { foreignKey: { allowNull: false } });
-
+//SEEDS
+Seeds.belongsToMany(Partners, { through: Seed_Partner });
