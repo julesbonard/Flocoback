@@ -1,5 +1,6 @@
 require("dotenv").config(); // To get environment variables from a .env file
 const express = require("express");
+const passport = require("passport");
 const app = express();
 const cors = require("cors");
 const PORT = process.env.PORT || 8000;
@@ -12,9 +13,13 @@ require("./sequelize/associations"); // If you have associations
 app.use(cors());
 app.use(express.json());
 
+app.use(passport.initialize());
+require("./config");
+
 app.get("/", (req, res) => res.send("Hello world !"));
 
 //route
+app.use("/login", require("./route/login.route"));
 app.use("/users", require("./route/users.route"));
 app.use("/miniFlora", require("./route/miniFlora.route"));
 app.use("/statsTaxons", require("./route/statsTaxons.route"));
