@@ -1,16 +1,16 @@
+require("dotenv").config();
 const passport = require("passport");
 const FacebookStrategy = require("passport-facebook");
 const GoogleStrategy = require("passport-google");
-const TwitterStrategy = require("passport-twitter");
 const jwt = require("jsonwebtoken");
-const keys = require("./index");
 
-const User = require("../sequelize/models/users");
+const secret = process.env.SECRET;
+const User = require("./sequelize/models/users");
 
 const credentials = {
   facebook: {
-    clientID: keys.FACEBOOK.clientID,
-    clientSecret: keys.FACEBOOK.clientSecret,
+    clientID: process.env.FACEBOOK_ID,
+    clientSecret: process.env.FACEBOOK_SECRET,
     callbackURL: "/auth/facebook/callback"
   }
 };
@@ -31,8 +31,6 @@ passport.use(
     profile,
     done
   ) {
-    console.log(profile);
-
     let userData = {
       email: profile.email[0].value,
       name: profile.username,
@@ -50,6 +48,6 @@ passport.use(
       expiresIn: "1h"
     });
 
-    done(err, user);
+    done(null, userData);
   })
 );

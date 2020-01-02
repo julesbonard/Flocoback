@@ -14,29 +14,29 @@ app.use(cors());
 app.use(express.json());
 
 app.use(passport.initialize());
-require("./config");
+require("./passport");
 
 app.get("/", (req, res) => res.send("Hello world !"));
 
 //route
-app.use("/login", require("./route/login.route"));
-app.use("/users", require("./route/users.route"));
-app.use("/miniFlora", require("./route/miniFlora.route"));
-app.use("/statsTaxons", require("./route/statsTaxons.route"));
-app.use("/statsCity", require("./route/statsCity.route"));
-app.use("/statsOxygene", require("./route/statsOxygene.route"));
-app.use("/plants", require("./route/plants.route"));
-app.use("/locations", require("./route/locations.route"));
-app.use("/partners", require("./route/partners.route"));
-app.use("/tresaury", require("./route/tresaury.route"));
-app.use("/agenda", require("./route/agenda.route"));
-app.use("/friends", require("./route/friends.route"));
-app.use("/comments", require("./route/comments.route"));
-app.use("/likes", require("./route/likes.route"));
-app.use("/posts", require("./route/posts.route"));
-app.use("/seeds", require("./route/seeds.route"));
-app.use("/pots", require("./route/pots.route"));
-app.use("/messages", require("./route/messages.route"));
+app.use("/login", require("./routes/login.routes"));
+app.use("/users", require("./routes/users.routes"));
+app.use("/miniFlora", require("./routes/miniFlora.routes"));
+app.use("/statsTaxons", require("./routes/statsTaxons.routes"));
+app.use("/statsCity", require("./routes/statsCity.routes"));
+app.use("/statsOxygene", require("./routes/statsOxygene.routes"));
+app.use("/plants", require("./routes/plants.routes"));
+app.use("/locations", require("./routes/locations.routes"));
+app.use("/partners", require("./routes/partners.routes"));
+app.use("/tresaury", require("./routes/tresaury.routes"));
+app.use("/agenda", require("./routes/agenda.routes"));
+app.use("/friends", require("./routes/friends.routes"));
+app.use("/comments", require("./routes/comments.routes"));
+app.use("/likes", require("./routes/likes.routes"));
+app.use("/posts", require("./routes/posts.routes"));
+app.use("/seeds", require("./routes/seeds.routes"));
+app.use("/pots", require("./routes/pots.routes"));
+app.use("/messages", require("./routes/messages.routes"));
 
 async function main() {
   try {

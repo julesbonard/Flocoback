@@ -29,10 +29,10 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//PUT 
+//PUT
 router.put("/:id", joiValidate(miniFloraPut), (req, res) => {
   const { id } = req.params;
-  const { number } = req.body
+  const { number } = req.body;
   MiniFlora.update(
     {
       number
