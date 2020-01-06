@@ -141,7 +141,8 @@ module.exports.seedsPost = Joi.object({
   environment: Joi.string().required(),
   season: Joi.string().required(),
   exposure: Joi.string().required(),
-  spray: Joi.string().required()
+  spray: Joi.string().required(),
+  PotUuid: Joi.string()
 });
 module.exports.seedsPut = Joi.object({
   name: Joi.string(),

@@ -1,0 +1,58 @@
+
+### POST 1 user
+POST https://floco-app.herokuapp.com/users
+Content-Type: application/json
+
+{
+    "firstName": "Toto",
+    "lastName": "Paul",
+    "avatar": "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+    "age": 23,
+    "email": "totopaul@gmail.com",
+    "pseudo": "azerty",
+    "password": "ytreza23"
+}
+
+### POST 1 pot
+POST https://floco-app.herokuapp.com/pots
+Content-Type: application/json
+
+{
+    "width": 12,
+    "length": 11,
+    "depth": 14,
+    "UserUuid": "2cfb2420-f9c4-435f-903a-bb68ebe41b3e"
+}
+###POST 1 seed
+POST https://floco-app.herokuapp.com/seeds
+Content-Type: application/json
+
+{
+    "name": "rose",
+    "status": "vulnérable",
+    "type": "vivace",
+    "environment": "extérieur/intérieur",
+    "season": "printemps",
+    "exposure": "sun",
+    "spray": "fréquente",
+    "PotUuid": "d9d2c894-218a-4716-a2df-41b30f945c15"
+}
+
+### POST 1 plant
+POST https://floco-app.herokuapp.com/plants
+Content-Type: application/json
+
+{
+    "image": "https://static.aujardin.info/cache/th/img9/philodendron-feuille-600x450.jpg",
+    "seedUuid"
+}
+
+### POST 1 location
+POST https://floco-app.herokuapp.com/locations
+Content-Type: application/json
+
+{
+    "latitude": 20,
+    "longitude": 20,
+    "plantUuid"
+}

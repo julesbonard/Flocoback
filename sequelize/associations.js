@@ -54,6 +54,7 @@ Posts.belongsTo(User, { foreignKey: { allowNull: false } });
 
 //POTS
 Pots.belongsTo(User, { foreignKey: { allowNull: false } });
+Pots.hasOne(Seeds, { foreignKey: { allowNull: false } });
 
 //LOCATIONS
 Locations.belongsTo(Plants, { foreignKey: { allowNull: false } });
@@ -64,6 +65,7 @@ Plants.belongsTo(Seeds, { foreignKey: { allowNull: false } });
 
 //SEEDS
 Seeds.hasOne(Plants, { foreignKey: { allowNull: false } });
+Seeds.belongsTo(Pots, { foreignKey: { allowNull: false } });
 
 //MINIFLORA:
 MiniFlora.hasOne(StatsTaxons, { foreignKey: { allowNull: false } });

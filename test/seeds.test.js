@@ -4,6 +4,10 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Seed = require("../sequelize/models/seeds");
+const Pot = require("../sequelize/models/pots");
+const User = require("../sequelize/models/users");
+
+chai.use(chaiHttp);
 
 const seedsKeys = [
   "uuid",
@@ -15,21 +19,50 @@ const seedsKeys = [
   "exposure",
   "spray",
   "createdAt",
-  "updatedAt"
+  "updatedAt",
+  "PotUuid"
 ];
 
+let seedsSample = {
+  name: "rose",
+  status: "vulnérable",
+  type: "vivace",
+  environment: "extérieur/intérieur",
+  season: "printemps",
+  exposure: "sun",
+  spray: "fréquente"
+};
+let potsSample = {
+  width: 40,
+  length: 35,
+  depth: 40
+};
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
+
 describe("SEED", () => {
-  chai.use(chaiHttp);
-  before(() => sequelize.sync({ force: true }));
-  const seedsSample = {
-    name: "rose",
-    status: "vulnérable",
-    type: "vivace",
-    environment: "extérieur/intérieur",
-    season: "printemps",
-    exposure: "sun",
-    spray: "fréquente"
-  };
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const user = await User.create(usersSample);
+    potsSample = {
+      ...potsSample,
+      UserUuid: user.uuid
+    };
+    const pot = await Pot.create(potsSample);
+    seedsSample = {
+      ...seedsSample,
+      PotUuid: pot.uuid
+    };
+  });
+  //GET ALL TEST
   describe("GET * SEEDS", () => {
     it("It should return all seeds.", async () => {
       await Seed.create(seedsSample);

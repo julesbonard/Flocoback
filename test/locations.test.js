@@ -6,6 +6,8 @@ const sequelize = require("../sequelize");
 const Location = require("../sequelize/models/locations");
 const Seed = require("../sequelize/models/seeds");
 const Plants = require("../sequelize/models/plants");
+const Pot = require("../sequelize/models/pots");
+const User = require("../sequelize/models/users");
 
 chai.use(chaiHttp);
 
@@ -25,7 +27,8 @@ let plantsSample = {
   image:
     "https://www.ikea.com/fr/fr/images/products/monstera-potted-plant__0653991_PE708220_S5.JPG?f=s"
 };
-const seedsSample = {
+
+let seedsSample = {
   name: "rose",
   status: "vulnérable",
   type: "vivace",
@@ -34,10 +37,35 @@ const seedsSample = {
   exposure: "sun",
   spray: "fréquente"
 };
+let potsSample = {
+  width: 40,
+  length: 35,
+  depth: 40
+};
+const usersSample = {
+  firstName: "Toto",
+  lastName: "Paul",
+  avatar:
+    "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+  age: 23,
+  email: "totopaul@gmail.com",
+  pseudo: "azerty",
+  password: "ytreza23"
+};
 
 describe("LOCATION", () => {
   before(async () => {
     await sequelize.sync({ force: true });
+    const user = await User.create(usersSample);
+    potsSample = {
+      ...potsSample,
+      UserUuid: user.uuid
+    };
+    const pot = await Pot.create(potsSample);
+    seedsSample = {
+      ...seedsSample,
+      PotUuid: pot.uuid
+    };
     const seed = await Seed.create(seedsSample);
     plantsSample = {
       ...plantsSample,
