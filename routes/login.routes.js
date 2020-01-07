@@ -39,6 +39,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// FACEBOOK
 router.get(
   "/auth/facebook",
   passport.authenticate("facebook", { scope: ["email"] })
@@ -47,7 +48,22 @@ router.get(
 router.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", { failureRedirect: "/", session: false }),
-  function(req, res) {
+  (req, res) => {
+    const { uuid, jwt } = req.user;
+    res.redirect(`http://localhost:3000?token=${jwt}&id=${uuid}`);
+  }
+);
+
+// GOOGLE
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/", session: false }),
+  (req, res) => {
     const { uuid, jwt } = req.user;
     res.redirect(`http://localhost:3000?token=${jwt}&id=${uuid}`);
   }
