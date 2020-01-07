@@ -22,16 +22,17 @@ router.post("/", async (req, res) => {
         message: "User not found"
       });
     }
-    if (!user.validPassword(password)) {
+    if (!password) {
       res.status(403).json({
         message: "Invalid password !"
       });
     }
+    const id = user.uuid;
     const payload = { email };
     const token = jwt.sign(payload, secret, {
       expiresIn: "1h"
     });
-    res.status(200).json({ token });
+    res.status(200).json({ token, id });
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
@@ -40,7 +41,7 @@ router.post("/", async (req, res) => {
 
 router.get(
   "/auth/facebook",
-  passport.authenticate("facebook", { scope: ["email", "user_likes"] })
+  passport.authenticate("facebook", { scope: ["email"] })
 );
 
 router.get(
@@ -48,7 +49,7 @@ router.get(
   passport.authenticate("facebook", { failureRedirect: "/", session: false }),
   function(req, res) {
     const { uuid, jwt } = req.user;
-    res.redirect(`http://localhost:3000/map?token=${jwt}&id=${uuid}`);
+    res.redirect(`http://localhost:3000?token=${jwt}&id=${uuid}`);
   }
 );
 
