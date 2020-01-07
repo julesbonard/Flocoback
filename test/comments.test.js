@@ -27,10 +27,10 @@ const usersSample = {
   lastName: "Paul",
   avatar:
     "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-  age: 23,
   email: "totopaul@gmail.com",
   pseudo: "azerty",
-  password: "ytreza23"
+  password: "ytreza23",
+  isOAuth: true
 };
 let postSample = {
   contents: "My plant",
@@ -97,7 +97,7 @@ describe("COMMENT", () => {
       const res = await chai
         .request(server)
         .post("/comments")
-        .send({ dte: 23, age: 30 });
+        .send({ dte: 23 });
       res.should.have.status(422);
       res.should.be.json;
       res.body.should.be.a("array");

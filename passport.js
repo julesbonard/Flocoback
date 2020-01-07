@@ -1,6 +1,6 @@
 require("dotenv").config();
 const passport = require("passport");
-const FacebookStrategy = require("passport-facebook");
+const FacebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require("passport-google");
 const jwt = require("jsonwebtoken");
 
@@ -11,7 +11,8 @@ const credentials = {
   facebook: {
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
-    callbackURL: "/auth/facebook/callback"
+    callbackURL: "http://localhost:8000/login/auth/facebook/callback",
+    profileFields: ["id", "emails", "name"]
   }
 };
 
@@ -31,23 +32,31 @@ passport.use(
     profile,
     done
   ) {
+    console.log(profile);
+
     let userData = {
-      email: profile.email[0].value,
-      name: profile.username,
+      firstName: profile.name.givenName,
+      lastName: profile.name.familyName,
+      email: profile.emails[0].value,
+      pseudo: profile.name.givenName,
       token: accessToken
     };
-    await User.findOrCreate({
+    const [user, created] = await User.findOrCreate({
       where: {
         email: userData.email
       },
       defaults: {
-        isOAuth: false
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        pseudo: userData.pseudo
+        // isOAuth: false
       }
     });
-    userData.jwt = jwt.sign({ email: userData.email }, secret, {
+    user.jwt = jwt.sign({ email: userData.email }, secret, {
       expiresIn: "1h"
     });
 
-    done(null, userData);
+    done(null, user);
   })
 );

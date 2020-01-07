@@ -57,18 +57,18 @@ module.exports.statsTaxonsPut = Joi.object({
 module.exports.usersPost = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
-  age: Joi.number().required(),
   email: Joi.string().required(),
   pseudo: Joi.string().required(),
-  password: Joi.string().required(),
+  isOAuth: Joi.boolean().required(),
+  password: Joi.string(),
   avatar: Joi.string()
 });
 module.exports.usersPut = Joi.object({
   firstName: Joi.string(),
   lastName: Joi.string(),
-  age: Joi.number(),
   email: Joi.string(),
   pseudo: Joi.string(),
+  isOAuth: Joi.boolean(),
   password: Joi.string(),
   avatar: Joi.string()
 });

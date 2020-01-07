@@ -5,6 +5,11 @@ const app = express();
 const cors = require("cors");
 const PORT = process.env.PORT || 8000;
 
+if (process.env.NODE_ENV === "DEVELOPMENT") {
+  const logger = require("morgan");
+  app.use(logger("tiny"));
+}
+
 // Get the Sequelize config
 const sequelize = require("./sequelize");
 require("./sequelize/associations"); // If you have associations

@@ -27,10 +27,10 @@ const usersSample = {
   lastName: "Paul",
   avatar:
     "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-  age: 23,
   email: "totopaul@gmail.com",
   pseudo: "azerty",
-  password: "ytreza23"
+  password: "ytreza23",
+  isOAuth: true
 };
 
 describe("TRESAURY", () => {

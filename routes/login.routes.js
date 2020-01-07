@@ -40,15 +40,15 @@ router.post("/", async (req, res) => {
 
 router.get(
   "/auth/facebook",
-  passport.authenticate("facebook", { scope: ["profile", "username"] })
+  passport.authenticate("facebook", { scope: ["email", "user_likes"] })
 );
 
 router.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", { failureRedirect: "/", session: false }),
   function(req, res) {
-    const { jwt } = req.user;
-    res.redirect(`http://localhost:3000?token=${jwt}`);
+    const { uuid, jwt } = req.user;
+    res.redirect(`http://localhost:3000/map?token=${jwt}&id=${uuid}`);
   }
 );
 

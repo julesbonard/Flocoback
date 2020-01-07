@@ -13,10 +13,10 @@ const usersKeys = [
   "avatar",
   "firstName",
   "lastName",
-  "age",
   "email",
   "pseudo",
   "password",
+  "isOAuth",
   "createdAt",
   "updatedAt"
 ];
@@ -25,10 +25,10 @@ const usersSample = {
   lastName: "Paul",
   avatar:
     "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-  age: 23,
   email: "totopaul@gmail.com",
   pseudo: "azerty",
-  password: "ytreza23"
+  password: "ytreza23",
+  isOAuth: true
 };
 
 User.prototype.checkPassword = function(password) {
@@ -89,7 +89,7 @@ describe("USERS", () => {
       const res = await chai
         .request(server)
         .post("/users")
-        .send({ dte: 23, age: 30 });
+        .send({ dte: 23 });
       res.should.have.status(422);
       res.should.be.json;
       res.body.should.be.a("array");
@@ -112,7 +112,7 @@ describe("USERS", () => {
       const res = await chai
         .request(server)
         .put(`/users/${users.uuid}`)
-        .send({ age: 10, pseudo: "scfresxcf" });
+        .send({ pseudo: "scfresxcf" });
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("object");
@@ -123,7 +123,7 @@ describe("USERS", () => {
       const res = await chai
         .request(server)
         .put(`/users/${users.uuid}`)
-        .send({ age: "aaaee" });
+        .send({ firstName: 234 });
       res.should.have.status(422);
       res.should.be.json;
       res.body.should.be.a("array");

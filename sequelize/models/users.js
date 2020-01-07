@@ -20,11 +20,6 @@ const User = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false
     },
-    age: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      validate: { min: 0 }
-    },
     email: {
       type: Sequelize.STRING,
       allowNull: false
@@ -36,6 +31,11 @@ const User = sequelize.define(
     password: {
       type: Sequelize.STRING,
       allowNull: true
+    },
+    isOAuth: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     },
     avatar: {
       type: Sequelize.STRING,
