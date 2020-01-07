@@ -35,21 +35,21 @@ router.put("/:id", joiValidate(usersPut), (req, res) => {
   const {
     firstName,
     lastName,
-    age,
     email,
     pseudo,
     password,
-    avatar
+    avatar,
+    isOAuth
   } = req.body;
   User.update(
     {
       firstName,
       lastName,
-      age,
       email,
       pseudo,
       password,
-      avatar
+      avatar,
+      isOAuth
     },
     {
       where: {
@@ -77,20 +77,20 @@ router.post("/", joiValidate(usersPost), (req, res) => {
   const {
     firstName,
     lastName,
-    age,
     email,
     pseudo,
     password,
-    avatar
+    avatar,
+    isOAuth
   } = req.body;
   User.create({
     firstName,
     lastName,
-    age,
     email,
     pseudo,
     password,
-    avatar
+    avatar,
+    isOAuth
   })
     .then(users => res.status(201).json(users))
     .catch(err => res.status(400).json(err));

@@ -26,12 +26,10 @@ const usersSample = {
   lastName: "Paul",
   avatar:
     "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-  age: 23,
   email: "totopaul@gmail.com",
   pseudo: "azerty",
   password: "ytreza23",
-  createdAt: new Date(),
-  updatedAt: new Date()
+  isOAuth: true
 };
 
 const receiverSample = {
@@ -39,7 +37,6 @@ const receiverSample = {
   lastName: "Paul",
   avatar:
     "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-  age: 23,
   email: "jeanpaul@gmail.com",
   pseudo: "qwerty",
   password: "qwertyuiop",
