@@ -4,13 +4,13 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-    "firstName": "Toto",
-    "lastName": "Paul",
+    "firstName": "l",
+    "lastName": "l",
     "avatar": "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-    "age": 23,
-    "email": "totopaul@gmail.com",
-    "pseudo": "azerty",
-    "password": "ytreza23"
+    "email": "l",
+    "pseudo": "l",
+    "password": "l",
+  "isOAuth": false
 }
 
 ### POST 1 pot
