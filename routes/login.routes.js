@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
         message: "User not found"
       });
     }
-    if (!password) {
+    if (!user.checkPassword(password)) {
       res.status(403).json({
         message: "Invalid password !"
       });

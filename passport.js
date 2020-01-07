@@ -13,6 +13,11 @@ const credentials = {
     clientSecret: process.env.FACEBOOK_SECRET,
     callbackURL: "http://localhost:8000/login/auth/facebook/callback",
     profileFields: ["id", "emails", "name"]
+  },
+  google: {
+    clientID: process.env.GOOGLE_ID,
+    clientSecret: process.env.GOOGLE_SECRET,
+    callbackURL: "http://localhost:8000/login/auth/google/callback"
   }
 };
 
@@ -60,3 +65,5 @@ passport.use(
     done(null, user);
   })
 );
+
+//GOOGLE strategy
