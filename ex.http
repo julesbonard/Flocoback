@@ -1,6 +1,6 @@
 
 ### POST 1 user
-POST https://floco-app.herokuapp.com/users
+POST http://localhost:8000/users
 Content-Type: application/json
 
 {
@@ -14,17 +14,17 @@ Content-Type: application/json
 }
 
 ### POST 1 pot
-POST https://floco-app.herokuapp.com/pots
+POST http://localhost:8000/pots
 Content-Type: application/json
 
 {
     "width": 12,
     "length": 11,
     "depth": 14,
-    "UserUuid": "2cfb2420-f9c4-435f-903a-bb68ebe41b3e"
+    "UserUuid": "238de8fd-3936-4e90-86b2-1e166b765160"
 }
 ###POST 1 seed
-POST https://floco-app.herokuapp.com/seeds
+POST http://localhost:8000/seeds
 Content-Type: application/json
 
 {
@@ -35,11 +35,11 @@ Content-Type: application/json
     "season": "printemps",
     "exposure": "sun",
     "spray": "fréquente",
-    "PotUuid": "d9d2c894-218a-4716-a2df-41b30f945c15"
+    "PotUuid": "5aa39bfc-8cbe-4406-9c70-95068f98b5f9"
 }
 
 ### POST 1 plant
-POST https://floco-app.herokuapp.com/plants
+POST http://localhost:8000/plants
 Content-Type: application/json
 
 {
@@ -48,7 +48,7 @@ Content-Type: application/json
 }
 
 ### POST 1 location
-POST https://floco-app.herokuapp.com/locations
+POST http://localhost:8000/locations
 Content-Type: application/json
 
 {
