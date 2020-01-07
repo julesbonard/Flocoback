@@ -1,0 +1,58 @@
+
+### POST 1 user
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+    "firstName": "Toto",
+    "lastName": "Paul",
+    "avatar": "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
+    "age": 23,
+    "email": "totopaul@gmail.com",
+    "pseudo": "azerty",
+    "password": "ytreza23"
+}
+
+### POST 1 pot
+POST http://localhost:8000/pots
+Content-Type: application/json
+
+{
+    "width": 12,
+    "length": 11,
+    "depth": 14,
+    "UserUuid": "238de8fd-3936-4e90-86b2-1e166b765160"
+}
+###POST 1 seed
+POST http://localhost:8000/seeds
+Content-Type: application/json
+
+{
+    "name": "rose",
+    "status": "vulnérable",
+    "type": "vivace",
+    "environment": "extérieur/intérieur",
+    "season": "printemps",
+    "exposure": "sun",
+    "spray": "fréquente",
+    "PotUuid": "5aa39bfc-8cbe-4406-9c70-95068f98b5f9"
+}
+
+### POST 1 plant
+POST http://localhost:8000/plants
+Content-Type: application/json
+
+{
+    "image": "https://static.aujardin.info/cache/th/img9/philodendron-feuille-600x450.jpg",
+    "seedUuid"
+}
+
+### POST 1 location
+POST http://localhost:8000/locations
+Content-Type: application/json
+
+{
+    "latitude": 20,
+    "longitude": 20,
+    "plantUuid"
+}
