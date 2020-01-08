@@ -21,7 +21,7 @@ Content-Type: application/json
     "width": 12,
     "length": 11,
     "depth": 14,
-    "UserUuid": "238de8fd-3936-4e90-86b2-1e166b765160"
+    "UserUuid": "b70a7ac1-c8cf-4002-ad92-e5c75c6be8bc"
 }
 ###POST 1 seed
 POST http://localhost:8000/seeds
@@ -35,7 +35,7 @@ Content-Type: application/json
     "season": "printemps",
     "exposure": "sun",
     "spray": "fréquente",
-    "PotUuid": "5aa39bfc-8cbe-4406-9c70-95068f98b5f9"
+    "PotUuid": "f8c0a330-6294-427f-b0ed-2e391120b554"
 }
 
 ### POST 1 plant
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 {
     "image": "https://static.aujardin.info/cache/th/img9/philodendron-feuille-600x450.jpg",
-    "seedUuid"
+    "SeedUuid": "868faa9c-86c1-4439-8bbd-631ce1dc048f"
 }
 
 ### POST 1 location
@@ -54,5 +54,5 @@ Content-Type: application/json
 {
     "latitude": 20,
     "longitude": 20,
-    "plantUuid"
+    "PlantUuid": "421ab258-01c2-40ca-9350-dec9c81502ae"
 }
