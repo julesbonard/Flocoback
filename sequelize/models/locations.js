@@ -3,10 +3,14 @@ const sequelize = require("../index");
 
 const Location = sequelize.define("Location", {
   uuid: {
-    type: Sequelize.UUID,
+    // type: Sequelize.UUID,
+    // allowNull: false,
+    // primaryKey: true,
+    // defaultValue: Sequelize.UUIDV4
+    type: Sequelize.INTEGER,
     allowNull: false,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV4
+    autoIncrement: true
   },
   latitude: {
     type: Sequelize.FLOAT,

@@ -7,10 +7,14 @@ const User = sequelize.define(
   "User",
   {
     uuid: {
-      type: Sequelize.UUID,
+      // type: Sequelize.UUID,
+      // allowNull: false,
+      // primaryKey: true,
+      // defaultValue: Sequelize.UUIDV4
+      type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true,
-      defaultValue: Sequelize.UUIDV4
+      autoIncrement: true
     },
     firstName: {
       type: Sequelize.STRING,
@@ -54,7 +58,7 @@ const User = sequelize.define(
   }
 );
 
-User.prototype.checkPassword = function(password) {
+User.prototype.checkPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
