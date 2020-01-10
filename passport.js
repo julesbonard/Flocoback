@@ -76,6 +76,7 @@ passport.use(
         lastName: profile.name.familyName,
         email: profile.emails[0].value,
         pseudo: profile.displayName,
+        avatar: profile.photos[0].value,
         token: accesToken
       };
 
@@ -88,6 +89,7 @@ passport.use(
           lastName: userData.lastName,
           email: userData.email,
           pseudo: userData.pseudo,
+          avatar: userData.avatar,
           isOAuth: true
         }
       });
