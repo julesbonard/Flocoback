@@ -95,11 +95,12 @@ router.post("/", joiValidate(usersPost), async (req, res) => {
       avatar,
       isOAuth
     });
+    const id = user.uuid;
     const payload = { email };
     const token = jwt.sign(payload, secret, {
       expiresIn: "1h"
     });
-    res.status(201).json({ user, token });
+    res.status(201).json({ user, token, id });
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
