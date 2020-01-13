@@ -5,6 +5,7 @@ const router = express.Router();
 const { joiValidate } = require("../middlewares/joiValidate");
 const { postsPost, postsPut } = require("../middlewares/joiSchemas");
 const Post = require("../sequelize/models/posts");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
 router.get("/", (req, res) => {

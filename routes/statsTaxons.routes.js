@@ -8,6 +8,7 @@ const {
   statsTaxonsPut
 } = require("../middlewares/joiSchemas");
 const StatsTaxons = require("../sequelize/models/statsTaxons");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
 router.get("/", (req, res) => {

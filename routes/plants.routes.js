@@ -5,6 +5,7 @@ const Plants = require("../sequelize/models/plants");
 
 const { joiValidate } = require("../middlewares/joiValidate");
 const { plantsPost, plantsPut } = require("../middlewares/joiSchemas");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
 router.get("/", (req, res) => {

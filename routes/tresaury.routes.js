@@ -5,6 +5,7 @@ const Tresaury = require("../sequelize/models/tresaury");
 
 const { joiValidate } = require("../middlewares/joiValidate");
 const { tresauryPost, tresauryPut } = require("../middlewares/joiSchemas");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
 router.get("/", (req, res) => {

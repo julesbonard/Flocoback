@@ -5,16 +5,17 @@ const Agenda = require("../sequelize/models/agenda");
 
 const { joiValidate } = require("../middlewares/joiValidate");
 const { agendaPost, agendaPut } = require("../middlewares/joiSchemas");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
-router.get("/", (req, res) => {
+router.get("/", checkAuth, (req, res) => {
   Agenda.findAll()
     .then(agenda => res.status(200).json(agenda))
     .catch(err => res.status(400).json(err));
 });
 
 //GET ONE
-router.get("/:id", (req, res) => {
+router.get("/:id", checkAuth, (req, res) => {
   const { id } = req.params;
   Agenda.findOne({
     where: {
@@ -30,7 +31,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT
-router.put("/:id", joiValidate(agendaPut), (req, res) => {
+router.put("/:id", joiValidate(agendaPut), checkAuth, (req, res) => {
   const { id } = req.params;
   const { event } = req.body;
   Agenda.update(
@@ -59,7 +60,7 @@ router.put("/:id", joiValidate(agendaPut), (req, res) => {
 });
 
 //POST
-router.post("/", joiValidate(agendaPost), (req, res) => {
+router.post("/", joiValidate(agendaPost), checkAuth, (req, res) => {
   const { event, UserUuid } = req.body;
   Agenda.create({
     event,
@@ -70,7 +71,7 @@ router.post("/", joiValidate(agendaPost), (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const agenda = await Agenda.findOne({

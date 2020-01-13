@@ -5,6 +5,7 @@ const router = express.Router();
 const { joiValidate } = require("../middlewares/joiValidate");
 const { locationPost, locationPut } = require("../middlewares/joiSchemas");
 const Location = require("../sequelize/models/locations");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL LOCATIONS
 router.get("/", (req, res) => {

@@ -7,6 +7,7 @@ const { usersPost, usersPut } = require("../middlewares/joiSchemas");
 const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET;
 const User = require("../sequelize/models/users");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
 router.get("/", (req, res) => {
@@ -102,7 +103,6 @@ router.post("/", joiValidate(usersPost), async (req, res) => {
     });
     res.status(201).json({ user, token, id });
   } catch (err) {
-    console.log(err);
     res.status(400).json(err);
   }
 });
