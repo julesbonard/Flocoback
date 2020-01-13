@@ -56,3 +56,10 @@ Content-Type: application/json
     "longitude": 20,
     "PlantUuid": "1"
 }
+
+### POST miniFlora
+POST https://floco-app.herokuapp.com/miniflora
+Content-Type: application/json
+{
+	"number": 623
+}

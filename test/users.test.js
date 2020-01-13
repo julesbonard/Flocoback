@@ -75,14 +75,14 @@ describe("USERS", () => {
         .request(server)
         .post(`/users`)
         .send(usersSample);
-      if (bcrypt.compareSync(usersSample.password, res.body.password)) {
-        usersSample.password = res.body.password;
+      if (bcrypt.compareSync(usersSample.password, res.body.user.password)) {
+        usersSample.password = res.body.user.password;
       }
       res.should.have.status(201);
       res.should.be.json;
-      res.body.should.be.a("object");
-      res.body.should.include(usersSample);
-      res.body.should.have.keys(usersKeys);
+      res.body.user.should.be.a("object");
+      res.body.user.should.include(usersSample);
+      res.body.user.should.have.keys(usersKeys);
     });
     // FAIL POST TEST
     it("should fail at adding a SINGLE users", async () => {

@@ -4,6 +4,8 @@ const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
 const { usersPost, usersPut } = require("../middlewares/joiSchemas");
+const jwt = require("jsonwebtoken");
+const secret = process.env.SECRET;
 const User = require("../sequelize/models/users");
 
 //GET ALL
@@ -73,27 +75,35 @@ router.put("/:id", joiValidate(usersPut), (req, res) => {
 });
 
 //POST ONE
-router.post("/", joiValidate(usersPost), (req, res) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    pseudo,
-    password,
-    avatar,
-    isOAuth
-  } = req.body;
-  User.create({
-    firstName,
-    lastName,
-    email,
-    pseudo,
-    password,
-    avatar,
-    isOAuth
-  })
-    .then(users => res.status(201).json(users))
-    .catch(err => res.status(400).json(err));
+router.post("/", joiValidate(usersPost), async (req, res) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      email,
+      pseudo,
+      password,
+      avatar,
+      isOAuth
+    } = req.body;
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      pseudo,
+      password,
+      avatar,
+      isOAuth
+    });
+    const payload = { email };
+    const token = jwt.sign(payload, secret, {
+      expiresIn: "1h"
+    });
+    res.status(201).json({ user, token });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
 });
 
 //DELETE ONE
