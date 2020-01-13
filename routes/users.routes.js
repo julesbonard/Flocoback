@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", joiValidate(usersPut), (req, res) => {
+router.put("/:id", joiValidate(usersPut), checkAuth, (req, res) => {
   const { id } = req.params;
   const {
     firstName,
@@ -108,7 +108,7 @@ router.post("/", joiValidate(usersPost), async (req, res) => {
 });
 
 //DELETE ONE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const users = await User.findOne({

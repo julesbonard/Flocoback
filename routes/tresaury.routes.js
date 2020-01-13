@@ -8,14 +8,14 @@ const { tresauryPost, tresauryPut } = require("../middlewares/joiSchemas");
 const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
-router.get("/", (req, res) => {
+router.get("/", checkAuth, (req, res) => {
   Tresaury.findAll()
     .then(tresaury => res.status(200).json(tresaury))
     .catch(err => res.status(400).json(err));
 });
 
 //GET ONE
-router.get("/:id", (req, res) => {
+router.get("/:id", checkAuth, (req, res) => {
   const { id } = req.params;
   Tresaury.findOne({
     where: {
@@ -31,7 +31,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT
-router.put("/:id", joiValidate(tresauryPut), (req, res) => {
+router.put("/:id", joiValidate(tresauryPut), checkAuth, (req, res) => {
   const { id } = req.params;
   Tresaury.update(
     {
@@ -59,7 +59,7 @@ router.put("/:id", joiValidate(tresauryPut), (req, res) => {
 });
 
 //POST
-router.post("/", joiValidate(tresauryPost), (req, res) => {
+router.post("/", joiValidate(tresauryPost), checkAuth, (req, res) => {
   const { level, badge, points, UserUuid } = req.body;
   Tresaury.create({
     level,
@@ -72,7 +72,7 @@ router.post("/", joiValidate(tresauryPost), (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const tresaury = await Tresaury.findOne({

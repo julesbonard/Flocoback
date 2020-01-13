@@ -35,11 +35,13 @@ const usersSample = {
   lastName: "Paul",
   avatar:
     "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-  age: 23,
   email: "totopaul@gmail.com",
   pseudo: "azerty",
-  password: "ytreza23"
+  password: "ytreza23",
+  isOAuth: true
 };
+
+let token = "";
 
 describe("PLANT", () => {
   before(async () => {
@@ -59,6 +61,11 @@ describe("PLANT", () => {
       ...plantsSample,
       SeedUuid: seed.uuid
     };
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
   });
 
   //GET ALL TEST
@@ -93,6 +100,7 @@ describe("PLANT", () => {
       const res = await chai
         .request(server)
         .post(`/plants`)
+        .set("access-token", token)
         .send(plantsSample);
       res.should.have.status(201);
       res.should.be.json;
@@ -106,6 +114,7 @@ describe("PLANT", () => {
       const res = await chai
         .request(server)
         .post(`/plants`)
+        .set("access-token", token)
         .send({ image: false });
       res.should.have.status(422);
       res.should.be.json;
@@ -115,6 +124,7 @@ describe("PLANT", () => {
       const res = await chai
         .request(server)
         .post(`/plants`)
+        .set("access-token", token)
         .send({ imag: "ddjdjd" });
       res.should.have.status(422);
       res.should.be.json;
@@ -129,6 +139,7 @@ describe("PLANT", () => {
       const res = await chai
         .request(server)
         .put(`/plants/${plants.uuid}`)
+        .set("access-token", token)
         .send({ image: "dfgdgdgdg" });
       res.should.have.status(200);
       res.should.be.json;
@@ -141,6 +152,7 @@ describe("PLANT", () => {
       const res = await chai
         .request(server)
         .put(`/plants/${changeplants.uuid}`)
+        .set("access-token", token)
         .send({ image: 1342 });
       res.should.have.status(422);
       res.should.be.json;
@@ -152,7 +164,10 @@ describe("PLANT", () => {
   describe("DELETE ONE plants", () => {
     it("should delete a SINGLE plants", async () => {
       const plants = await Plants.create(plantsSample);
-      const res = await chai.request(server).delete(`/plants/${plants.uuid}`);
+      const res = await chai
+        .request(server)
+        .delete(`/plants/${plants.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });

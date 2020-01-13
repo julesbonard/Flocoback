@@ -31,7 +31,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", joiValidate(seedsPut), (req, res) => {
+router.put("/:id", joiValidate(seedsPut), checkAuth, (req, res) => {
   const { id } = req.params;
   const { name, status, type, environment, season, exposure, spray } = req.body;
   Seed.update(
@@ -66,7 +66,7 @@ router.put("/:id", joiValidate(seedsPut), (req, res) => {
 });
 
 //POST ONE
-router.post("/", joiValidate(seedsPost), (req, res) => {
+router.post("/", joiValidate(seedsPost), checkAuth, (req, res) => {
   const {
     PotUuid,
     name,
@@ -92,7 +92,7 @@ router.post("/", joiValidate(seedsPost), (req, res) => {
 });
 
 //DELETE ONE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const seeds = await Seed.findOne({

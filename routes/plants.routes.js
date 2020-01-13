@@ -31,7 +31,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT
-router.put("/:id", joiValidate(plantsPut), (req, res) => {
+router.put("/:id", joiValidate(plantsPut), checkAuth, (req, res) => {
   const { id } = req.params;
   const { image } = req.body;
   Plants.update(
@@ -60,7 +60,7 @@ router.put("/:id", joiValidate(plantsPut), (req, res) => {
 });
 
 //POST
-router.post("/", joiValidate(plantsPost), (req, res) => {
+router.post("/", joiValidate(plantsPost), checkAuth, (req, res) => {
   const { image, SeedUuid } = req.body;
   Plants.create({
     image,
@@ -71,7 +71,7 @@ router.post("/", joiValidate(plantsPost), (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const plants = await Plants.findOne({

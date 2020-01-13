@@ -8,14 +8,14 @@ const Pot = require("../sequelize/models/pots");
 const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
-router.get("/", (req, res) => {
+router.get("/", checkAuth, (req, res) => {
   Pot.findAll()
     .then(pots => res.status(200).json(pots))
     .catch(err => res.status(400).json(err));
 });
 
 //GET ONE
-router.get("/:id", (req, res) => {
+router.get("/:id", checkAuth, (req, res) => {
   const { id } = req.params;
   Pot.findOne({
     where: {
@@ -31,7 +31,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", joiValidate(potsPut), (req, res) => {
+router.put("/:id", joiValidate(potsPut), checkAuth, (req, res) => {
   const { id } = req.params;
   const { width, length, depth } = req.body;
   Pot.update(
@@ -62,7 +62,7 @@ router.put("/:id", joiValidate(potsPut), (req, res) => {
 });
 
 //POST ONE
-router.post("/", joiValidate(potsPost), (req, res) => {
+router.post("/", joiValidate(potsPost), checkAuth, (req, res) => {
   const { width, length, depth, UserUuid } = req.body;
   Pot.create({
     width,
@@ -75,7 +75,7 @@ router.post("/", joiValidate(potsPost), (req, res) => {
 });
 
 //DELETE ONE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const pots = await Pot.findOne({
