@@ -4,10 +4,11 @@ const router = express.Router();
 
 const { joiValidate } = require("../middlewares/joiValidate");
 const { usersPost, usersPut } = require("../middlewares/joiSchemas");
+const { checkAuth } = require("../middlewares/tokenJwt");
 const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET;
 const User = require("../sequelize/models/users");
-const { checkAuth } = require("../middlewares/tokenJwt");
+const Tresaury = require("../sequelize/models/tresaury");
 
 //GET ALL
 router.get("/", (req, res) => {
@@ -26,6 +27,22 @@ router.get("/:id", (req, res) => {
   })
     .then(users => {
       res.status(200).json(users);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
+//GET ONE TRESAURY
+router.get("/:id/tresaury", (req, res) => {
+  const { id } = req.params;
+  Tresaury.findAll({
+    where: {
+      UserUuid: id
+    }
+  })
+    .then(tresaury => {
+      res.status(200).json(tresaury);
     })
     .catch(err => {
       res.status(400).json(err);
