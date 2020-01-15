@@ -7,6 +7,7 @@ const { usersPost, usersPut } = require("../middlewares/joiSchemas");
 const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET;
 const User = require("../sequelize/models/users");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
 router.get("/", (req, res) => {
@@ -32,7 +33,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", joiValidate(usersPut), (req, res) => {
+router.put("/:id", joiValidate(usersPut), checkAuth, (req, res) => {
   const { id } = req.params;
   const {
     firstName,
@@ -102,13 +103,12 @@ router.post("/", joiValidate(usersPost), async (req, res) => {
     });
     res.status(201).json({ user, token, id });
   } catch (err) {
-    console.log(err);
     res.status(400).json(err);
   }
 });
 
 //DELETE ONE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const users = await User.findOne({

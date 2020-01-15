@@ -22,6 +22,7 @@ const usersSample = {
   password: "ytreza23",
   isOAuth: true
 };
+let token = "";
 
 describe("FRIEND", () => {
   before(async () => {
@@ -31,13 +32,21 @@ describe("FRIEND", () => {
       ...friendsSample,
       UserUuid: user.uuid
     };
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
   });
 
   //GET ALL TEST
   describe("GET * friends", () => {
     it("It should return all friends.", async () => {
       await Friends.create(friendsSample);
-      const res = await chai.request(server).get("/friends");
+      const res = await chai
+        .request(server)
+        .get("/friends")
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("array");
@@ -51,7 +60,10 @@ describe("FRIEND", () => {
   describe("GET ONE FRIENDS", () => {
     it("should return a SINGLE Friends", async () => {
       const friends = await Friends.create(friendsSample);
-      const res = await chai.request(server).get(`/friends/${friends.uuid}`);
+      const res = await chai
+        .request(server)
+        .get(`/friends/${friends.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("object");
@@ -65,6 +77,7 @@ describe("FRIEND", () => {
       const res = await chai
         .request(server)
         .post(`/friends`)
+        .set("access-token", token)
         .send(friendsSample);
       res.should.have.status(201);
       res.should.be.json;
@@ -78,6 +91,7 @@ describe("FRIEND", () => {
       const res = await chai
         .request(server)
         .post(`/friends`)
+        .set("access-token", token)
         .send({ event: false });
       res.should.have.status(422);
       res.should.be.json;
@@ -87,6 +101,7 @@ describe("FRIEND", () => {
       const res = await chai
         .request(server)
         .post(`/friends`)
+        .set("access-token", token)
         .send({ evnt: "ddjdjd" });
       res.should.have.status(422);
       res.should.be.json;
@@ -101,6 +116,7 @@ describe("FRIEND", () => {
       const res = await chai
         .request(server)
         .put(`/friends/${friends.uuid}`)
+        .set("access-token", token)
         .send({ confirmed: false });
       res.should.have.status(200);
       res.should.be.json;
@@ -113,6 +129,7 @@ describe("FRIEND", () => {
       const res = await chai
         .request(server)
         .put(`/friends/${changefriends.uuid}`)
+        .set("access-token", token)
         .send({ confirmed: 1342 });
       res.should.have.status(422);
       res.should.be.json;
@@ -124,7 +141,10 @@ describe("FRIEND", () => {
   describe("DELETE ONE FRIENDS", () => {
     it("should delete a SINGLE friends", async () => {
       const friends = await Friends.create(friendsSample);
-      const res = await chai.request(server).delete(`/friends/${friends.uuid}`);
+      const res = await chai
+        .request(server)
+        .delete(`/friends/${friends.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });

@@ -5,16 +5,17 @@ const router = express.Router();
 const { joiValidate } = require("../middlewares/joiValidate");
 const { likePost, likePut } = require("../middlewares/joiSchemas");
 const Like = require("../sequelize/models/likes");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
-router.get("/", (req, res) => {
+router.get("/", checkAuth, (req, res) => {
   Like.findAll()
     .then(likes => res.status(200).json(likes))
     .catch(err => res.status(400).json(err));
 });
 
 //GET ONE
-router.get("/:id", (req, res) => {
+router.get("/:id", checkAuth, (req, res) => {
   const { id } = req.params;
   Like.findOne({
     where: {
@@ -30,7 +31,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", joiValidate(likePut), (req, res) => {
+router.put("/:id", joiValidate(likePut), checkAuth, (req, res) => {
   const { id } = req.params;
   const { like } = req.body;
   Like.update(
@@ -59,7 +60,7 @@ router.put("/:id", joiValidate(likePut), (req, res) => {
 });
 
 //POST ONE
-router.post("/", joiValidate(likePost), (req, res) => {
+router.post("/", joiValidate(likePost), checkAuth, (req, res) => {
   const { like, UserUuid, PostUuid } = req.body;
   Like.create({
     like,
@@ -71,7 +72,7 @@ router.post("/", joiValidate(likePost), (req, res) => {
 });
 
 //DELETE ONE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const likes = await Like.findOne({
