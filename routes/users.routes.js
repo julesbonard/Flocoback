@@ -36,7 +36,7 @@ router.get("/:id", (req, res) => {
 //GET ONE TRESAURY
 router.get("/:id/tresaury", (req, res) => {
   const { id } = req.params;
-  Tresaury.findAll({
+  Tresaury.findOne({
     where: {
       UserUuid: id
     }
