@@ -61,10 +61,11 @@ router.put("/:id", joiValidate(plantsPut), checkAuth, (req, res) => {
 
 //POST
 router.post("/", joiValidate(plantsPost), checkAuth, (req, res) => {
-  const { image, SeedUuid } = req.body;
+  const { image, SeedUuid, PotUuid } = req.body;
   Plants.create({
     image,
-    SeedUuid
+    SeedUuid,
+    PotUuid
   })
     .then(plants => res.status(201).json(plants))
     .catch(err => res.status(400).json(err));

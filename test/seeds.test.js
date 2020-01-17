@@ -4,8 +4,6 @@ const should = chai.should();
 const server = require("../index");
 const sequelize = require("../sequelize");
 const Seed = require("../sequelize/models/seeds");
-const Pot = require("../sequelize/models/pots");
-const User = require("../sequelize/models/users");
 
 chai.use(chaiHttp);
 
@@ -19,11 +17,10 @@ const seedsKeys = [
   "exposure",
   "spray",
   "createdAt",
-  "updatedAt",
-  "PotUuid"
+  "updatedAt"
 ];
 
-let seedsSample = {
+const seedsSample = {
   name: "rose",
   status: "vulnérable",
   type: "vivace",
@@ -31,11 +28,6 @@ let seedsSample = {
   season: "printemps",
   exposure: "sun",
   spray: "fréquente"
-};
-let potsSample = {
-  width: 40,
-  length: 35,
-  depth: 40
 };
 const usersSample = {
   firstName: "Toto",
@@ -53,16 +45,6 @@ let token = "";
 describe("SEED", () => {
   before(async () => {
     await sequelize.sync({ force: true });
-    const user = await User.create(usersSample);
-    potsSample = {
-      ...potsSample,
-      UserUuid: user.uuid
-    };
-    const pot = await Pot.create(potsSample);
-    seedsSample = {
-      ...seedsSample,
-      PotUuid: pot.uuid
-    };
     const res = await chai
       .request(server)
       .post(`/users`)

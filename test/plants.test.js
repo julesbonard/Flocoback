@@ -10,7 +10,14 @@ const User = require("../sequelize/models/users");
 
 chai.use(chaiHttp);
 
-const plantsKeys = ["uuid", "image", "createdAt", "updatedAt", "SeedUuid"];
+const plantsKeys = [
+  "uuid",
+  "image",
+  "createdAt",
+  "updatedAt",
+  "SeedUuid",
+  "PotUuid"
+];
 let plantsSample = {
   image:
     "https://www.ikea.com/fr/fr/images/products/monstera-potted-plant__0653991_PE708220_S5.JPG?f=s"
@@ -52,14 +59,11 @@ describe("PLANT", () => {
       UserUuid: user.uuid
     };
     const pot = await Pot.create(potsSample);
-    seedsSample = {
-      ...seedsSample,
-      PotUuid: pot.uuid
-    };
     const seed = await Seed.create(seedsSample);
     plantsSample = {
       ...plantsSample,
-      SeedUuid: seed.uuid
+      SeedUuid: seed.uuid,
+      PotUuid: pot.uuid
     };
     const res = await chai
       .request(server)
