@@ -67,16 +67,7 @@ router.put("/:id", joiValidate(seedsPut), checkAuth, (req, res) => {
 
 //POST ONE
 router.post("/", joiValidate(seedsPost), checkAuth, (req, res) => {
-  const {
-    PotUuid,
-    name,
-    status,
-    type,
-    environment,
-    season,
-    exposure,
-    spray
-  } = req.body;
+  const { name, status, type, environment, season, exposure, spray } = req.body;
   Seed.create({
     name,
     status,
@@ -84,8 +75,7 @@ router.post("/", joiValidate(seedsPost), checkAuth, (req, res) => {
     environment,
     season,
     exposure,
-    spray,
-    PotUuid
+    spray
   })
     .then(seeds => res.status(201).json(seeds))
     .catch(err => res.status(400).json(err));

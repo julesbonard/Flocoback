@@ -64,14 +64,11 @@ describe("LOCATION", () => {
       UserUuid: user.uuid
     };
     const pot = await Pot.create(potsSample);
-    seedsSample = {
-      ...seedsSample,
-      PotUuid: pot.uuid
-    };
     const seed = await Seed.create(seedsSample);
     plantsSample = {
       ...plantsSample,
-      SeedUuid: seed.uuid
+      SeedUuid: seed.uuid,
+      PotUuid: pot.uuid
     };
     const plant = await Plants.create(plantsSample);
     locationSample = {
