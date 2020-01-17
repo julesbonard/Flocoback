@@ -33,9 +33,13 @@ router.get("/:id", checkAuth, (req, res) => {
 //PUT
 router.put("/:id", joiValidate(tresauryPut), checkAuth, (req, res) => {
   const { id } = req.params;
+  const { level, badge, points } = req.body;
+
   Tresaury.update(
     {
-      level: req.body.level
+      level,
+      badge,
+      points
     },
     {
       where: {
