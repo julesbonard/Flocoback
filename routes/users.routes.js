@@ -9,12 +9,41 @@ const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET;
 const User = require("../sequelize/models/users");
 const Tresaury = require("../sequelize/models/tresaury");
+const Pot = require("../sequelize/models/pots");
+const Plant = require("../sequelize/models/plants");
+const Location = require("../sequelize/models/locations");
 
 //GET ALL
 router.get("/", (req, res) => {
   User.findAll()
     .then(users => res.status(200).json(users))
     .catch(err => res.status(400).json(err));
+});
+
+//GET ALL LOCATIONS
+router.get("/:id/plants", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const pots = await Plant.findAll({
+      include: [
+        {
+          model: Pot,
+          where: {
+            UserUuid: id
+          }
+        },
+        {
+          model: Location
+        }
+      ]
+    });
+    console.log(pots);
+    res.status(200).json(pots);
+  } catch (err) {
+    console.log(err);
+
+    res.status(400).json({ error: err });
+  }
 });
 
 //GET ONE
