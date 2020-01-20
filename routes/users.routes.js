@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const sequelize = require("sequelize");
 const router = express.Router();
@@ -149,6 +151,7 @@ router.post("/", joiValidate(usersPost), async (req, res) => {
     });
     res.status(201).json({ user, token, id });
   } catch (err) {
+    console.log(err);
     res.status(400).json(err);
   }
 });

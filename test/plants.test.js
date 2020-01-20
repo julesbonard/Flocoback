@@ -81,7 +81,7 @@ describe("PLANT", () => {
       res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(plantsSample);
-      res.body[0].should.keys(plantsKeys);
+      res.body[0].should.keys([...plantsKeys, "Location", "Pot"]);
       res.body.length.should.be.eql(1);
     });
   });
