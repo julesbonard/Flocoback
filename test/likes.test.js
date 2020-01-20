@@ -34,6 +34,7 @@ let postSample = {
   date: "1970-01-01T00:00:00.000Z",
   image: "https/"
 };
+let token = "";
 
 describe("LIKE", () => {
   before(async () => {
@@ -49,13 +50,21 @@ describe("LIKE", () => {
       UserUuid: user.uuid,
       PostUuid: post.uuid
     };
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
   });
 
   //GET ALL TEST
   describe("GET * LIKES", () => {
     it("It should return all likes.", async () => {
       await Like.create(likesSample);
-      const res = await chai.request(server).get("/likes");
+      const res = await chai
+        .request(server)
+        .get("/likes")
+        .set("access-token", token);
       res.should.have.status(200);
       res.body.should.be.a("array");
       res.body[0].should.include(likesSample);
@@ -67,7 +76,10 @@ describe("LIKE", () => {
   describe("GET ONE LIKES", () => {
     it("should return a SINGLE likes", async () => {
       const likes = await Like.create(likesSample);
-      const res = await chai.request(server).get(`/likes/${likes.uuid}`);
+      const res = await chai
+        .request(server)
+        .get(`/likes/${likes.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("object");
@@ -82,6 +94,7 @@ describe("LIKE", () => {
       const res = await chai
         .request(server)
         .post(`/likes`)
+        .set("access-token", token)
         .send(likesSample);
       res.should.have.status(201);
       res.should.be.json;
@@ -94,6 +107,7 @@ describe("LIKE", () => {
       const res = await chai
         .request(server)
         .post("/likes")
+        .set("access-token", token)
         .send({ like: 30 });
       res.should.have.status(422);
       res.should.be.json;
@@ -103,6 +117,7 @@ describe("LIKE", () => {
       const res = await chai
         .request(server)
         .post("/statsCity")
+        .set("access-token", token)
         .send({ nudfff: "ert" });
       res.should.have.status(422);
       res.should.be.json;
@@ -117,6 +132,7 @@ describe("LIKE", () => {
       const res = await chai
         .request(server)
         .put(`/likes/${likes.uuid}`)
+        .set("access-token", token)
         .send({ like: false });
       res.should.have.status(200);
       res.should.be.json;
@@ -128,6 +144,7 @@ describe("LIKE", () => {
       const res = await chai
         .request(server)
         .put(`/likes/${likes.uuid}`)
+        .set("access-token", token)
         .send({ like: "aaaee" });
       res.should.have.status(422);
       res.should.be.json;
@@ -139,7 +156,10 @@ describe("LIKE", () => {
   describe("DELETE ONE LIKES", () => {
     it("should delete a SINGLE likes", async () => {
       const likes = await Like.create(likesSample);
-      const res = await chai.request(server).delete(`/likes/${likes.uuid}`);
+      const res = await chai
+        .request(server)
+        .delete(`/likes/${likes.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });

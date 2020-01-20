@@ -5,6 +5,7 @@ const router = express.Router();
 const { joiValidate } = require("../middlewares/joiValidate");
 const { miniFloraPost, miniFloraPut } = require("../middlewares/joiSchemas");
 const MiniFlora = require("../sequelize/models/miniFlora");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
 router.get("/", (req, res) => {

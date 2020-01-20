@@ -5,10 +5,14 @@ const Plants = sequelize.define(
   "Plant",
   {
     uuid: {
-      type: Sequelize.UUID,
+      // type: Sequelize.UUID,
+      // allowNull: false,
+      // primaryKey: true,
+      // defaultValue: Sequelize.UUIDV4
+      type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true,
-      defaultValue: Sequelize.UUIDV4
+      autoIncrement: true
     },
     image: {
       type: Sequelize.STRING,

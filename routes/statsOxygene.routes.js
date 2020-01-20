@@ -8,6 +8,7 @@ const {
   statsOxygenePut
 } = require("../middlewares/joiSchemas");
 const StatsOxygene = require("../sequelize/models/statsOxygene");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
 router.get("/", (req, res) => {

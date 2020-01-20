@@ -30,13 +30,17 @@ const usersSample = {
   password: "ytreza23",
   isOAuth: true
 };
-
-User.prototype.checkPassword = function(password) {
-  return bcrypt.compareSync(password, this.password);
-};
+let token = "";
 
 describe("USERS", () => {
-  before(() => sequelize.sync({ force: true }));
+  before(async () => {
+    await sequelize.sync({ force: true });
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
+  });
 
   //GET ALL TEST
   describe("GET * USERS", () => {
@@ -51,7 +55,7 @@ describe("USERS", () => {
       res.body.should.be.a("array");
       res.body[0].should.include(usersSample);
       res.body[0].should.have.keys(usersKeys);
-      res.body.length.should.be.eql(1);
+      res.body.length.should.be.eql(2);
     });
   });
 
@@ -75,14 +79,14 @@ describe("USERS", () => {
         .request(server)
         .post(`/users`)
         .send(usersSample);
-      if (bcrypt.compareSync(usersSample.password, res.body.password)) {
-        usersSample.password = res.body.password;
+      if (bcrypt.compareSync(usersSample.password, res.body.user.password)) {
+        usersSample.password = res.body.user.password;
       }
       res.should.have.status(201);
       res.should.be.json;
-      res.body.should.be.a("object");
-      res.body.should.include(usersSample);
-      res.body.should.have.keys(usersKeys);
+      res.body.user.should.be.a("object");
+      res.body.user.should.include(usersSample);
+      res.body.user.should.have.keys(usersKeys);
     });
     // FAIL POST TEST
     it("should fail at adding a SINGLE users", async () => {
@@ -112,6 +116,7 @@ describe("USERS", () => {
       const res = await chai
         .request(server)
         .put(`/users/${users.uuid}`)
+        .set("access-token", token)
         .send({ pseudo: "scfresxcf" });
       res.should.have.status(200);
       res.should.be.json;
@@ -123,6 +128,7 @@ describe("USERS", () => {
       const res = await chai
         .request(server)
         .put(`/users/${users.uuid}`)
+        .set("access-token", token)
         .send({ firstName: 234 });
       res.should.have.status(422);
       res.should.be.json;
@@ -134,7 +140,10 @@ describe("USERS", () => {
   describe("DELETE ONE USERS", () => {
     it("should delete a SINGLE users", async () => {
       const users = await User.create(usersSample);
-      const res = await chai.request(server).delete(`/users/${users.uuid}`);
+      const res = await chai
+        .request(server)
+        .delete(`/users/${users.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });

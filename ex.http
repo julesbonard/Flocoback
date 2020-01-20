@@ -1,30 +1,30 @@
 
 ### POST 1 user
-POST http://localhost:8000/users
+POST https://floco-app.herokuapp.com/users
 Content-Type: application/json
 
 {
-    "firstName": "l",
-    "lastName": "l",
+    "firstName": "test_profile",
+    "lastName": "test_profile",
     "avatar": "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-    "email": "l",
-    "pseudo": "l",
-    "password": "l",
+    "email": "test_profile",
+    "pseudo": "test_profile",
+    "password": "test_profile",
   "isOAuth": false
 }
 
 ### POST 1 pot
-POST http://localhost:8000/pots
+POST https://floco-app.herokuapp.com/pots
 Content-Type: application/json
 
 {
     "width": 12,
     "length": 11,
     "depth": 14,
-    "UserUuid": "b70a7ac1-c8cf-4002-ad92-e5c75c6be8bc"
+    "UserUuid": "1"
 }
 ###POST 1 seed
-POST http://localhost:8000/seeds
+POST https://floco-app.herokuapp.com/seeds
 Content-Type: application/json
 
 {
@@ -35,24 +35,31 @@ Content-Type: application/json
     "season": "printemps",
     "exposure": "sun",
     "spray": "fréquente",
-    "PotUuid": "f8c0a330-6294-427f-b0ed-2e391120b554"
+    "PotUuid": "1"
 }
 
 ### POST 1 plant
-POST http://localhost:8000/plants
+POST https://floco-app.herokuapp.com/plants
 Content-Type: application/json
 
 {
     "image": "https://static.aujardin.info/cache/th/img9/philodendron-feuille-600x450.jpg",
-    "SeedUuid": "868faa9c-86c1-4439-8bbd-631ce1dc048f"
+    "SeedUuid": "1"
 }
 
 ### POST 1 location
-POST http://localhost:8000/locations
+POST https://floco-app.herokuapp.com/locations
 Content-Type: application/json
 
 {
     "latitude": 20,
     "longitude": 20,
-    "PlantUuid": "421ab258-01c2-40ca-9350-dec9c81502ae"
+    "PlantUuid": "1"
+}
+
+### POST miniFlora
+POST https://floco-app.herokuapp.com/miniflora
+Content-Type: application/json
+{
+	"number": 623
 }

@@ -33,6 +33,8 @@ const usersSample = {
   password: "ytreza23",
   isOAuth: true
 };
+let token = "";
+
 describe("POSTS", () => {
   before(async () => {
     await sequelize.sync({ force: true });
@@ -41,13 +43,21 @@ describe("POSTS", () => {
       ...postSample,
       UserUuid: users.uuid
     };
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
   });
 
   //GET ALL TEST
   describe("GET * POSTS", () => {
     it("It should return all posts.", async () => {
       await Post.create(postSample);
-      const res = await chai.request(server).get("/posts");
+      const res = await chai
+        .request(server)
+        .get("/posts")
+        .set("access-token", token);
       res.should.have.status(200);
       res.body.should.be.a("array");
       res.body[0].should.include(postSample);
@@ -59,7 +69,10 @@ describe("POSTS", () => {
   describe("GET ONE POSTS", () => {
     it("should return a SINGLE posts", async () => {
       const posts = await Post.create(postSample);
-      const res = await chai.request(server).get(`/posts/${posts.uuid}`);
+      const res = await chai
+        .request(server)
+        .get(`/posts/${posts.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("object");
@@ -74,6 +87,7 @@ describe("POSTS", () => {
       const res = await chai
         .request(server)
         .post(`/posts`)
+        .set("access-token", token)
         .send(postSample);
       res.should.have.status(201);
       res.should.be.json;
@@ -86,6 +100,7 @@ describe("POSTS", () => {
       const res = await chai
         .request(server)
         .post("/posts")
+        .set("access-token", token)
         .send({ date: 30 });
       res.should.have.status(422);
       res.should.be.json;
@@ -95,6 +110,7 @@ describe("POSTS", () => {
       const res = await chai
         .request(server)
         .post("/statsCity")
+        .set("access-token", token)
         .send({ nudfff: "ert" });
       res.should.have.status(422);
       res.should.be.json;
@@ -109,6 +125,7 @@ describe("POSTS", () => {
       const res = await chai
         .request(server)
         .put(`/posts/${posts.uuid}`)
+        .set("access-token", token)
         .send({ contents: "scfresxcf" });
       res.should.have.status(200);
       res.should.be.json;
@@ -120,6 +137,7 @@ describe("POSTS", () => {
       const res = await chai
         .request(server)
         .put(`/posts/${posts.uuid}`)
+        .set("access-token", token)
         .send({ date: "aaaee" });
       res.should.have.status(422);
       res.should.be.json;
@@ -131,7 +149,10 @@ describe("POSTS", () => {
   describe("DELETE ONE POSTS", () => {
     it("should delete a SINGLE posts", async () => {
       const posts = await Post.create(postSample);
-      const res = await chai.request(server).delete(`/posts/${posts.uuid}`);
+      const res = await chai
+        .request(server)
+        .delete(`/posts/${posts.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });

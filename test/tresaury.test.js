@@ -32,6 +32,7 @@ const usersSample = {
   password: "ytreza23",
   isOAuth: true
 };
+let token = "";
 
 describe("TRESAURY", () => {
   before(async () => {
@@ -41,13 +42,21 @@ describe("TRESAURY", () => {
       ...tresaurySample,
       UserUuid: user.uuid
     };
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
   });
 
   //GET ALL TEST
   describe("GET * TRESAURY", () => {
     it("It should return all tresaury.", async () => {
       await Tresaury.create(tresaurySample);
-      const res = await chai.request(server).get("/tresaury");
+      const res = await chai
+        .request(server)
+        .get("/tresaury")
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("array");
@@ -61,7 +70,10 @@ describe("TRESAURY", () => {
   describe("GET ONE TRESAURY", () => {
     it("should return a SINGLE tresaury", async () => {
       const tresaury = await Tresaury.create(tresaurySample);
-      const res = await chai.request(server).get(`/tresaury/${tresaury.uuid}`);
+      const res = await chai
+        .request(server)
+        .get(`/tresaury/${tresaury.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("object");
@@ -76,6 +88,7 @@ describe("TRESAURY", () => {
       const res = await chai
         .request(server)
         .put(`/tresaury/${createdTresaury.uuid}`)
+        .set("access-token", token)
         .send({ level: 12334 });
       res.should.have.status(200);
       res.should.be.json;
@@ -88,6 +101,7 @@ describe("TRESAURY", () => {
       const res = await chai
         .request(server)
         .put(`/tresaury/${changeTresaury.uuid}`)
+        .set("access-token", token)
         .send({ points: "sdf" });
       res.should.have.status(422);
       res.should.be.json;
@@ -99,6 +113,7 @@ describe("TRESAURY", () => {
       const res = await chai
         .request(server)
         .put(`/tresaury/${changeTresaury.uuid}`)
+        .set("access-token", token)
         .send({ poi: 1, elv: 4 });
       res.should.have.status(422);
       res.should.be.json;
@@ -112,6 +127,7 @@ describe("TRESAURY", () => {
       const res = await chai
         .request(server)
         .post(`/tresaury`)
+        .set("access-token", token)
         .send(tresaurySample);
       res.should.have.status(201);
       res.should.be.json;
@@ -125,6 +141,7 @@ describe("TRESAURY", () => {
       const res = await chai
         .request(server)
         .post(`/tresaury`)
+        .set("access-token", token)
         .send({ lev: 20, bad: 30 });
       res.should.have.status(422);
       res.should.be.json;
@@ -136,6 +153,7 @@ describe("TRESAURY", () => {
       const res = await chai
         .request(server)
         .post(`/tresaury`)
+        .set("access-token", token)
         .send({ level: "tedwv", points: "xwves" });
       res.should.have.status(422);
       res.should.be.json;
@@ -149,7 +167,8 @@ describe("TRESAURY", () => {
       const deletedTresaury = await Tresaury.create(tresaurySample);
       const res = await chai
         .request(server)
-        .delete(`/tresaury/${deletedTresaury.uuid}`);
+        .delete(`/tresaury/${deletedTresaury.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });
