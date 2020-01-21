@@ -57,10 +57,16 @@ Pots.belongsTo(User, { foreignKey: { allowNull: false } });
 Pots.hasOne(Plants, { foreignKey: { allowNull: false } });
 
 //LOCATIONS
-Locations.belongsTo(Plants, { foreignKey: { allowNull: false } });
+Locations.belongsTo(Plants, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE"
+});
 
 //PLANTS
-Plants.hasOne(Locations, { foreignKey: { allowNull: false } });
+Plants.hasOne(Locations, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE"
+});
 Plants.belongsTo(Pots, { foreignKey: { allowNull: false } });
 Plants.belongsTo(Seeds, { foreignKey: { allowNull: false } });
 
