@@ -5,14 +5,10 @@ const Seed = sequelize.define(
   "Seed",
   {
     uuid: {
-      // type: Sequelize.UUID,
-      // allowNull: false,
-      // primaryKey: true,
-      // defaultValue: Sequelize.UUIDV4
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true
+      defaultValue: Sequelize.UUIDV4
     },
     name: {
       type: Sequelize.STRING,

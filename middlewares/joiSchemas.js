@@ -4,7 +4,7 @@ const Joi = require("@hapi/joi");
 module.exports.locationPost = Joi.object({
   latitude: Joi.number().required(),
   longitude: Joi.number().required(),
-  PlantUuid: Joi.number()
+  PlantUuid: Joi.string()
 });
 module.exports.locationPut = Joi.object({
   latitude: Joi.number(),
@@ -77,7 +77,7 @@ module.exports.usersPut = Joi.object({
 module.exports.commentPost = Joi.object({
   date: Joi.date().required(),
   contents: Joi.string().required(),
-  UserUuid: Joi.number(),
+  UserUuid: Joi.string(),
   PostUuid: Joi.string()
 });
 module.exports.commentPut = Joi.object({
@@ -88,7 +88,7 @@ module.exports.commentPut = Joi.object({
 //LIKE
 module.exports.likePost = Joi.object({
   like: Joi.boolean().required(),
-  UserUuid: Joi.number(),
+  UserUuid: Joi.string(),
   PostUuid: Joi.string()
 });
 module.exports.likePut = Joi.object({
@@ -100,7 +100,7 @@ module.exports.postsPost = Joi.object({
   contents: Joi.string().required(),
   date: Joi.date().required(),
   image: Joi.string().required(),
-  UserUuid: Joi.number()
+  UserUuid: Joi.string()
 });
 module.exports.postsPut = Joi.object({
   contents: Joi.string(),
@@ -112,7 +112,7 @@ module.exports.postsPut = Joi.object({
 module.exports.messagePost = Joi.object({
   date: Joi.date().required(),
   contents: Joi.string().required(),
-  UserUuid: Joi.number(),
+  UserUuid: Joi.string(),
   receiverUuid: Joi.string()
 });
 module.exports.messagePut = Joi.object({
@@ -125,7 +125,7 @@ module.exports.potsPost = Joi.object({
   width: Joi.number().required(),
   length: Joi.number().required(),
   depth: Joi.number().required(),
-  UserUuid: Joi.number()
+  UserUuid: Joi.string()
 });
 module.exports.potsPut = Joi.object({
   width: Joi.number(),
@@ -174,8 +174,8 @@ module.exports.partnersPut = Joi.object({
 //PLANTS
 module.exports.plantsPost = Joi.object({
   image: Joi.string(),
-  SeedUuid: Joi.number(),
-  PotUuid: Joi.number()
+  SeedUuid: Joi.string(),
+  PotUuid: Joi.string()
 });
 module.exports.plantsPut = Joi.object({
   image: Joi.string()
@@ -184,7 +184,7 @@ module.exports.plantsPut = Joi.object({
 //AGENDA
 module.exports.agendaPost = Joi.object({
   event: Joi.string(),
-  UserUuid: Joi.number()
+  UserUuid: Joi.string()
 });
 module.exports.agendaPut = Joi.object({
   event: Joi.string()
@@ -195,7 +195,7 @@ module.exports.tresauryPost = Joi.object({
   level: Joi.number(),
   badge: Joi.string(),
   points: Joi.number(),
-  UserUuid: Joi.number()
+  UserUuid: Joi.string()
 });
 module.exports.tresauryPut = Joi.object({
   level: Joi.number(),
@@ -206,7 +206,7 @@ module.exports.tresauryPut = Joi.object({
 //FRIENDS
 module.exports.friendsPost = Joi.object({
   confirmed: Joi.boolean(),
-  UserUuid: Joi.number()
+  UserUuid: Joi.string()
 });
 module.exports.friendsPut = Joi.object({
   confirmed: Joi.boolean()

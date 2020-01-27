@@ -5,14 +5,10 @@ const Pot = sequelize.define(
   "Pot",
   {
     uuid: {
-      // type: Sequelize.UUID,
-      // allowNull: false,
-      // primaryKey: true,
-      // defaultValue: Sequelize.UUIDV4
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true
+      defaultValue: Sequelize.UUIDV4
     },
     width: {
       type: Sequelize.INTEGER,
