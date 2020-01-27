@@ -5,16 +5,17 @@ const router = express.Router();
 const { joiValidate } = require("../middlewares/joiValidate");
 const { postsPost, postsPut } = require("../middlewares/joiSchemas");
 const Post = require("../sequelize/models/posts");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL
-router.get("/", (req, res) => {
+router.get("/", checkAuth, (req, res) => {
   Post.findAll()
     .then(posts => res.status(200).json(posts))
     .catch(err => res.status(400).json(err));
 });
 
 //GET ONE
-router.get("/:id", (req, res) => {
+router.get("/:id", checkAuth, (req, res) => {
   const { id } = req.params;
   Post.findOne({
     where: {
@@ -30,7 +31,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE
-router.put("/:id", joiValidate(postsPut), (req, res) => {
+router.put("/:id", joiValidate(postsPut), checkAuth, (req, res) => {
   const { id } = req.params;
   const { contents, date, image } = req.body;
   Post.update(
@@ -61,7 +62,7 @@ router.put("/:id", joiValidate(postsPut), (req, res) => {
 });
 
 //POST ONE
-router.post("/", joiValidate(postsPost), (req, res) => {
+router.post("/", joiValidate(postsPost), checkAuth, (req, res) => {
   const { contents, date, image, UserUuid } = req.body;
   Post.create({
     contents,
@@ -74,7 +75,7 @@ router.post("/", joiValidate(postsPost), (req, res) => {
 });
 
 //DELETE ONE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const posts = await Post.findOne({

@@ -141,8 +141,7 @@ module.exports.seedsPost = Joi.object({
   environment: Joi.string().required(),
   season: Joi.string().required(),
   exposure: Joi.string().required(),
-  spray: Joi.string().required(),
-  PotUuid: Joi.string()
+  spray: Joi.string().required()
 });
 module.exports.seedsPut = Joi.object({
   name: Joi.string(),
@@ -175,7 +174,8 @@ module.exports.partnersPut = Joi.object({
 //PLANTS
 module.exports.plantsPost = Joi.object({
   image: Joi.string(),
-  SeedUuid: Joi.string()
+  SeedUuid: Joi.string(),
+  PotUuid: Joi.string()
 });
 module.exports.plantsPut = Joi.object({
   image: Joi.string()

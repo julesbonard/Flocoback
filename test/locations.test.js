@@ -47,11 +47,13 @@ const usersSample = {
   lastName: "Paul",
   avatar:
     "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-  age: 23,
   email: "totopaul@gmail.com",
   pseudo: "azerty",
-  password: "ytreza23"
+  password: "ytreza23",
+  isOAuth: true
 };
+
+let token = "";
 
 describe("LOCATION", () => {
   before(async () => {
@@ -62,20 +64,22 @@ describe("LOCATION", () => {
       UserUuid: user.uuid
     };
     const pot = await Pot.create(potsSample);
-    seedsSample = {
-      ...seedsSample,
-      PotUuid: pot.uuid
-    };
     const seed = await Seed.create(seedsSample);
     plantsSample = {
       ...plantsSample,
-      SeedUuid: seed.uuid
+      SeedUuid: seed.uuid,
+      PotUuid: pot.uuid
     };
     const plant = await Plants.create(plantsSample);
     locationSample = {
       ...locationSample,
       PlantUuid: plant.uuid
     };
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
   });
 
   //GET ALL TEST
@@ -112,6 +116,7 @@ describe("LOCATION", () => {
       const res = await chai
         .request(server)
         .put(`/locations/${createdLocation.uuid}`)
+        .set("access-token", token)
         .send({ latitude: 33, longitude: 33 });
       res.should.have.status(200);
       res.should.be.json;
@@ -124,6 +129,7 @@ describe("LOCATION", () => {
       const res = await chai
         .request(server)
         .put(`/locations/${changeLocation.uuid}`)
+        .set("access-token", token)
         .send({ latitude: "aaaee", longitude: "adfd" });
       res.should.have.status(422);
       res.should.be.json;
@@ -135,6 +141,7 @@ describe("LOCATION", () => {
       const res = await chai
         .request(server)
         .put(`/locations/${changeLocation.uuid}`)
+        .set("access-token", token)
         .send({ laude: 1, lontude: 4 });
       res.should.have.status(422);
       res.should.be.json;
@@ -148,6 +155,7 @@ describe("LOCATION", () => {
       const res = await chai
         .request(server)
         .post(`/locations`)
+        .set("access-token", token)
         .send(locationSample);
       res.should.have.status(201);
       res.should.be.json;
@@ -161,6 +169,7 @@ describe("LOCATION", () => {
       const res = await chai
         .request(server)
         .post(`/locations`)
+        .set("access-token", token)
         .send({ latude: 20, lontude: 30 });
       res.should.have.status(422);
       res.should.be.json;
@@ -172,6 +181,7 @@ describe("LOCATION", () => {
       const res = await chai
         .request(server)
         .post(`/locations`)
+        .set("access-token", token)
         .send({ latitude: "tedwv", longitude: "xwves" });
       res.should.have.status(422);
       res.should.be.json;
@@ -185,7 +195,8 @@ describe("LOCATION", () => {
       const deletedLocation = await Location.create(locationSample);
       const res = await chai
         .request(server)
-        .delete(`/locations/${deletedLocation}`);
+        .delete(`/locations/${deletedLocation}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });

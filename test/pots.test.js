@@ -32,6 +32,7 @@ const usersSample = {
   password: "ytreza23",
   isOAuth: true
 };
+let token = "";
 
 describe("POT", () => {
   before(async () => {
@@ -41,12 +42,20 @@ describe("POT", () => {
       ...potsSample,
       UserUuid: user.uuid
     };
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
   });
   //GET ALL TEST
   describe("GET * POTS", () => {
     it("It should return all pots.", async () => {
       await Pot.create(potsSample);
-      const res = await chai.request(server).get("/pots");
+      const res = await chai
+        .request(server)
+        .get("/pots")
+        .set("access-token", token);
       res.should.have.status(200);
       res.body.should.be.a("array");
       res.body[0].should.include(potsSample);
@@ -58,7 +67,10 @@ describe("POT", () => {
   describe("GET ONE POTS", () => {
     it("should return a SINGLE pots", async () => {
       const pots = await Pot.create(potsSample);
-      const res = await chai.request(server).get(`/pots/${pots.uuid}`);
+      const res = await chai
+        .request(server)
+        .get(`/pots/${pots.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("object");
@@ -73,6 +85,7 @@ describe("POT", () => {
       const res = await chai
         .request(server)
         .post(`/pots`)
+        .set("access-token", token)
         .send(potsSample);
       res.should.have.status(201);
       res.should.be.json;
@@ -85,6 +98,7 @@ describe("POT", () => {
       const res = await chai
         .request(server)
         .post("/pots")
+        .set("access-token", token)
         .send({ epth: 40 });
       res.should.have.status(422);
       res.should.be.json;
@@ -94,6 +108,7 @@ describe("POT", () => {
       const res = await chai
         .request(server)
         .post("/statsCity")
+        .set("access-token", token)
         .send({ nudfff: "ert", qsd: "xcvb" });
       res.should.have.status(422);
       res.should.be.json;
@@ -108,6 +123,7 @@ describe("POT", () => {
       const res = await chai
         .request(server)
         .put(`/pots/${pots.uuid}`)
+        .set("access-token", token)
         .send({ depth: 4 });
       res.should.have.status(200);
       res.should.be.json;
@@ -119,6 +135,7 @@ describe("POT", () => {
       const res = await chai
         .request(server)
         .put(`/pots/${pots.uuid}`)
+        .set("access-token", token)
         .send({ depth: "aaaee" });
       res.should.have.status(422);
       res.should.be.json;
@@ -130,7 +147,10 @@ describe("POT", () => {
   describe("DELETE ONE POTS", () => {
     it("should delete a SINGLE pots", async () => {
       const pots = await Pot.create(potsSample);
-      const res = await chai.request(server).delete(`/pots/${pots.uuid}`);
+      const res = await chai
+        .request(server)
+        .delete(`/pots/${pots.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });

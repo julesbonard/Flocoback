@@ -5,6 +5,7 @@ const router = express.Router();
 const { joiValidate } = require("../middlewares/joiValidate");
 const { locationPost, locationPut } = require("../middlewares/joiSchemas");
 const Location = require("../sequelize/models/locations");
+const { checkAuth } = require("../middlewares/tokenJwt");
 
 //GET ALL LOCATIONS
 router.get("/", (req, res) => {
@@ -30,7 +31,7 @@ router.get("/:id", (req, res) => {
 });
 
 //PUT ONE LOCATION
-router.put("/:id", joiValidate(locationPut), (req, res) => {
+router.put("/:id", joiValidate(locationPut), checkAuth, (req, res) => {
   const { id } = req.params;
   const { latitude, longitude } = req.body;
 
@@ -57,7 +58,7 @@ router.put("/:id", joiValidate(locationPut), (req, res) => {
 });
 
 //POST ONE LOCATION
-router.post("/", joiValidate(locationPost), (req, res) => {
+router.post("/", joiValidate(locationPost), checkAuth, (req, res) => {
   const { latitude, longitude, PlantUuid } = req.body;
   Location.create({
     latitude,
@@ -69,7 +70,7 @@ router.post("/", joiValidate(locationPost), (req, res) => {
 });
 
 //DELETE ONE LOCATION
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const location = await Location.findOne({

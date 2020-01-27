@@ -10,7 +10,14 @@ const User = require("../sequelize/models/users");
 
 chai.use(chaiHttp);
 
-const plantsKeys = ["uuid", "image", "createdAt", "updatedAt", "SeedUuid"];
+const plantsKeys = [
+  "uuid",
+  "image",
+  "createdAt",
+  "updatedAt",
+  "SeedUuid",
+  "PotUuid"
+];
 let plantsSample = {
   image:
     "https://www.ikea.com/fr/fr/images/products/monstera-potted-plant__0653991_PE708220_S5.JPG?f=s"
@@ -35,11 +42,13 @@ const usersSample = {
   lastName: "Paul",
   avatar:
     "https://images.assetsdelivery.com/compings_v2/gmast3r/gmast3r1710/gmast3r171002485.jpg",
-  age: 23,
   email: "totopaul@gmail.com",
   pseudo: "azerty",
-  password: "ytreza23"
+  password: "ytreza23",
+  isOAuth: true
 };
+
+let token = "";
 
 describe("PLANT", () => {
   before(async () => {
@@ -50,15 +59,17 @@ describe("PLANT", () => {
       UserUuid: user.uuid
     };
     const pot = await Pot.create(potsSample);
-    seedsSample = {
-      ...seedsSample,
-      PotUuid: pot.uuid
-    };
     const seed = await Seed.create(seedsSample);
     plantsSample = {
       ...plantsSample,
-      SeedUuid: seed.uuid
+      SeedUuid: seed.uuid,
+      PotUuid: pot.uuid
     };
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
   });
 
   //GET ALL TEST
@@ -70,7 +81,7 @@ describe("PLANT", () => {
       res.should.be.json;
       res.body.should.be.a("array");
       res.body[0].should.include(plantsSample);
-      res.body[0].should.keys(plantsKeys);
+      res.body[0].should.keys([...plantsKeys, "Location", "Pot"]);
       res.body.length.should.be.eql(1);
     });
   });
@@ -93,6 +104,7 @@ describe("PLANT", () => {
       const res = await chai
         .request(server)
         .post(`/plants`)
+        .set("access-token", token)
         .send(plantsSample);
       res.should.have.status(201);
       res.should.be.json;
@@ -106,6 +118,7 @@ describe("PLANT", () => {
       const res = await chai
         .request(server)
         .post(`/plants`)
+        .set("access-token", token)
         .send({ image: false });
       res.should.have.status(422);
       res.should.be.json;
@@ -115,6 +128,7 @@ describe("PLANT", () => {
       const res = await chai
         .request(server)
         .post(`/plants`)
+        .set("access-token", token)
         .send({ imag: "ddjdjd" });
       res.should.have.status(422);
       res.should.be.json;
@@ -129,6 +143,7 @@ describe("PLANT", () => {
       const res = await chai
         .request(server)
         .put(`/plants/${plants.uuid}`)
+        .set("access-token", token)
         .send({ image: "dfgdgdgdg" });
       res.should.have.status(200);
       res.should.be.json;
@@ -141,6 +156,7 @@ describe("PLANT", () => {
       const res = await chai
         .request(server)
         .put(`/plants/${changeplants.uuid}`)
+        .set("access-token", token)
         .send({ image: 1342 });
       res.should.have.status(422);
       res.should.be.json;
@@ -152,7 +168,10 @@ describe("PLANT", () => {
   describe("DELETE ONE plants", () => {
     it("should delete a SINGLE plants", async () => {
       const plants = await Plants.create(plantsSample);
-      const res = await chai.request(server).delete(`/plants/${plants.uuid}`);
+      const res = await chai
+        .request(server)
+        .delete(`/plants/${plants.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });

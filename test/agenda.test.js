@@ -23,6 +23,7 @@ const usersSample = {
   password: "ytreza23",
   isOAuth: true
 };
+let token = "";
 
 describe("AGENDA", () => {
   before(async () => {
@@ -32,13 +33,21 @@ describe("AGENDA", () => {
       ...agendaSample,
       UserUuid: user.uuid
     };
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
   });
 
   //GET ALL TEST
   describe("GET * AGENDA", () => {
     it("It should return all agenda.", async () => {
       await Agenda.create(agendaSample);
-      const res = await chai.request(server).get("/agenda");
+      const res = await chai
+        .request(server)
+        .get("/agenda")
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("array");
@@ -52,7 +61,10 @@ describe("AGENDA", () => {
   describe("GET ONE AGENDA", () => {
     it("should return a SINGLE agenda", async () => {
       const agenda = await Agenda.create(agendaSample);
-      const res = await chai.request(server).get(`/agenda/${agenda.uuid}`);
+      const res = await chai
+        .request(server)
+        .get(`/agenda/${agenda.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("object");
@@ -66,6 +78,7 @@ describe("AGENDA", () => {
       const res = await chai
         .request(server)
         .post(`/agenda`)
+        .set("access-token", token)
         .send(agendaSample);
       res.should.have.status(201);
       res.should.be.json;
@@ -79,6 +92,7 @@ describe("AGENDA", () => {
       const res = await chai
         .request(server)
         .post(`/agenda`)
+        .set("access-token", token)
         .send({ event: false });
       res.should.have.status(422);
       res.should.be.json;
@@ -88,6 +102,7 @@ describe("AGENDA", () => {
       const res = await chai
         .request(server)
         .post(`/agenda`)
+        .set("access-token", token)
         .send({ evnt: "ddjdjd" });
       res.should.have.status(422);
       res.should.be.json;
@@ -102,6 +117,7 @@ describe("AGENDA", () => {
       const res = await chai
         .request(server)
         .put(`/agenda/${agenda.uuid}`)
+        .set("access-token", token)
         .send({ event: "hivers" });
       res.should.have.status(200);
       res.should.be.json;
@@ -114,6 +130,7 @@ describe("AGENDA", () => {
       const res = await chai
         .request(server)
         .put(`/agenda/${changeAgenda.uuid}`)
+        .set("access-token", token)
         .send({ event: 1342 });
       res.should.have.status(422);
       res.should.be.json;
@@ -125,7 +142,10 @@ describe("AGENDA", () => {
   describe("DELETE ONE AGENDA", () => {
     it("should delete a SINGLE agenda", async () => {
       const agenda = await Agenda.create(agendaSample);
-      const res = await chai.request(server).delete(`/agenda/${agenda.uuid}`);
+      const res = await chai
+        .request(server)
+        .delete(`/agenda/${agenda.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });
