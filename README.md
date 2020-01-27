@@ -1,24 +1,37 @@
+
 # biarritz_P3_floco_backend
-### trucs kon a utilisé
 
-- Semantic ui
-- Semantic ui React
-- Axios
-- Chart.js
-- Leaflet
-- Node-sass
-- React
-- React-leaflet
-- React-router-dom
-- Redux
+### Packages
 
-### `Fork le projet`
+- @hapi/joi
+- bcrypt
+- cors
+- dotenv
+- express
+- jsonwebtoken
+- mysql2
+- passport
+- passport-facebook
+- passport-google
+- sequelize
+- uuid
+- pg
+- pg-hstore
+- chai
+- husky
+- mocha
+- morgan
+- nodemon
+- prettier
+- pretty-quick
+
+### `Fork the projet`
 
 ```
-git clone https://github.com/WildCodeSchool/biarritz_P3_floco_frontend.git
+git clone https://github.com/WildCodeSchool/biarritz_P3_floco_backend.git
 ```
 
-### `Installer les modules`
+### `Install package`
 
 ```
 npm install
@@ -42,7 +55,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `Api`
+### `API`
 
 ```
 https://floco-app.herokuapp.com/
@@ -50,7 +63,7 @@ https://floco-app.herokuapp.com/
 
 ### `Présentation`
 
-Floco est un projet client fait par ~~**5**~~ 4 élèves de la [Wild Code School](https://www.wildcodeschool.com/) en 1 mois et demi.
+Floco est un projet client fait par 4 élèves de la [Wild Code School](https://www.wildcodeschool.com/) en 1 mois et demi.
 
 Le but de l'appli [(PWA)](https://fr.wikipedia.org/wiki/Progressive_web_app) est d’inciter les utilisateurs à participer à la réimplantation de certaines plantes, en voie de disparition dans la région de Strasbourg.
 
@@ -75,15 +88,13 @@ Le but de l'appli [(PWA)](https://fr.wikipedia.org/wiki/Progressive_web_app) est
 
 - Ajouter Des filtres pour rechercher une plante.
 
-### `L'équipe`
+### `The team`
 
-![](src/assets/8874047.png)
-
-Etudiant de la Wild Code School cool
+Student from the Wild Code School
 
 - [Dominic Brice](https://github.com/dominicBrice)
 - [Lucas Leproux](https://github.com/lucas240)
 - [Jules Bonard](https://github.com/julesbonard)
 - [Frédérique Mendy](https://github.com/Superdref)
 
-#### Porteuse de projet: "Ying Wang"
+#### Project bearer: "Ying Wang"
