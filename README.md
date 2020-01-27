@@ -1,8 +1,4 @@
 # biarritz_P3_floco_backend
-## Bienvenue sur la documentation d'une app d'enfer !
-
-<img src="./src/assets/logo-floco.png" alt="logo floco" width="300"/>
-
 ### trucs kon a utilisé
 
 - Semantic ui
