@@ -51,12 +51,14 @@ These command need to be executed in the terminal:
 ```
 npm test
 ```
-### Lauch the server on port 8000
+The test will appear in the terminal.
+
+### Launch the server on port 8000
 
 ```
 npm start
 ```
-### Lauch the server on port 8000 in dev environment
+### Launch the server on port 8000 in dev environment
 
 ```
 npm run dev
