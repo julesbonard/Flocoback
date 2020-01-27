@@ -27,13 +27,15 @@
 
 ## Getting started
 
-### `Fork the projet`
+These command need to be executed in the terminal:
+
+### Fork the projet
 
 ```
 git clone https://github.com/WildCodeSchool/biarritz_P3_floco_backend.git
 ```
 
-### `Install package`
+### Install package
 
 ```
 npm install
@@ -41,25 +43,25 @@ npm install
 
 ## Available Scripts
 
-In the terminal, you can run:
+These command need to be executed in the terminal:
 
-### `Launch the test`
+### Launch the test
 
 ```
 npm test
 ```
-### `Lauch the server on port 8000`
+### Lauch the server on port 8000
 
 ```
 npm start
 ```
-### `Lauch the server on port 8000 in dev environment`
+### Lauch the server on port 8000 in dev environment
 
 ```
 npm run dev
 ```
 Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
-### `Drop the database and recreate it`
+### Drop the database and recreate it
 
 ```
 npm run resync
@@ -67,10 +69,6 @@ npm run resync
 this command need to be execute everytime you changed the database.
 
 ## Présentation
-
-Floco est un projet client fait par 4 élèves de la [Wild Code School](https://www.wildcodeschool.com/) en 1 mois et demi.
-
-Le but de l'appli [(PWA)](https://fr.wikipedia.org/wiki/Progressive_web_app) est d’inciter les utilisateurs à participer à la réimplantation de certaines plantes, en voie de disparition dans la région de Strasbourg.
 
 ### `Fonctionnalités à mettre en place`
 
