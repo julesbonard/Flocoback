@@ -37,18 +37,30 @@ git clone https://github.com/WildCodeSchool/biarritz_P3_floco_backend.git
 npm install
 ```
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
-In the project directory, you can run:
+In the terminal, you can run:
 
-### `Ouvrir le projet`
+### `Launch the test`
+
+```
+npm test
+```
+### `Lauch the server on port 8000`
 
 ```
 npm start
 ```
+### `Lauch the server on port 8000 in dev environment`
 
+```
+npm run dev
+```
+### `Drop the database and recreate it`
+
+```
+npm run resync
+```
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
