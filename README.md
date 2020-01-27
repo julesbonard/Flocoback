@@ -40,7 +40,7 @@ git clone https://github.com/WildCodeSchool/biarritz_P3_floco_backend.git
 ```
 npm install
 ```
-Before launching the server you should first create a `.env` file, follow the instruction in `example.env`.
+Before launching the server you should first create a `.env`  file, follow the instruction in `example.env`.
 
 ## Available Scripts
 
@@ -74,10 +74,7 @@ this command need to be execute everytime you changed the database.
 ## File organization
 
 ### Middlewares
-
-#### Page D'acceuil/Map
-
-- La partie stats des plantes locales.
+Add modification to the request send in `route.js` files
 
 ### Routes
 ### Sequelize
