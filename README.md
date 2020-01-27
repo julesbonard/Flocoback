@@ -1,7 +1,7 @@
 
 # biarritz_P3_floco_backend
 
-### Packages
+## Packages
 
 - @hapi/joi
 - bcrypt
@@ -24,6 +24,8 @@
 - nodemon
 - prettier
 - pretty-quick
+
+## Getting started
 
 ### `Fork the projet`
 
@@ -56,24 +58,15 @@ npm start
 ```
 npm run dev
 ```
+Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
 ### `Drop the database and recreate it`
 
 ```
 npm run resync
 ```
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+this command need to be execute everytime you changed the database.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `API`
-
-```
-https://floco-app.herokuapp.com/
-```
-
-### `Présentation`
+## Présentation
 
 Floco est un projet client fait par 4 élèves de la [Wild Code School](https://www.wildcodeschool.com/) en 1 mois et demi.
 
