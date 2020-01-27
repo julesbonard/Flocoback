@@ -71,6 +71,20 @@ npm run resync
 ```
 this command need to be execute everytime you changed the database.
 
+## File organization
+
+### Middlewares
+
+#### Page D'acceuil/Map
+
+- La partie stats des plantes locales.
+
+### Routes
+### Sequelize
+
+#### Models
+### Test
+
 ## Présentation
 
 ### `Fonctionnalités à mettre en place`
