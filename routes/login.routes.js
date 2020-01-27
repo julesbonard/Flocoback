@@ -51,7 +51,9 @@ router.get(
   passport.authenticate("facebook", { failureRedirect: "/", session: false }),
   (req, res) => {
     const { uuid, jwt } = req.user;
-    res.redirect(`http://localhost:3000/login?token=${jwt}&id=${uuid}`);
+    res.redirect(
+      `https://floco-app-front.netlify.com/login?token=${jwt}&id=${uuid}`
+    );
   }
 );
 
@@ -66,7 +68,9 @@ router.get(
   passport.authenticate("google", { failureRedirect: "/", session: false }),
   (req, res) => {
     const { uuid, jwt } = req.user;
-    res.redirect(`http://localhost:3000/login?token=${jwt}&id=${uuid}`);
+    res.redirect(
+      `https://floco-app-front.netlify.com/login?token=${jwt}&id=${uuid}`
+    );
   }
 );
 
