@@ -40,6 +40,7 @@ git clone https://github.com/WildCodeSchool/biarritz_P3_floco_backend.git
 ```
 npm install
 ```
+Before launching the server you should first create a `.env` file, follow the instruction in `example.env`.
 
 ## Available Scripts
 
