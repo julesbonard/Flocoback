@@ -37,6 +37,7 @@ let postSample = {
   date: "1970-01-01T00:00:00.000Z",
   image: "https/"
 };
+let token = "";
 
 describe("COMMENT", () => {
   before(async () => {
@@ -52,13 +53,21 @@ describe("COMMENT", () => {
       UserUuid: user.uuid,
       PostUuid: post.uuid
     };
+    const res = await chai
+      .request(server)
+      .post(`/users`)
+      .send(usersSample);
+    token = res.body.token;
   });
 
   //GET ALL TEST
   describe("GET * COMMENTS", () => {
     it("It should return all comments.", async () => {
       await Comment.create(commentsSample);
-      const res = await chai.request(server).get("/comments");
+      const res = await chai
+        .request(server)
+        .get("/comments")
+        .set("access-token", token);
       res.should.have.status(200);
       res.body.should.be.a("array");
       res.body[0].should.include(commentsSample);
@@ -70,7 +79,10 @@ describe("COMMENT", () => {
   describe("GET ONE COMMENTS", () => {
     it("should return a SINGLE comments", async () => {
       const comments = await Comment.create(commentsSample);
-      const res = await chai.request(server).get(`/comments/${comments.uuid}`);
+      const res = await chai
+        .request(server)
+        .get(`/comments/${comments.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a("object");
@@ -85,6 +97,7 @@ describe("COMMENT", () => {
       const res = await chai
         .request(server)
         .post(`/comments`)
+        .set("access-token", token)
         .send(commentsSample);
       res.should.have.status(201);
       res.should.be.json;
@@ -97,6 +110,7 @@ describe("COMMENT", () => {
       const res = await chai
         .request(server)
         .post("/comments")
+        .set("access-token", token)
         .send({ dte: 23 });
       res.should.have.status(422);
       res.should.be.json;
@@ -106,6 +120,7 @@ describe("COMMENT", () => {
       const res = await chai
         .request(server)
         .post("/statsCity")
+        .set("access-token", token)
         .send({ nudfff: "ert", qsd: "xcvb" });
       res.should.have.status(422);
       res.should.be.json;
@@ -120,6 +135,7 @@ describe("COMMENT", () => {
       const res = await chai
         .request(server)
         .put(`/comments/${comments.uuid}`)
+        .set("access-token", token)
         .send({ contents: "scfresxcf" });
       res.should.have.status(200);
       res.should.be.json;
@@ -131,6 +147,7 @@ describe("COMMENT", () => {
       const res = await chai
         .request(server)
         .put(`/comments/${comments.uuid}`)
+        .set("access-token", token)
         .send({ date: "aaaee" });
       res.should.have.status(422);
       res.should.be.json;
@@ -144,7 +161,8 @@ describe("COMMENT", () => {
       const comments = await Comment.create(commentsSample);
       const res = await chai
         .request(server)
-        .delete(`/comments/${comments.uuid}`);
+        .delete(`/comments/${comments.uuid}`)
+        .set("access-token", token);
       res.should.have.status(200);
       res.should.be.json;
     });

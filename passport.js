@@ -11,13 +11,13 @@ const credentials = {
   facebook: {
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
-    callbackURL: "http://localhost:8000/login/auth/facebook/callback",
+    callbackURL: "https://floco-app.herokuapp.com/login/auth/facebook/callback",
     profileFields: ["id", "emails", "name"]
   },
   google: {
     clientID: process.env.GOOGLE_ID,
     clientSecret: process.env.GOOGLE_SECRET,
-    callbackURL: "http://localhost:8000/login/auth/google/callback"
+    callbackURL: "https://floco-app.herokuapp.com/login/auth/google/callback"
   }
 };
 
