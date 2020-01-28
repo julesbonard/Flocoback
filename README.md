@@ -144,30 +144,7 @@ It contain all the express routes for POST, PUT, GET, DELETE.
 - `tresaury.test.js`
 - `users.test.js`
 
-## Présentation
-
-### `Fonctionnalités à mettre en place`
-
-#### Page D'acceuil/Map
-
-- La partie stats des plantes locales.
-
-#### Mon Compte
-
-- Faire un tchat.
-- Faire un système d'ajout d'amis.
-- Développer les sous-menus.
-- Ajouter une partie niveau en rapport avec le nombre de plantes de l'utilisateur.
-
-#### Plantes
-
-- Faire une page d'ajout de plantes.
-
-#### Bibliothèque
-
-- Ajouter Des filtres pour rechercher une plante.
-
-### `The team`
+## The team
 
 Student from the Wild Code School
 
