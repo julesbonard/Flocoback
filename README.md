@@ -2,6 +2,8 @@
 
 # biarritz_P3_floco_backend
 
+<img src="./mcd.svg" width="auto"/>
+
 ## Packages
 
 - @hapi/joi
