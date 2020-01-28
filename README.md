@@ -41,7 +41,7 @@ git clone https://github.com/WildCodeSchool/biarritz_P3_floco_backend.git
 ```
 npm install
 ```
-Before launching the server you should first create a `.env`  file, follow the instruction in `example.env`.
+**Before launching the server** you should first create a `.env`  file, follow the instruction in `example.env`.
 
 ## Available Scripts
 
@@ -70,7 +70,7 @@ Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
 ```
 npm run resync
 ```
-this command need to be execute everytime you changed the database.
+this command need to be execute everytime you change the database.
 
 ## File organization
 
@@ -80,18 +80,48 @@ It contain 2 middlewares:
  1. requiring the token
  2. precise the params of the object request
  
-- `joiSchemas.js`
-- `joiValidate.js`
-- `tokenJwt.js`
+- `joiSchemas.js` manage all the schemas who validate the object request send to the route. There is schema for the POST and PUT routes. `.required()`mean that the response will be an error if the value is not provide.
+- `joiValidate.js` is the middleware who manage the validation of the schemas
+- `tokenJwt.js`is the middleware who require a token to access the routes. It is called `checkAuth`.
 
 ### `Routes`
-It contain all the express routes for POST, PUT, GET, DELETE.
-- `agenda.routes.js`
-- `comments.routes.js`
-- `friends.routes.js`
-- `likes.routes.js`
-- `locations.routes.js`
-- `login.routes.js` this file purpose is to authenticate the user with a form or with the passport of Facebook and Google.
+It contain all the express routes files.
+- `agenda.routes.js` has 5 routes, **these routes are never use**:
+	 - GET ALL: get all the agendas of all users, need a token to access the route. 
+	 - GET ONE: get one agenda, need a token to access the route and the id of the agenda. 
+	 - PUT: modify one agenda, need a token to access the route and the id of the agenda, you can only update the params who are in the `joiSchema.js`. 
+	 - POST: create one agenda, need a token to access the route, you can only create the params who are in the `joiSchema.js`. 
+	 - DELETE: delete one agenda, need a token to access the route and the id of the agenda.
+- `comments.routes.js` has 5 routes, **these routes are  never use**:
+	 - GET ALL: get all the comments of all users, need a token to access the route. 
+	 - GET ONE: get one comment, need a token to access the route and the id of the comment. 
+	 - PUT: modify one comment, need a token to access the route and the id of the comment, you can only update the params who are in the `joiSchema.js`. 
+	 - POST: create one comment, need a token to access the route, you can only create the params who are in the `joiSchema.js`. 
+	 - DELETE: delete one comment, need a token to access the route and the id of the comment.
+- `friends.routes.js`has 5 routes, **these routes are never use**:
+	 - GET ALL: get all the friends of all users, need a token to access the route. 
+	 - GET ONE: get one friend, need a token to access the route and the id of the friend. 
+	 - PUT: modify one friend, need a token to access the route and the id of the friend, you can only update the params who are in the `joiSchema.js`. 
+	 - POST: create one friend, need a token to access the route, you can only create the params who are in the `joiSchema.js`. 
+	 - DELETE: delete one friend, need a token to access the route and the id of the friend.
+- `likes.routes.js`has 5 routes, **these routes are never use**:
+	 - GET ALL: get all the likes of all users, need a token to access the route. 
+	 - GET ONE: get one like, need a token to access the route and the id of the like. 
+	 - PUT: modify one like, need a token to access the route and the id of the like, you can only update the params who are in the `joiSchema.js`. 
+	 - POST: create one like, need a token to access the route, you can only create the params who are in the `joiSchema.js`. 
+	 - DELETE: delete one like, need a token to access the route and the id of the like.
+- `locations.routes.js`has 5 routes:
+	 - GET ALL: get all the locations.
+	 - GET ONE: get one location, need the id of the location. 
+	 - PUT: modify one location, need a token to access the route and the id of the location, you can only update the params who are in the `joiSchema.js`. 
+	 - POST: create one location, need a token to access the route, you can only create the params who are in the `joiSchema.js`. 
+	 - DELETE: delete one location, need a token to access the route and the id of the location.
+- `login.routes.js` this file purpose is to authenticate the user with a form or with the passport of Facebook and Google, it has 5 routes:
+	 - POST: find if the user exist and if the password is valid, sign a token if there is no error.
+	 - GET: it ask you to login with your Facebook account.
+	 - GET: if your login with Facebook, a token is sign and you are redirect to the frontend.
+	 - GET: it ask you to login with your Google account.
+	 - GET: if your login with Google, a token is sign and you are redirect to the frontend.
 - `messages.routes.js`
 - `miniFlora.routes.js`
 - `partners.routes.js`
@@ -106,8 +136,14 @@ It contain all the express routes for POST, PUT, GET, DELETE.
 - `users.routes.js`
 
 ### `Sequelize`
+The projet use [Sequelize](https://sequelize.org/v5/) to avoid writting all the informations by hand in MySQL database, it manage to save time.
 
-#### `Models`
+ - `associations.js`
+ - `config.js`
+ - `index.js`
+ - `resync.js`
+
+#### - `Models`
 - `agenda.js`
 - `comments.js`
 - `friends.js`
@@ -125,6 +161,7 @@ It contain all the express routes for POST, PUT, GET, DELETE.
 - `statsTaxons.js`
 - `tresaury.js`
 - `users.js`
+
 ### `Test`
 - `agenda.test.js`
 - `comments.test.js`
