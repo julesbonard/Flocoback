@@ -73,14 +73,18 @@ this command need to be execute everytime you changed the database.
 
 ## File organization
 
-### Middlewares
-Add modification to the request send in `route.js` files
+### `Middlewares`
+Add modification to the request send in `route.js` files.
+It contain 2 middlewares: 
+- requiring the token
+- precise the params of the object request
 
-### Routes
-### Sequelize
+### `Routes`
+It contain all the express routes for POST, PUT, GET, DELETE.
+### `Sequelize`
 
-#### Models
-### Test
+#### `Models`
+### `Test`
 
 ## Présentation
 
