@@ -108,7 +108,41 @@ It contain all the express routes for POST, PUT, GET, DELETE.
 ### `Sequelize`
 
 #### `Models`
+- `agenda.js`
+- `comments.js`
+- `friends.js`
+- `likes.js`
+- `locations.js`
+- `messages.js`
+- `miniFlora.js`
+- `partners.js`
+- `plants.js`
+- `posts.js`
+- `pots.js`
+- `seeds.js`
+- `stasCity.js`
+- `statsOxygene.js`
+- `statsTaxons.js`
+- `tresaury.js`
+- `users.js`
 ### `Test`
+- `agenda.test.js`
+- `comments.test.js`
+- `friends.test.js`
+- `likes.test.js`
+- `locations.test.js`
+- `messages.test.js`
+- `miniFlora.test.js`
+- `partners.test.js`
+- `plants.test.js`
+- `posts.test.js`
+- `pots.test.js`
+- `seeds.test.js`
+- `stasCity.test.js`
+- `statsOxygene.test.js`
+- `statsTaxons.test.js`
+- `tresaury.test.js`
+- `users.test.js`
 
 ## Présentation
 
