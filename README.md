@@ -77,12 +77,33 @@ this command need to be execute everytime you changed the database.
 ### `Middlewares`
 It add modification to the request send in `route.js` files.
 It contain 2 middlewares: 
-- requiring the token
-- precise the params of the object request
+ 1. requiring the token
+ 2. precise the params of the object request
+ 
+- `joiSchemas.js`
+- `joiValidate.js`
+- `tokenJwt.js`
 
 ### `Routes`
 It contain all the express routes for POST, PUT, GET, DELETE.
-`login.routes.js` this file purpose is to authenticate the user with a form or with the passport of facebook and google.
+- `agenda.routes.js`
+- `comments.routes.js`
+- `friends.routes.js`
+- `likes.routes.js`
+- `locations.routes.js`
+- `login.routes.js` this file purpose is to authenticate the user with a form or with the passport of Facebook and Google.
+- `messages.routes.js`
+- `miniFlora.routes.js`
+- `partners.routes.js`
+- `plants.routes.js`
+- `posts.routes.js`
+- `pots.routes.js`
+- `seeds.routes.js`
+- `stasCity.routes.js`
+- `statsOxygene.routes.js`
+- `statsTaxons.routes.js`
+- `tresaury.routes.js`
+- `users.routes.js`
 
 ### `Sequelize`
 
