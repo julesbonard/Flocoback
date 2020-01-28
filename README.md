@@ -200,41 +200,43 @@ It contain all the express routes files.
 	 - PUT: modify one user, need a token to access the route and the id of the user, you can only update the params who are in the `joiSchema.js`. 
 	 - POST: create one user, you can only create the params who are in the `joiSchema.js`. 
 	 - DELETE: delete one user, need a token to access the route and the id of the user.
-
 ### `Sequelize`
 The project use [Sequelize](https://sequelize.org/v5/) to avoid writing all the information by hand in MySQL database, it manage to save time.
 
- - `associations.js`
- - `config.js`
- - `index.js`
- - `resync.js`
+ - `associations.js` manage the relations between tables (models), it associate the tables like in MySQL but simpler because it's this file who create the **foreign key**.
+ - `config.js` access the database of MySQL with the `.env` file.
+ - `index.js` execute `config.js`.
+ - `resync.js` drop the database & recreate it.
 
 #### - `Models`
-- `agenda.js`
-- `comments.js`
-- `friends.js`
-- `likes.js`
-- `locations.js`
-- `messages.js`
-- `miniFlora.js`
-- `partners.js`
-- `plants.js`
-- `posts.js`
-- `pots.js`
-- `seeds.js`
-- `stasCity.js`
-- `statsOxygene.js`
-- `statsTaxons.js`
-- `tresaury.js`
-- `users.js`
+This folder regroup all tables of the database.
+
+- `agenda.js`is for the agenda in the frontend, where you can add event, **frontend not developed**.
+- `comments.js` is for the comment section in the post, you need the date to sort the comments , ** frontend not developed**.
+- `friends.js` determined whether your friend with another user or not, **frontend not developed**.
+- `likes.js` is for the post feature, **frontend not developed**.
+- `locations.js` is for the position of the marker on the map, it represent the position of the plant.
+- `messages.js`is for the chat in the community part, **frontend not developed**.
+- `miniFlora.js`only has one value for the statistics part, because it is called in several page, **frontend not developed**.
+- `partners.js`is for the store who are in partnership with the app, they can exchange seed, **frontend not developed**.
+- `plants.js` is the plants the user plant, you need a pot and a seed. You can have an image, it was suppose for the evolution of the user and the post.
+- `posts.js`is for the community part where different user share their plant, **frontend not developed**.
+- `pots.js` is for the container where the plant go.
+- `seeds.js`is all the characteristic of the plant.
+- `stasCity.js`should retrieved the statistics of the city locally from the user position, **frontend not developed**.
+- `statsOxygene.js`should measure the amount of oxygen produce with the app, **frontend not developed**.
+- `statsTaxons.js`contain the number of different taxon, their status and if their restored or not, **frontend not developed**.
+- `tresaury.js` is for the evolution of the user profile, the badge and level rise with the number of plants the user plant and the points is for trading seeds.
+- `users.js` contain all the user information for the login and all tables associate to the user, the user password is encrypt with bcrypt.
 
 ### `Test`
+This folder regroup all the test. 
 - `agenda.test.js`
 - `comments.test.js`
 - `friends.test.js`
 - `likes.test.js`
 - `locations.test.js`
-- `messages.test.js`
+- `messages.test.js`, **not working**.
 - `miniFlora.test.js`
 - `partners.test.js`
 - `plants.test.js`
