@@ -22,9 +22,12 @@
 
 ## Getting started
 
-These command need to be executed in the terminal:
+### Pre-requisite
+NPM `6.10.3`
+Node `v12.10.0`
 
 ### Fork the project
+These command need to be executed in the terminal:
 
 ```
 git clone https://github.com/WildCodeSchool/biarritz_P3_floco_backend.git
@@ -65,6 +68,33 @@ Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
 npm run resync
 ```
 this command need to be execute everytime you change the database.
+
+### Create `.env`
+
+```
+PORT=8000
+DB_HOST=localhost
+DB_USER=user
+DB_PW=password
+DB_DATABASE=database
+DB_DIALECT=mysql
+DB_DATABASE_TEST=database_test
+SECRET=secret_token
+
+FACEBOOK_ID=facebook_id_app
+FACEBOOK_SECRET=facebook_secret_app
+
+GOOGLE_ID=google_id_app
+GOOGLE_SECRET=google_id_app
+
+# Databases should be created by hand before
+# The real file should be named `.env` in the root directory
+# https://www.npmjs.com/package/dotenv
+
+# If you deploy this to Heroku, place your env variables in Settings -> Config Vars
+
+# The facebook and google app should be created by you
+```
 
 ## File organization
 
