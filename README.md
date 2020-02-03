@@ -2,7 +2,7 @@
 
 # biarritz_P3_floco_backend
 
-## Wireframe
+## Database modelisation
 
 <img src="./mcd.svg" width="auto"/>
 
@@ -10,8 +10,6 @@
 
 - @hapi/joi
 - bcrypt
-- cors
-- dotenv
 - express
 - jsonwebtoken
 - mysql2
@@ -19,16 +17,8 @@
 - passport-facebook
 - passport-google
 - sequelize
-- uuid
-- pg
-- pg-hstore
 - chai
-- husky
 - mocha
-- morgan
-- nodemon
-- prettier
-- pretty-quick
 
 ## Getting started
 
@@ -237,7 +227,7 @@ This folder regroup all tables of the database.
 - `users.js` contain all the user information for the login and all tables associate to the user, the user password is encrypt with bcrypt.
 
 ### `Test`
-This folder regroup all the test. 
+This folder regroup all the test, we use Mocha and Chai. 
 Each file, test one model, they have at least 5 tests: GET ALL, GET, PUT, POST and DELETE. 
 The methods PUT and POST have test where the result should fail.
 At the start of each file multiple variable are created for the test, there is a variable like `exampleKeys` where we add all the keys we expect the test to return, the variable like `exampleSample`are variable we test or create for the foreign key, we sometimes also create a `user` to recover a token.
@@ -264,9 +254,9 @@ At the start of each file multiple variable are created for the test, there is a
 
 Student from the Wild Code School
 
-- [Dominic Brice](https://github.com/dominicBrice)
-- [Lucas Leproux](https://github.com/lucas240)
-- [Jules Bonard](https://github.com/julesbonard)
-- [Frédérique Mendy](https://github.com/Superdref)
+- [Dominic Brice](https://www.linkedin.com/in/dominic-brice-328a27a6/)
+- [Lucas Leproust](https://www.linkedin.com/in/lucas-leproust/)
+- [Jules Bonard](https://www.linkedin.com/in/julesbonard/)
+- [Frédérique Mendy](https://www.linkedin.com/in/fr%C3%A9d%C3%A9rique-mendy-a742551a/)
 
 #### Project bearer: "Ying Wang"
