@@ -52,7 +52,7 @@ router.get(
   (req, res) => {
     const { uuid, jwt } = req.user;
     res.redirect(
-      `https://floco-app-front.netlify.com/login?token=${jwt}&id=${uuid}`
+      `http://localhost/login?token=${jwt}&id=${uuid}`
     );
   }
 );
@@ -69,7 +69,7 @@ router.get(
   (req, res) => {
     const { uuid, jwt } = req.user;
     res.redirect(
-      `https://floco-app-front.netlify.com/login?token=${jwt}&id=${uuid}`
+      `http://localhost/login?token=${jwt}&id=${uuid}`
     );
   }
 );
