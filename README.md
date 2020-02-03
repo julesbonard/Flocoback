@@ -238,6 +238,10 @@ This folder regroup all tables of the database.
 
 ### `Test`
 This folder regroup all the test. 
+Each file, test one model, they have at least 5 tests: GET ALL, GET, PUT, POST and DELETE. 
+The methods PUT and POST have test where the result should fail.
+At the start of each file multiple variable are created for the test, there is a variable like `exampleKeys` where we add all the keys we expect the text to return, the variable like `exampleSample`are variable we test or create for the foreign key, we sometimes also create a `user` to recover a token.
+
 - `agenda.test.js`
 - `comments.test.js`
 - `friends.test.js`
