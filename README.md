@@ -78,12 +78,11 @@ this command need to be execute everytime you change the database.
 
 ## File organization
 
-
 - `.gitignore` it untracked files to ignore.
 - `ex.http` it send HTTP request to the database, you need REST Client for this file.
-- `example.env` this file stock information about your MySQL database Facebook app and Google app for access.
+- `example.env` this file stock information about your MySQL database, Facebook app and Google app for access.
 - `index.js` this file initialize passport and express, all routes need to be written here, it also create the database using the config & models.
-- `passport.js` this file has the strategy of Facebook and Google, it create or find the user with the account provide.
+- `passport.js` this file has the strategy of Facebook and Google, it create or find the user with the account provide and sign a token. You need to add the callback URL, for the client ID and client secret look in `example.env`
 - `Procfile` it specifies the commands that are executed by the app on startup in Heroku.
 
 ### `Middlewares`
