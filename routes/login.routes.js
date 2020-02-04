@@ -52,7 +52,8 @@ router.get(
   (req, res) => {
     const { uuid, jwt } = req.user;
     res.redirect(
-  `http://localhost:3000/login?token=${jwt}&id=${uuid}`    );
+      `http://localhost:3000/login?token=${jwt}&id=${uuid}`
+    );
   }
 );
 
@@ -68,7 +69,7 @@ router.get(
   (req, res) => {
     const { uuid, jwt } = req.user;
     res.redirect(
-        `http://localhost:3000/login?token=${jwt}&id=${uuid}`
+      `http://localhost:3000/login?token=${jwt}&id=${uuid}`
     );
   }
 );
